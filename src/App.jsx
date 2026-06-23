@@ -1056,7 +1056,7 @@ function LockedCouponsSection({ coupons }) {
       </button>
 
       {isOpen ? (
-        <div id="cupones-bloqueados-lista" className="mt-3 grid grid-cols-1 gap-3 animate-fade-in-up sm:mt-4 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+        <div id="cupones-bloqueados-lista" className="mt-3 grid grid-cols-2 gap-3 animate-fade-in-up sm:mt-4 sm:gap-4 lg:grid-cols-3">
           {coupons.map((coupon) => (
             <CouponCard key={coupon.id} coupon={coupon} onRedeem={() => {}} />
           ))}
