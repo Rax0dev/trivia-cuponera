@@ -385,6 +385,10 @@ function getDailyTrivia() {
 const SPECIAL_DATES = [
   // Personaliza aquí tus fechas especiales en formato MM-DD
   { date: '02-14', message: '¡Feliz San Valentín, mi amor! 💘 Hoy la Bóveda brilla más fuerte.', themeColor: '#e11d48' },
+  { date: '05-08', message: '¡Feliz aniversario de nuestra boda civil, Amochito! 💍 Gracias por decir que sí.', themeColor: '#ec4899' },
+  { date: '05-10', message: '¡Feliz Día de la Madre, mi amor! Eres una mamá increíble y una esposa aún mejor. 💐', themeColor: '#8b5cf6' },
+  { date: '05-14', message: '¡Feliz cumpleaños, mi amor! 🎂 Celebro tu vida hoy y siempre.', themeColor: '#db2777' },
+  { date: '07-19', message: '¡Feliz aniversario de nuestra boda por la iglesia, mi amor! 💒 Otro año bendecido a tu lado.', themeColor: '#f59e0b' },
   { date: '12-25', message: '¡Feliz Navidad, Amochito! 🎄 Gracias por ser mi mejor regalo.', themeColor: '#16a34a' },
 ]
 
