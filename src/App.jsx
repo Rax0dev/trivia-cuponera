@@ -23,7 +23,7 @@ const QUESTIONS = [
   },
   {
     id: 2,
-    question: 'El día de esa famosa fiesta donde me dijiste que te llamaba la atención, ¿cuál fue mi reacción interna?',
+    question: 'El día de esa famosa fiesta donde me dijiste que te llamaba la atención, ¿cómo reaccioné?',
     options: [
       'Me puse súper nervioso y no sabía qué hacer',
       'Te invité a salir ahí mismo con muchísima seguridad',
@@ -33,7 +33,7 @@ const QUESTIONS = [
   },
   {
     id: 3,
-    question: '¿En dónde fue el punto de encuentro exacto de nuestra primera salida oficial solos?',
+    question: '¿Dónde quedamos para nuestra primera salida oficial solos?',
     options: [
       'En el área de comida de Galerías',
       'En el estacionamiento de tu hospital',
@@ -43,7 +43,7 @@ const QUESTIONS = [
   },
   {
     id: 4,
-    question: 'Para nuestra primera comida juntos ese día, fuimos a un lugar muy elegante y sofisticado... ¿Qué comimos?',
+    question: 'Nuestra primera comida juntos fue en un lugar bien fancy... ¿qué pedimos?',
     options: [
       'Unos Subway',
       'Unos tacos de birria',
@@ -53,7 +53,7 @@ const QUESTIONS = [
   },
   {
     id: 5,
-    question: 'A la mañana siguiente de esa primera cita, ¿en dónde fuimos a desayunar?',
+    question: 'Al día siguiente de nuestra primera cita, ¿dónde desayunamos?',
     options: [
       'En el buffet del hotel',
       'En Jugos y Chocos Tony',
@@ -63,7 +63,7 @@ const QUESTIONS = [
   },
   {
     id: 6,
-    question: 'Al principio de salir, jugábamos a los espías y nos escondíamos de nuestros amigos en común. ¿Por qué lo hacíamos?',
+    question: 'Cuando empezamos a salir, andábamos de espías escondiéndonos de nuestros amigos. ¿Por qué?',
     options: [
       'Porque no sabíamos cómo iban a reaccionar',
       'Porque nos gustaba la adrenalina del peligro',
@@ -73,7 +73,7 @@ const QUESTIONS = [
   },
   {
     id: 7,
-    question: '¿Qué cualidad tuya me hizo darme cuenta de que habías nacido para ser enfermera?',
+    question: '¿Qué es lo tuyo que me hizo pensar "esta morra nació para ser enfermera"?',
     options: [
       'Tu súper poder para no dormir en 24 horas',
       'Tu forma de hablar tan cálida y lo atenta que eres con todos',
@@ -93,7 +93,7 @@ const QUESTIONS = [
   },
   {
     id: 9,
-    question: 'En nuestra visita al Zoológico de Guadalajara ocurrió una pequeña tragedia financiera que no noté hasta que regresamos. ¿Qué pasó?',
+    question: 'En el Zoológico de Guadalajara me pasó una tragedia financiera y no me di cuenta hasta que regresamos. ¿Qué se me perdió?',
     options: [
       'Perdí todo el efectivo que llevábamos para los recuerditos',
       'Perdí mi tarjeta de Banorte',
@@ -103,7 +103,7 @@ const QUESTIONS = [
   },
   {
     id: 10,
-    question: 'En ese mismo viaje al zoológico, decidimos saltarnos una atracción principal para no perder tiempo formados. ¿Cuál fue?',
+    question: 'En ese mismo viaje al zoológico nos brincamos una atracción porque no queríamos hacer fila. ¿Cuál?',
     options: [
       'El acuario de los tiburones',
       'El teleférico que cruza todo el parque',
@@ -113,7 +113,7 @@ const QUESTIONS = [
   },
   {
     id: 11,
-    question: 'A cambio de no formarnos en esa atracción, preferimos ir a ver pingüinos, monos capuchinos y a unos animales que estaban muy a gusto medio dormidos. ¿Cuáles eran?',
+    question: 'Como no hicimos fila, fuimos a ver pingüinos, monos capuchinos y otros bichos dormilones. ¿Cuáles?',
     options: [
       'Los leones',
       'Los tigres blancos',
@@ -123,7 +123,7 @@ const QUESTIONS = [
   },
   {
     id: 12,
-    question: 'Nuestro viaje a las Grutas de Tolantongo estuvo increíble, pero terminamos comiendo casi todo el tiempo en el restaurante por una razón muy específica. ¿Cuál?',
+    question: 'En Tolantongo comimos casi todo el tiempo en el restaurante por una razón bien específica. ¿Cuál?',
     options: [
       'La comida de los puestos se veía dudosa',
       'Era el único lugar que aceptaba pago con tarjeta y nos quedamos sin efectivo',
@@ -133,7 +133,7 @@ const QUESTIONS = [
   },
   {
     id: 13,
-    question: 'Cuando te llevé a la Ciudad de México, mi objetivo principal era que conocieras:',
+    question: 'Cuando te llevé a CDMX, lo que más quería era que conocieras...',
     options: [
       'El estadio de mi equipo favorito y los museos de arte',
       'A unos tíos que no veía desde hace años',
@@ -143,7 +143,7 @@ const QUESTIONS = [
   },
   {
     id: 14,
-    question: 'En ese viaje a CDMX te llevé a probar algo delicioso que lamentablemente no encontramos aquí en Aguascalientes. ¿Qué era?',
+    question: 'En CDMX te llevé a comer algo que no encontramos en Aguas. ¿Qué fue?',
     options: [
       'El caldo de gallina y comer en Casa de Toño',
       'Las verdaderas tortas de chilaquil de esquina',
@@ -153,7 +153,7 @@ const QUESTIONS = [
   },
   {
     id: 15,
-    question: "Casi no estamos en casa por nuestros trabajos, pero cuando por fin tenemos tiempo para nosotros, ¿cuál es nuestro 'código de vestimenta' favorito para relajarnos?",
+    question: 'Casi no estamos en casa por el trabajo, pero cuando tenemos tiempo juntos, ¿cómo nos vestimos para estar relajados?',
     options: [
       'Andar en pijama todo el día',
       'Estar sin ropa',
@@ -163,7 +163,7 @@ const QUESTIONS = [
   },
   {
     id: 16,
-    question: 'Cuando armamos el modo cooperativo en los videojuegos, ¿cuáles son los títulos que más jugamos juntos?',
+    question: 'Cuando jugamos juntos en modo cooperativo, ¿cuáles son nuestros juegos?',
     options: [
       'Fortnite, Overcooked y LEGO Marvel',
       'Dead by Daylight, Halo y Gears of War',
@@ -173,7 +173,7 @@ const QUESTIONS = [
   },
   {
     id: 17,
-    question: 'Si decidimos apagar las consolas y sacar los juegos de mesa, ¿cuál es nuestro combo infalible?',
+    question: 'Si apagamos las consolas y sacamos juegos de mesa, ¿cuál es nuestro combo infalible?',
     options: [
       'Monopoly, Jenga y Scrabble',
       'Ajedrez, Lotería y Basta',
@@ -183,7 +183,7 @@ const QUESTIONS = [
   },
   {
     id: 18,
-    question: 'A veces yo me pongo a jugar títulos de un solo jugador como Spiderman, Resident Evil o Assassins Creed. ¿Qué haces tú mientras tanto?',
+    question: 'A veces me pongo a jugar solito cosas como Spider-Man, Resident Evil o Assassins Creed. ¿Tú qué haces mientras?',
     options: [
       'Te pones a jugar con tu tablet o a ver una serie que te gusta',
       'Te quedas dormida a los 10 minutos en el sillón',
@@ -203,7 +203,7 @@ const QUESTIONS = [
   },
   {
     id: 20,
-    question: 'Hubo otra serie de comedia que tú me recomendaste ver y que, gracias a ti, se convirtió en una de mis grandes favoritas. ¿Cuál es?',
+    question: 'Había otra serie de comedia que tú me recomendaste y ahora es de mis favoritas. ¿Cuál?',
     options: [
       'The Office',
       'Friends',
@@ -213,7 +213,7 @@ const QUESTIONS = [
   },
   {
     id: 21,
-    question: 'En general, ¿cómo podríamos describir nuestro estilo de vida y nuestra dinámica de pareja?',
+    question: 'En general, ¿cómo describirías nuestra dinámica de pareja?',
     options: [
       'Trabajamos mucho, pero nuestro mayor placer es llegar a casa a relajarnos juntos',
       'Nos la pasamos planeando fiestas y salidas con amigos cada fin de semana',
@@ -223,7 +223,7 @@ const QUESTIONS = [
   },
   {
     id: 22,
-    question: 'El día de nuestra pedida de mano fue inolvidable. ¿En el concierto de qué artista, que es nuestro favorito, te di el anillo?',
+    question: 'El día que te pedí matrimonio fue en el concierto de qué artista?',
     options: [
       'Bad Bunny',
       'Feid',
@@ -233,7 +233,7 @@ const QUESTIONS = [
   },
   {
     id: 23,
-    question: '¿A qué ciudad viajamos para ir a ese concierto que cambiaría nuestras vidas?',
+    question: '¿A qué ciudad viajamos para ese concierto?',
     options: [
       'Monterrey',
       'Ciudad de México',
@@ -243,7 +243,7 @@ const QUESTIONS = [
   },
   {
     id: 24,
-    question: 'Aunque yo estaba súper nervioso en el momento de la pedida, logré pensar rápido para que nos quedara el recuerdo para siempre. ¿Qué hice?',
+    question: 'Yo estaba bien nervioso cuando te pedí matrimonio, pero se me ocurrió algo rápido para grabar el momento. ¿Qué hice?',
     options: [
       'Llevé un tripié escondido en la chamarra',
       'Le pedí a una persona que estaba ahí que grabara el momento',
@@ -253,7 +253,7 @@ const QUESTIONS = [
   },
   {
     id: 25,
-    question: 'A la mañana siguiente de comprometernos, fuimos a celebrar con un desayuno donde comimos riquísimo. ¿A qué lugar fuimos?',
+    question: 'Al día siguiente de comprometernos fuimos a desayunar a un lugar bien rico. ¿A dónde?',
     options: [
       'A La Casa de Toño',
       'A Los Chilaquiles',
@@ -263,7 +263,7 @@ const QUESTIONS = [
   },
   {
     id: 26,
-    question: 'Hablando de comida rica, cuando estamos en casa y pedimos por Rappi para no cocinar, ¿cuáles son algunos de nuestros lugares de confianza?',
+    question: 'Cuando pedimos Rappi porque no queremos cocinar, ¿de dónde pedimos usualmente?',
     options: [
       "McDonald's, KFC o Burger King",
       'Tacos Oficina, Sushi Roll o Terraza Italiana',
@@ -273,7 +273,7 @@ const QUESTIONS = [
   },
   {
     id: 27,
-    question: 'Ya en pleno modo de planeación de nuestra boda, mi lado de desarrollador salió a relucir para que no se nos pasara ningún detalle. ¿Cómo bauticé a la app que armé para llevar nuestro control?',
+    question: 'En la planeación de la boda me puse bien nerd y armé una app para llevar el control. ¿Cómo la bauticé?',
     options: [
       'Boda Vicky y Aldo',
       'Pagos Bodorrio',
@@ -283,7 +283,7 @@ const QUESTIONS = [
   },
   {
     id: 28,
-    question: 'Si hacemos un recuento de por qué funcionamos tan bien juntos, es porque compartimos casi todo. Además de los viajes y la comida, ¿qué más nos encanta hacer?',
+    question: '¿Qué otra cosa nos encanta hacer juntos aparte de viajar y comer?',
     options: [
       'Irnos de antro todos los viernes',
       'Jugar videojuegos e ir al cine',
@@ -293,7 +293,7 @@ const QUESTIONS = [
   },
   {
     id: 29,
-    question: 'En el fondo, desde esa fiesta donde tú diste el primer paso, hasta hoy, ¿qué fue lo que más me atrapó de ti desde que te fui conociendo?',
+    question: 'Desde esa fiesta donde tú diste el primer paso, ¿qué fue lo que más me atrapó de ti?',
     options: [
       'Que me ganabas en el UNO',
       'Tu corazón enorme y tu forma de ser tan noble y amable',
@@ -303,7 +303,7 @@ const QUESTIONS = [
   },
   {
     id: 30,
-    question: 'Al final de todo este cuestionario... ¿Cuál es la mayor recompensa de estar abriendo esta Bóveda?',
+    question: 'Al final de todo esto, ¿cuál es la mejor parte de abrir esta Bóveda?',
     options: [
       'Tener la razón en todas las preguntas',
       'Recordar que seguimos siendo el mejor equipo',
