@@ -26,6 +26,9 @@ import {
   Users,
   Smile,
   Lock,
+  Flame,
+  ChevronUp,
+  ChevronDown,
 } from 'lucide-react'
 
 const QUESTIONS = [
@@ -345,6 +348,20 @@ function getTodayKey() {
   return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
 }
 
+function getYesterdayKey() {
+  const date = new Date()
+  date.setDate(date.getDate() - 1)
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+}
+
+function isYesterday(dateKey) {
+  return dateKey === getYesterdayKey()
+}
+
+function isToday(dateKey) {
+  return dateKey === getTodayKey()
+}
+
 function getDailyTrivia() {
   const question = QUESTIONS[getDailyQuestionIndex()]
   return {
@@ -600,23 +617,33 @@ const INITIAL_COUPONS = [
   },
 ]
 
-function Header({ readyCount }) {
+function Header({ readyCount, streak }) {
   return (
-    <header className="mb-6 flex items-start justify-between sm:mb-8">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-wider text-rose-400">
-          App privada de pareja
-        </p>
-        <h1 className="mt-1 text-3xl font-bold text-gray-800 sm:text-4xl">
-          La Bóveda de Vicky
-        </h1>
-      </div>
+    <header className="mb-6 sm:mb-8">
+      <h1 className="mb-4 text-3xl font-bold text-gray-800 sm:text-4xl">
+        La Bóveda de Mi Amochito
+      </h1>
 
-      <div className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm">
-        <Gift className="h-5 w-5 text-red-400" aria-hidden="true" />
-        <div className="text-right leading-tight">
-          <span className="block text-xs text-gray-500">Listos para usar</span>
-          <span className="font-bold text-gray-800">{readyCount}</span>
+      <div className="flex flex-wrap gap-3">
+        <div className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm">
+          <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-orange-100">
+            <Flame className="h-6 w-6 text-orange-500" aria-hidden="true" />
+            <Heart className="absolute right-1 top-1 h-3 w-3 fill-red-500 text-red-500" aria-hidden="true" />
+          </div>
+          <div className="leading-tight">
+            <span className="block text-xs text-gray-500">Racha</span>
+            <span className="font-bold text-gray-800">{streak} días</span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-100">
+            <Gift className="h-5 w-5 text-red-400" aria-hidden="true" />
+          </div>
+          <div className="leading-tight">
+            <span className="block text-xs text-gray-500">Listos para usar</span>
+            <span className="font-bold text-gray-800">{readyCount}</span>
+          </div>
         </div>
       </div>
     </header>
@@ -765,21 +792,73 @@ function CouponCard({ coupon, onRedeem }) {
   )
 }
 
-function CouponGrid({ coupons, onRedeem }) {
+function CouponSection({ title, icon: Icon, coupons, onRedeem, emptyMessage }) {
   return (
-    <section aria-labelledby="cupones-titulo">
+    <section className="mb-8" aria-labelledby={title.replace(/\s+/g, '-').toLowerCase()}>
       <div className="mb-4 flex items-center gap-2">
-        <Heart className="h-5 w-5 text-red-400" aria-hidden="true" />
-        <h2 id="cupones-titulo" className="text-lg font-bold text-gray-800">
-          Mis Cupones Desbloqueados
+        <Icon className="h-5 w-5 text-red-400" aria-hidden="true" />
+        <h2 id={title.replace(/\s+/g, '-').toLowerCase()} className="text-lg font-bold text-gray-800">
+          {title}
         </h2>
+        <span className="ml-auto rounded-full bg-stone-100 px-2 py-0.5 text-xs font-semibold text-gray-500">
+          {coupons.length}
+        </span>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {coupons.map((coupon) => (
-          <CouponCard key={coupon.id} coupon={coupon} onRedeem={onRedeem} />
-        ))}
-      </div>
+      {coupons.length === 0 ? (
+        <div className="rounded-2xl bg-white p-6 text-center text-sm text-gray-500 shadow-sm">
+          {emptyMessage}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {coupons.map((coupon) => (
+            <CouponCard key={coupon.id} coupon={coupon} onRedeem={onRedeem} />
+          ))}
+        </div>
+      )}
+    </section>
+  )
+}
+
+function LockedCouponsSection({ coupons }) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  if (coupons.length === 0) return null
+
+  return (
+    <section className="mb-8" aria-labelledby="cupones-bloqueados-titulo">
+      <button
+        type="button"
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="flex w-full items-center justify-between rounded-2xl bg-white p-4 shadow-sm transition-colors hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2"
+        aria-expanded={isOpen}
+        aria-controls="cupones-bloqueados-lista"
+      >
+        <div className="flex items-center gap-2">
+          <Lock className="h-5 w-5 text-stone-400" aria-hidden="true" />
+          <h2 id="cupones-bloqueados-titulo" className="text-base font-bold text-gray-700">
+            Cupones por descubrir
+          </h2>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="rounded-full bg-stone-100 px-2 py-0.5 text-xs font-semibold text-gray-500">
+            {coupons.length}
+          </span>
+          {isOpen ? (
+            <ChevronUp className="h-5 w-5 text-gray-400" aria-hidden="true" />
+          ) : (
+            <ChevronDown className="h-5 w-5 text-gray-400" aria-hidden="true" />
+          )}
+        </div>
+      </button>
+
+      {isOpen ? (
+        <div id="cupones-bloqueados-lista" className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {coupons.map((coupon) => (
+            <CouponCard key={coupon.id} coupon={coupon} onRedeem={() => {}} />
+          ))}
+        </div>
+      ) : null}
     </section>
   )
 }
@@ -857,6 +936,18 @@ function App() {
   })
   const [selectedOptionId, setSelectedOptionId] = useState(null)
   const [wrongOptionId, setWrongOptionId] = useState(null)
+  const [streak, setStreak] = useState(() => {
+    if (typeof window === 'undefined') return 0
+    return parseInt(window.localStorage.getItem('streakCount') || '0', 10)
+  })
+  const [lastCorrectDate, setLastCorrectDate] = useState(() => {
+    if (typeof window === 'undefined') return ''
+    return window.localStorage.getItem('lastCorrectDate') || ''
+  })
+  const [bestStreak, setBestStreak] = useState(() => {
+    if (typeof window === 'undefined') return 0
+    return parseInt(window.localStorage.getItem('bestStreak') || '0', 10)
+  })
   const [coupons, setCoupons] = useState(() => {
     if (typeof window === 'undefined') return INITIAL_COUPONS
     const unlocked = JSON.parse(window.localStorage.getItem('unlockedCouponIds') || '[]')
@@ -891,6 +982,26 @@ function App() {
     saveCoupons(nextCoupons)
   }
 
+  const updateStreak = () => {
+    const nextStreak = isToday(lastCorrectDate)
+      ? streak
+      : isYesterday(lastCorrectDate)
+        ? streak + 1
+        : 1
+    const nextBestStreak = Math.max(nextStreak, bestStreak)
+    setStreak(nextStreak)
+    setBestStreak(nextBestStreak)
+    setLastCorrectDate(todayKey)
+    window.localStorage.setItem('streakCount', String(nextStreak))
+    window.localStorage.setItem('bestStreak', String(nextBestStreak))
+    window.localStorage.setItem('lastCorrectDate', todayKey)
+  }
+
+  const resetStreak = () => {
+    setStreak(0)
+    window.localStorage.setItem('streakCount', '0')
+  }
+
   const handleAnswer = (option) => {
     setSelectedOptionId(option.id)
 
@@ -900,10 +1011,12 @@ function App() {
         setTriviaStatus('success')
         window.localStorage.setItem('triviaStatus', 'success')
         window.localStorage.setItem('triviaDate', todayKey)
+        updateStreak()
         unlockRandomCoupon()
       }, 400)
     } else {
       setWrongOptionId(option.id)
+      resetStreak()
     }
   }
 
@@ -946,7 +1059,7 @@ function App() {
   return (
     <div className="min-h-screen bg-stone-50 px-4 py-6 sm:py-8">
       <div className="mx-auto max-w-md sm:max-w-lg">
-        <Header readyCount={readyCount} />
+        <Header readyCount={readyCount} streak={streak} />
 
         <main>
           <DailyChallenge
@@ -957,11 +1070,28 @@ function App() {
             onAnswer={handleAnswer}
           />
 
-          <CouponGrid coupons={coupons} onRedeem={openRedeem} />
+          <CouponSection
+            title="Mis Cupones Desbloqueados"
+            icon={Gift}
+            coupons={coupons.filter((c) => !c.locked && !c.redeemed)}
+            onRedeem={openRedeem}
+            emptyMessage="Responde correctamente el reto del día para desbloquear un cupón."
+          />
+
+          <CouponSection
+            title="Mis Cupones Canjeados"
+            icon={CheckCircle2}
+            coupons={coupons.filter((c) => c.redeemed)}
+            emptyMessage="Aún no has canjeado ningún cupón."
+          />
+
+          <LockedCouponsSection
+            coupons={coupons.filter((c) => c.locked && !c.redeemed)}
+          />
         </main>
 
         <footer className="mt-10 text-center text-xs text-gray-400">
-          Hecho con amor para Vicky 💕
+          Hecho con amor para Mi Amochito 💕
         </footer>
       </div>
 
