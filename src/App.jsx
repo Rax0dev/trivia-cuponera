@@ -10,13 +10,173 @@ import {
   X,
 } from 'lucide-react'
 
-const TRIVIA = {
-  question: '¿Cuál es la skin que siempre elijo en Fortnite?',
-  options: [
-    { id: 'a', label: 'Peely', isCorrect: true },
-    { id: 'b', label: 'Renegade Raider', isCorrect: false },
-    { id: 'c', label: 'Midas', isCorrect: false },
-  ],
+const QUESTIONS = [
+  {
+    id: 1,
+    question: 'Seamos honestos, después de meses de conocernos por amigos en común... ¿Quién dio el primer paso para que estuviéramos juntos?',
+    options: [
+      'Yo armé un plan maestro para conquistarte',
+      'Tú en una fiesta, porque yo no me daba cuenta de nada',
+      'Un amigo en común nos encerró para que habláramos',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 2,
+    question: 'El día de esa famosa fiesta donde me dijiste que te llamaba la atención, ¿cuál fue mi reacción interna?',
+    options: [
+      'Me puse súper nervioso y no sabía qué hacer',
+      'Te invité a salir ahí mismo con muchísima seguridad',
+      'Me hice el difícil y te dije que lo pensaría',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 3,
+    question: '¿En dónde fue el punto de encuentro exacto de nuestra primera salida oficial solos?',
+    options: [
+      'En el área de comida de Galerías',
+      'En el estacionamiento de tu hospital',
+      'En el hotel Vive Place cerca de Galerías',
+    ],
+    correctAnswerIndex: 2,
+  },
+  {
+    id: 4,
+    question: 'Para nuestra primera comida juntos ese día, fuimos a un lugar muy elegante y sofisticado... ¿Qué comimos?',
+    options: [
+      'Unos Subway',
+      'Unos tacos de birria',
+      'Pizza de peperoni',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 5,
+    question: 'A la mañana siguiente de esa primera cita, ¿en dónde fuimos a desayunar?',
+    options: [
+      'En el buffet del hotel',
+      'En Jugos y Chocos Tony',
+      'Fuimos por unas gorditas al centro',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 6,
+    question: 'Al principio de salir, jugábamos a los espías y nos escondíamos de nuestros amigos en común. ¿Por qué lo hacíamos?',
+    options: [
+      'Porque no sabíamos cómo iban a reaccionar',
+      'Porque nos gustaba la adrenalina del peligro',
+      'Porque nuestros turnos no cuadraban para verlos a todos',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 7,
+    question: '¿Qué cualidad tuya me hizo darme cuenta de que habías nacido para ser enfermera?',
+    options: [
+      'Tu súper poder para no dormir en 24 horas',
+      'Tu forma de hablar tan cálida y lo atenta que eres con todos',
+      'Lo rápido que te memorizas los medicamentos',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 8,
+    question: 'En nuestro primer viaje juntos a Tequila, Jalisco, había un columpio padrísimo con piso de cristal. ¿Por qué no me quise subir contigo?',
+    options: [
+      'Porque me dan pavor las alturas',
+      'Porque había demasiada fila y nos íbamos a atrasar',
+      'Porque me mareaba mucho el movimiento',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 9,
+    question: 'En nuestra visita al Zoológico de Guadalajara ocurrió una pequeña tragedia financiera que no noté hasta que regresamos. ¿Qué pasó?',
+    options: [
+      'Perdí todo el efectivo que llevábamos para los recuerditos',
+      'Perdí mi tarjeta de Banorte',
+      'Dejé olvidada la cartera en el área de comida',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 10,
+    question: 'En ese mismo viaje al zoológico, decidimos saltarnos una atracción principal para no perder tiempo formados. ¿Cuál fue?',
+    options: [
+      'El acuario de los tiburones',
+      'El teleférico que cruza todo el parque',
+      'El recorrido en jeep del Safari',
+    ],
+    correctAnswerIndex: 2,
+  },
+  {
+    id: 11,
+    question: 'A cambio de no formarnos en esa atracción, preferimos ir a ver pingüinos, monos capuchinos y a unos animales que estaban muy a gusto medio dormidos. ¿Cuáles eran?',
+    options: [
+      'Los leones',
+      'Los tigres blancos',
+      'Los osos pardos',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 12,
+    question: 'Nuestro viaje a las Grutas de Tolantongo estuvo increíble, pero terminamos comiendo casi todo el tiempo en el restaurante por una razón muy específica. ¿Cuál?',
+    options: [
+      'La comida de los puestos se veía dudosa',
+      'Era el único lugar que aceptaba pago con tarjeta y nos quedamos sin efectivo',
+      'Era el único lugar con aire acondicionado en toda la zona',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 13,
+    question: 'Cuando te llevé a la Ciudad de México, mi objetivo principal era que conocieras:',
+    options: [
+      'El estadio de mi equipo favorito y los museos de arte',
+      'A unos tíos que no veía desde hace años',
+      'Mi ciudad natal y los lugares emblemáticos como la Torre Latino',
+    ],
+    correctAnswerIndex: 2,
+  },
+  {
+    id: 14,
+    question: 'En ese viaje a CDMX te llevé a probar algo delicioso que lamentablemente no encontramos aquí en Aguascalientes. ¿Qué era?',
+    options: [
+      'El caldo de gallina y comer en Casa de Toño',
+      'Las verdaderas tortas de chilaquil de esquina',
+      'Unos tacos al pastor con piña de verdad',
+    ],
+    correctAnswerIndex: 0,
+  },
+]
+
+function getDailyQuestionIndex() {
+  const today = new Date()
+  const start = new Date(today.getFullYear(), 0, 0)
+  const diff = today - start
+  const oneDay = 1000 * 60 * 60 * 24
+  const dayOfYear = Math.floor(diff / oneDay)
+  return dayOfYear % QUESTIONS.length
+}
+
+function getTodayKey() {
+  const today = new Date()
+  return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+}
+
+function getDailyTrivia() {
+  const question = QUESTIONS[getDailyQuestionIndex()]
+  return {
+    question: question.question,
+    options: question.options.map((label, index) => ({
+      id: String.fromCharCode(97 + index),
+      label,
+      isCorrect: index === question.correctAnswerIndex,
+    })),
+  }
 }
 
 const INITIAL_COUPONS = [
@@ -66,7 +226,7 @@ function Header({ readyCount }) {
   )
 }
 
-function DailyChallenge({ status, selectedOptionId, wrongOptionId, onAnswer }) {
+function DailyChallenge({ trivia, status, selectedOptionId, wrongOptionId, onAnswer }) {
   return (
     <section className="mb-8 sm:mb-10" aria-labelledby="reto-titulo">
       <div className="rounded-3xl bg-gradient-to-br from-rose-200 to-red-300 p-1 shadow-sm">
@@ -84,11 +244,11 @@ function DailyChallenge({ status, selectedOptionId, wrongOptionId, onAnswer }) {
                 id="reto-titulo"
                 className="mb-5 text-xl font-bold leading-snug text-gray-800 sm:text-2xl"
               >
-                {TRIVIA.question}
+                {trivia.question}
               </h2>
 
               <div className="flex flex-col gap-3">
-                {TRIVIA.options.map((option) => {
+                {trivia.options.map((option) => {
                   const isSelected = selectedOptionId === option.id
                   const isWrong = wrongOptionId === option.id
 
@@ -268,7 +428,15 @@ function RedeemModal({ coupon, onClose, onConfirm }) {
 }
 
 function App() {
-  const [triviaStatus, setTriviaStatus] = useState('active')
+  const dailyTrivia = getDailyTrivia()
+  const todayKey = getTodayKey()
+
+  const [triviaStatus, setTriviaStatus] = useState(() => {
+    if (typeof window === 'undefined') return 'active'
+    const saved = window.localStorage.getItem('triviaStatus')
+    const savedDate = window.localStorage.getItem('triviaDate')
+    return saved === 'success' && savedDate === todayKey ? 'success' : 'active'
+  })
   const [selectedOptionId, setSelectedOptionId] = useState(null)
   const [wrongOptionId, setWrongOptionId] = useState(null)
   const [coupons, setCoupons] = useState(INITIAL_COUPONS)
@@ -282,7 +450,11 @@ function App() {
 
     if (option.isCorrect) {
       setWrongOptionId(null)
-      window.setTimeout(() => setTriviaStatus('success'), 400)
+      window.setTimeout(() => {
+        setTriviaStatus('success')
+        window.localStorage.setItem('triviaStatus', 'success')
+        window.localStorage.setItem('triviaDate', todayKey)
+      }, 400)
     } else {
       setWrongOptionId(option.id)
     }
@@ -329,6 +501,7 @@ function App() {
 
         <main>
           <DailyChallenge
+            trivia={dailyTrivia}
             status={triviaStatus}
             selectedOptionId={selectedOptionId}
             wrongOptionId={wrongOptionId}
