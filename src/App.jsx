@@ -221,6 +221,96 @@ const QUESTIONS = [
     ],
     correctAnswerIndex: 0,
   },
+  {
+    id: 22,
+    question: 'El día de nuestra pedida de mano fue inolvidable. ¿En el concierto de qué artista, que es nuestro favorito, te di el anillo?',
+    options: [
+      'Bad Bunny',
+      'Feid',
+      'Karol G',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 23,
+    question: '¿A qué ciudad viajamos para ir a ese concierto que cambiaría nuestras vidas?',
+    options: [
+      'Monterrey',
+      'Ciudad de México',
+      'Guadalajara',
+    ],
+    correctAnswerIndex: 2,
+  },
+  {
+    id: 24,
+    question: 'Aunque yo estaba súper nervioso en el momento de la pedida, logré pensar rápido para que nos quedara el recuerdo para siempre. ¿Qué hice?',
+    options: [
+      'Llevé un tripié escondido en la chamarra',
+      'Le pedí a una persona que estaba ahí que grabara el momento',
+      'Pagué un paquete VIP que incluía fotógrafo',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 25,
+    question: 'A la mañana siguiente de comprometernos, fuimos a celebrar con un desayuno donde comimos riquísimo. ¿A qué lugar fuimos?',
+    options: [
+      'A La Casa de Toño',
+      'A Los Chilaquiles',
+      'Al buffet del hotel',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 26,
+    question: 'Hablando de comida rica, cuando estamos en casa y pedimos por Rappi para no cocinar, ¿cuáles son algunos de nuestros lugares de confianza?',
+    options: [
+      "McDonald's, KFC o Burger King",
+      'Tacos Oficina, Sushi Roll o Terraza Italiana',
+      'Puras ensaladas y jugos verdes',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 27,
+    question: 'Ya en pleno modo de planeación de nuestra boda, mi lado de desarrollador salió a relucir para que no se nos pasara ningún detalle. ¿Cómo bauticé a la app que armé para llevar nuestro control?',
+    options: [
+      'Boda Vicky y Aldo',
+      'Pagos Bodorrio',
+      'Wedding Tracker Pro',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 28,
+    question: 'Si hacemos un recuento de por qué funcionamos tan bien juntos, es porque compartimos casi todo. Además de los viajes y la comida, ¿qué más nos encanta hacer?',
+    options: [
+      'Irnos de antro todos los viernes',
+      'Jugar videojuegos e ir al cine',
+      'Entrenar pesas todos los días',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 29,
+    question: 'En el fondo, desde esa fiesta donde tú diste el primer paso, hasta hoy, ¿qué fue lo que más me atrapó de ti desde que te fui conociendo?',
+    options: [
+      'Que me ganabas en el UNO',
+      'Tu corazón enorme y tu forma de ser tan noble y amable',
+      'Que te gustaba exactamente la misma música que a mí',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 30,
+    question: 'Al final de todo este cuestionario... ¿Cuál es la mayor recompensa de estar abriendo esta Bóveda?',
+    options: [
+      'Tener la razón en todas las preguntas',
+      'Recordar que seguimos siendo el mejor equipo',
+      'Que yo te prepare de cenar hoy',
+    ],
+    correctAnswerIndex: 1,
+  },
 ]
 
 function getDailyQuestionIndex() {
