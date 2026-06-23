@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   Heart,
   Sparkles,
@@ -617,6 +617,83 @@ const INITIAL_COUPONS = [
   },
 ]
 
+function generateConfettiParticles() {
+  const shapes = ['❤️', '💕', '✨', '💖', '🌸', '•', '·']
+  return Array.from({ length: 18 }, (_, index) => ({
+    id: index,
+    shape: shapes[Math.floor(Math.random() * shapes.length)],
+    left: `${Math.random() * 100}%`,
+    size: `${0.75 + Math.random() * 1}rem`,
+    delay: `${Math.random() * 0.8}s`,
+    duration: `${2.2 + Math.random() * 1.2}s`,
+    color: ['#fb7185', '#f43f5e', '#f97316', '#f472b6'][Math.floor(Math.random() * 4)],
+  }))
+}
+
+function ConfettiBurst() {
+  const particles = useMemo(() => generateConfettiParticles(), [])
+
+  return (
+    <div
+      className="pointer-events-none fixed inset-0 z-40 overflow-hidden"
+      aria-hidden="true"
+    >
+      {particles.map((p) => (
+        <span
+          key={p.id}
+          className="animate-float-down absolute top-0 select-none"
+          style={{
+            left: p.left,
+            fontSize: p.size,
+            animationDelay: p.delay,
+            animationDuration: p.duration,
+            color: p.color,
+          }}
+        >
+          {p.shape}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+function RomanticConfetti({ show }) {
+  if (!show) return null
+  return <ConfettiBurst />
+}
+
+function AnimatedNumber({ value }) {
+  const [display, setDisplay] = useState(value)
+  const prevValueRef = useRef(value)
+
+  useEffect(() => {
+    const prevValue = prevValueRef.current
+    if (prevValue === value) return
+
+    const startTime = performance.now()
+    const duration = 500
+    const startValue = prevValue
+    const delta = value - startValue
+
+    const animate = (now) => {
+      const elapsed = now - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      const ease = 1 - (1 - progress) ** 3
+      const current = Math.round(startValue + delta * ease)
+      setDisplay(current)
+
+      if (progress < 1) {
+        requestAnimationFrame(animate)
+      }
+    }
+
+    requestAnimationFrame(animate)
+    prevValueRef.current = value
+  }, [value])
+
+  return <span>{display}</span>
+}
+
 function Header({ readyCount, streak }) {
   return (
     <header className="mb-6 sm:mb-8">
@@ -627,12 +704,20 @@ function Header({ readyCount, streak }) {
       <div className="flex flex-wrap gap-3">
         <div className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm">
           <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-orange-100">
-            <Flame className="h-6 w-6 text-orange-500" aria-hidden="true" />
+            <Flame
+              className={[
+                'h-6 w-6 text-orange-500',
+                streak > 0 ? 'animate-pulse-soft' : '',
+              ].join(' ')}
+              aria-hidden="true"
+            />
             <Heart className="absolute right-1 top-1 h-3 w-3 fill-red-500 text-red-500" aria-hidden="true" />
           </div>
           <div className="leading-tight">
             <span className="block text-xs text-gray-500">Racha</span>
-            <span className="font-bold text-gray-800">{streak} días</span>
+            <span className="font-bold text-gray-800">
+              <AnimatedNumber value={streak} /> días
+            </span>
           </div>
         </div>
 
@@ -642,7 +727,9 @@ function Header({ readyCount, streak }) {
           </div>
           <div className="leading-tight">
             <span className="block text-xs text-gray-500">Listos para usar</span>
-            <span className="font-bold text-gray-800">{readyCount}</span>
+            <span className="font-bold text-gray-800">
+              <AnimatedNumber value={readyCount} />
+            </span>
           </div>
         </div>
       </div>
@@ -650,10 +737,11 @@ function Header({ readyCount, streak }) {
   )
 }
 
-function DailyChallenge({ trivia, status, selectedOptionId, wrongOptionId, onAnswer }) {
+function DailyChallenge({ trivia, status, selectedOptionId, wrongOptionId, onAnswer, showConfetti }) {
   return (
-    <section className="mb-8 sm:mb-10" aria-labelledby="reto-titulo">
-      <div className="rounded-3xl bg-gradient-to-br from-rose-200 to-red-300 p-1 shadow-sm">
+    <section className="relative mb-8 sm:mb-10" aria-labelledby="reto-titulo">
+      <RomanticConfetti show={showConfetti} />
+      <div className="rounded-3xl bg-gradient-to-br from-rose-200 to-red-300 p-1 shadow-sm transition-shadow duration-300 hover:shadow-md">
         <div className="rounded-[1.35rem] bg-white p-5 sm:p-7">
           <div className="mb-4 flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-red-400" aria-hidden="true" />
@@ -685,10 +773,10 @@ function DailyChallenge({ trivia, status, selectedOptionId, wrongOptionId, onAns
                         'w-full rounded-xl border px-4 py-3.5 text-left font-medium transition-all duration-200',
                         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2',
                         isWrong
-                          ? 'border-red-300 bg-red-50 text-red-600'
+                          ? 'animate-shake border-red-300 bg-red-50 text-red-600'
                           : isSelected
                             ? 'border-rose-300 bg-rose-50 text-gray-800'
-                            : 'border-stone-200 bg-stone-50 text-gray-700 hover:border-rose-300 hover:bg-rose-50',
+                            : 'border-stone-200 bg-stone-50 text-gray-700 hover:border-rose-300 hover:bg-rose-50 hover:shadow-sm',
                         'active:scale-[0.98]',
                       ].join(' ')}
                     >
@@ -726,16 +814,17 @@ function DailyChallenge({ trivia, status, selectedOptionId, wrongOptionId, onAns
   )
 }
 
-function CouponCard({ coupon, onRedeem }) {
+function CouponCard({ coupon, onRedeem, isNewlyUnlocked }) {
   const Icon = coupon.icon
 
   return (
     <article
       className={[
         'flex flex-col rounded-3xl bg-white p-5 shadow-sm transition-all duration-300',
-        'hover:shadow-md hover:-translate-y-0.5',
+        'hover:shadow-lg hover:-translate-y-1 hover:scale-[1.01]',
         coupon.redeemed ? 'opacity-70 grayscale' : '',
         coupon.locked ? 'opacity-80' : '',
+        isNewlyUnlocked ? 'animate-pop-glow' : '',
       ].join(' ')}
     >
       <div
@@ -771,7 +860,7 @@ function CouponCard({ coupon, onRedeem }) {
             ? 'cursor-not-allowed bg-stone-200 text-stone-500'
             : coupon.locked
               ? 'cursor-not-allowed bg-stone-200 text-stone-400'
-              : 'bg-red-400 text-white shadow-sm hover:bg-red-500 active:scale-95',
+              : 'bg-red-400 text-white shadow-sm hover:bg-red-500 hover:shadow-md hover:shadow-red-200 active:scale-95',
         ].join(' ')}
       >
         {coupon.redeemed ? (
@@ -792,7 +881,7 @@ function CouponCard({ coupon, onRedeem }) {
   )
 }
 
-function CouponSection({ title, icon: Icon, coupons, onRedeem, emptyMessage }) {
+function CouponSection({ title, icon: Icon, coupons, onRedeem, emptyMessage, newlyUnlockedId }) {
   return (
     <section className="mb-8" aria-labelledby={title.replace(/\s+/g, '-').toLowerCase()}>
       <div className="mb-4 flex items-center gap-2">
@@ -806,13 +895,18 @@ function CouponSection({ title, icon: Icon, coupons, onRedeem, emptyMessage }) {
       </div>
 
       {coupons.length === 0 ? (
-        <div className="rounded-2xl bg-white p-6 text-center text-sm text-gray-500 shadow-sm">
+        <div className="rounded-2xl bg-white p-6 text-center text-sm text-gray-500 shadow-sm animate-fade-in-up">
           {emptyMessage}
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {coupons.map((coupon) => (
-            <CouponCard key={coupon.id} coupon={coupon} onRedeem={onRedeem} />
+            <CouponCard
+              key={coupon.id}
+              coupon={coupon}
+              onRedeem={onRedeem}
+              isNewlyUnlocked={coupon.id === newlyUnlockedId}
+            />
           ))}
         </div>
       )}
@@ -830,7 +924,7 @@ function LockedCouponsSection({ coupons }) {
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex w-full items-center justify-between rounded-2xl bg-white p-4 shadow-sm transition-colors hover:bg-stone-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2"
+        className="flex w-full items-center justify-between rounded-2xl bg-white p-4 shadow-sm transition-all duration-200 hover:bg-stone-100 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2"
         aria-expanded={isOpen}
         aria-controls="cupones-bloqueados-lista"
       >
@@ -853,7 +947,7 @@ function LockedCouponsSection({ coupons }) {
       </button>
 
       {isOpen ? (
-        <div id="cupones-bloqueados-lista" className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div id="cupones-bloqueados-lista" className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 animate-fade-in-up">
           {coupons.map((coupon) => (
             <CouponCard key={coupon.id} coupon={coupon} onRedeem={() => {}} />
           ))}
@@ -959,6 +1053,8 @@ function App() {
     }))
   })
   const [modalCouponId, setModalCouponId] = useState(null)
+  const [showConfetti, setShowConfetti] = useState(false)
+  const [newlyUnlockedId, setNewlyUnlockedId] = useState(null)
 
   const readyCount = coupons.filter((c) => !c.locked && !c.redeemed).length
   const modalCoupon = coupons.find((c) => c.id === modalCouponId) || null
@@ -980,6 +1076,8 @@ function App() {
     )
     setCoupons(nextCoupons)
     saveCoupons(nextCoupons)
+    setNewlyUnlockedId(couponToUnlock.id)
+    window.setTimeout(() => setNewlyUnlockedId(null), 1500)
   }
 
   const updateStreak = () => {
@@ -1011,8 +1109,10 @@ function App() {
         setTriviaStatus('success')
         window.localStorage.setItem('triviaStatus', 'success')
         window.localStorage.setItem('triviaDate', todayKey)
+        setShowConfetti(true)
         updateStreak()
         unlockRandomCoupon()
+        window.setTimeout(() => setShowConfetti(false), 4000)
       }, 400)
     } else {
       setWrongOptionId(option.id)
@@ -1068,6 +1168,7 @@ function App() {
             selectedOptionId={selectedOptionId}
             wrongOptionId={wrongOptionId}
             onAnswer={handleAnswer}
+            showConfetti={showConfetti}
           />
 
           <CouponSection
@@ -1076,6 +1177,7 @@ function App() {
             coupons={coupons.filter((c) => !c.locked && !c.redeemed)}
             onRedeem={openRedeem}
             emptyMessage="Responde correctamente el reto del día para desbloquear un cupón."
+            newlyUnlockedId={newlyUnlockedId}
           />
 
           <CouponSection
