@@ -3,9 +3,28 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
   body {
     @apply bg-stone-50 text-gray-800 antialiased;
     margin: 0;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+  }
+
+  #root {
+    min-height: 100dvh;
+  }
+
+  button,
+  [role='button'] {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 
@@ -131,6 +150,20 @@
 
 .animate-sparkle {
   animation: sparkle 1.8s ease-in-out infinite;
+}
+
+@media (min-width: 768px) and (orientation: landscape) {
+  .welcome-landscape {
+    flex-direction: row !important;
+    align-items: center !important;
+    text-align: left !important;
+    max-width: 48rem !important;
+  }
+
+  .welcome-landscape > div:first-child {
+    margin-bottom: 0 !important;
+    flex-shrink: 0 !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

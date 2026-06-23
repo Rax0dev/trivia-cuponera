@@ -672,75 +672,78 @@ function RomanticConfetti({ show }) {
 
 function WelcomeScreen({ onStart }) {
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-y-auto bg-gradient-to-br from-pink-100 via-rose-50 to-pink-200 p-6 text-center">
-      <div className="animate-fade-in-up max-w-sm">
-        <div className="mb-6 flex justify-center">
-          <div className="relative flex h-28 w-28 items-center justify-center rounded-full bg-white shadow-lg shadow-rose-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-gradient-to-br from-pink-100 via-rose-50 to-pink-200 p-4 text-center sm:p-6">
+      <div className="welcome-landscape animate-fade-in-up w-full max-w-xs py-6 sm:max-w-sm sm:py-8 md:max-w-md md:py-10 lg:flex lg:max-w-3xl lg:items-center lg:gap-10 lg:text-left">
+        <div className="mb-6 flex justify-center lg:mb-0 lg:shrink-0">
+          <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-lg shadow-rose-200 sm:h-28 sm:w-28">
             <Heart
-              className="h-14 w-14 fill-red-500 text-red-500 animate-pulse-soft"
+              className="h-12 w-12 fill-red-500 text-red-500 animate-pulse-soft sm:h-14 sm:w-14"
               aria-hidden="true"
             />
             <Sparkles
-              className="absolute -right-2 -top-2 h-8 w-8 text-amber-400 animate-sparkle"
+              className="absolute -right-1 -top-1 h-7 w-7 text-amber-400 animate-sparkle sm:-right-2 sm:-top-2 sm:h-8 sm:w-8"
               aria-hidden="true"
             />
           </div>
         </div>
 
-        <h1 className="mb-4 text-3xl font-bold text-gray-800 sm:text-4xl">
-          Bienvenida a tu Bóveda
-        </h1>
+        <div className="flex-1">
+          <h1 className="mb-3 text-2xl font-bold text-gray-800 sm:text-3xl md:mb-4 md:text-4xl">
+            Bienvenida a tu Bóveda
+          </h1>
 
-        <p className="mb-8 text-lg leading-relaxed text-gray-600">
-          Cada día tienes una pregunta sobre nuestra historia. Si respondes bien,
-          desbloqueas un cupón sorpresa que puedes canjear cuando quieras.
-        </p>
+          <p className="mb-6 text-base leading-relaxed text-gray-600 sm:text-lg md:mb-8">
+            Cada día tienes una pregunta sobre nuestra historia. Si respondes
+            bien, desbloqueas un cupón sorpresa que puedes canjear cuando
+            quieras.
+          </p>
 
-        <div className="mb-8 space-y-4 text-left">
-          <div className="flex items-start gap-3 rounded-2xl bg-white/70 p-4 shadow-sm">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-100 text-red-400">
-              <Sparkles className="h-5 w-5" aria-hidden="true" />
+          <div className="mb-6 space-y-3 text-left sm:mb-8 sm:space-y-4">
+            <div className="flex items-start gap-3 rounded-2xl bg-white/70 p-3 shadow-sm sm:p-4">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-rose-100 text-red-400 sm:h-10 sm:w-10">
+                <Sparkles className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-800 sm:text-base">Un reto al día</p>
+                <p className="text-xs text-gray-600 sm:text-sm">
+                  Responde la trivia para poner a prueba cuánto recuerdas de nosotros.
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="font-semibold text-gray-800">Un reto al día</p>
-              <p className="text-sm text-gray-600">
-                Responde la trivia para poner a prueba cuánto recuerdas de nosotros.
-              </p>
+
+            <div className="flex items-start gap-3 rounded-2xl bg-white/70 p-3 shadow-sm sm:p-4">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-rose-100 text-red-400 sm:h-10 sm:w-10">
+                <Gift className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-800 sm:text-base">Cupones sorpresa</p>
+                <p className="text-xs text-gray-600 sm:text-sm">
+                  Cada acierto desbloquea un cupón romántico para canjear.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3 rounded-2xl bg-white/70 p-3 shadow-sm sm:p-4">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-rose-100 text-red-400 sm:h-10 sm:w-10">
+                <Flame className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-800 sm:text-base">Mantén la racha</p>
+                <p className="text-xs text-gray-600 sm:text-sm">
+                  Acertar varios días seguidos aumenta tu racha de amor.
+                </p>
+              </div>
             </div>
           </div>
 
-          <div className="flex items-start gap-3 rounded-2xl bg-white/70 p-4 shadow-sm">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-100 text-red-400">
-              <Gift className="h-5 w-5" aria-hidden="true" />
-            </div>
-            <div>
-              <p className="font-semibold text-gray-800">Cupones sorpresa</p>
-              <p className="text-sm text-gray-600">
-                Cada acierto desbloquea un cupón romántico para canjear.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3 rounded-2xl bg-white/70 p-4 shadow-sm">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-100 text-red-400">
-              <Flame className="h-5 w-5" aria-hidden="true" />
-            </div>
-            <div>
-              <p className="font-semibold text-gray-800">Mantén la racha</p>
-              <p className="text-sm text-gray-600">
-                Acertar varios días seguidos aumenta tu racha de amor.
-              </p>
-            </div>
-          </div>
+          <button
+            type="button"
+            onClick={onStart}
+            className="min-h-[3rem] w-full rounded-2xl bg-red-400 py-3 text-base font-bold text-white shadow-lg shadow-red-200 transition-all duration-200 hover:bg-red-500 hover:shadow-xl active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300 sm:py-4 sm:text-lg"
+          >
+            Abrir mi bóveda 💕
+          </button>
         </div>
-
-        <button
-          type="button"
-          onClick={onStart}
-          className="w-full rounded-2xl bg-red-400 py-4 text-lg font-bold text-white shadow-lg shadow-red-200 transition-all duration-200 hover:bg-red-500 hover:shadow-xl active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300"
-        >
-          Abrir mi bóveda 💕
-        </button>
       </div>
     </div>
   )
@@ -788,7 +791,7 @@ function Toast({ message, onClose }) {
     <div
       role="status"
       aria-live="polite"
-      className="animate-fade-in-up fixed bottom-6 left-1/2 z-50 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-2xl bg-gray-800 px-4 py-3 text-sm font-medium text-white shadow-lg"
+      className="animate-fade-in-up fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] left-1/2 z-50 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-2xl bg-gray-800 px-4 py-3 text-sm font-medium text-white shadow-lg"
     >
       {message}
     </div>
@@ -797,14 +800,14 @@ function Toast({ message, onClose }) {
 
 function Header({ readyCount, streak, bestStreak }) {
   return (
-    <header className="mb-6 sm:mb-8">
-      <h1 className="mb-4 text-3xl font-bold text-gray-800 sm:text-4xl">
+    <header className="mb-5 sm:mb-7 md:mb-8">
+      <h1 className="mb-3 text-2xl font-bold leading-tight text-gray-800 sm:text-3xl md:mb-4 md:text-4xl">
         La Bóveda de Mi Amochito
       </h1>
 
-      <div className="flex flex-wrap gap-3">
-        <div className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm">
-          <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-orange-100">
+      <div className="flex flex-wrap gap-2 sm:gap-3">
+        <div className="flex flex-1 min-w-[8rem] items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm sm:flex-none sm:min-w-0">
+          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-100">
             <Flame
               className={[
                 'h-6 w-6 text-orange-500',
@@ -814,7 +817,7 @@ function Header({ readyCount, streak, bestStreak }) {
             />
             <Heart className="absolute right-1 top-1 h-3 w-3 fill-red-500 text-red-500" aria-hidden="true" />
           </div>
-          <div className="leading-tight">
+          <div className="min-w-0 leading-tight">
             <span className="block text-xs text-gray-500">Racha</span>
             <span className="font-bold text-gray-800">
               <AnimatedNumber value={streak} /> días
@@ -825,11 +828,11 @@ function Header({ readyCount, streak, bestStreak }) {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-100">
+        <div className="flex flex-1 min-w-[8rem] items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm sm:flex-none sm:min-w-0">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-100">
             <Gift className="h-5 w-5 text-red-400" aria-hidden="true" />
           </div>
-          <div className="leading-tight">
+          <div className="min-w-0 leading-tight">
             <span className="block text-xs text-gray-500">Listos para usar</span>
             <span className="font-bold text-gray-800">
               <AnimatedNumber value={readyCount} />
@@ -843,11 +846,11 @@ function Header({ readyCount, streak, bestStreak }) {
 
 function DailyChallenge({ trivia, status, selectedOptionId, wrongOptionId, onAnswer, showConfetti }) {
   return (
-    <section className="relative mb-8 sm:mb-10" aria-labelledby="reto-titulo">
+    <section className="relative mb-6 sm:mb-8 md:mb-10" aria-labelledby="reto-titulo">
       <RomanticConfetti show={showConfetti} />
       <div className="rounded-3xl bg-gradient-to-br from-rose-200 to-red-300 p-1 shadow-sm transition-shadow duration-300 hover:shadow-md">
-        <div className="rounded-[1.35rem] bg-white p-5 sm:p-7">
-          <div className="mb-4 flex items-center gap-2">
+        <div className="rounded-[1.35rem] bg-white p-4 sm:p-6 md:p-7">
+          <div className="mb-3 flex items-center gap-2 md:mb-4">
             <Sparkles className="h-5 w-5 text-red-400" aria-hidden="true" />
             <span className="text-sm font-semibold uppercase tracking-wider text-rose-400">
               Reto del día
@@ -858,12 +861,12 @@ function DailyChallenge({ trivia, status, selectedOptionId, wrongOptionId, onAns
             <div className="animate-fade-in-up">
               <h2
                 id="reto-titulo"
-                className="mb-5 text-xl font-bold leading-snug text-gray-800 sm:text-2xl"
+                className="mb-4 text-lg font-bold leading-snug text-gray-800 sm:text-xl md:mb-5 md:text-2xl"
               >
                 {trivia.question}
               </h2>
 
-              <div className="flex flex-col gap-3">
+              <div className="grid grid-cols-1 gap-2 sm:gap-3 md:grid-cols-2 md:gap-3">
                 {trivia.options.map((option) => {
                   const isSelected = selectedOptionId === option.id
                   const isWrong = wrongOptionId === option.id
@@ -875,7 +878,7 @@ function DailyChallenge({ trivia, status, selectedOptionId, wrongOptionId, onAns
                       disabled={selectedOptionId !== null}
                       onClick={() => onAnswer(option)}
                       className={[
-                        'w-full rounded-xl border px-4 py-3.5 text-left font-medium transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60',
+                        'min-h-[3rem] w-full rounded-xl border px-4 py-3 text-left text-sm font-medium transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60 sm:text-base sm:py-3.5',
                         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2',
                         isWrong
                           ? 'animate-shake border-red-300 bg-red-50 text-red-600'
@@ -898,16 +901,16 @@ function DailyChallenge({ trivia, status, selectedOptionId, wrongOptionId, onAns
               ) : null}
             </div>
           ) : (
-            <div className="animate-fade-in-up py-4 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-rose-100">
-                <CheckCircle2 className="h-9 w-9 text-red-400" aria-hidden="true" />
+            <div className="animate-fade-in-up py-2 text-center sm:py-4">
+              <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-rose-100 sm:mb-4 sm:h-16 sm:w-16">
+                <CheckCircle2 className="h-8 w-8 text-red-400 sm:h-9 sm:w-9" aria-hidden="true" />
               </div>
-              <h2 className="mb-2 text-2xl font-bold text-gray-800">¡Correcto!</h2>
-              <p className="mb-5 text-gray-600">
+              <h2 className="mb-2 text-xl font-bold text-gray-800 sm:text-2xl">¡Correcto!</h2>
+              <p className="mb-4 text-sm text-gray-600 sm:text-base sm:mb-5">
                 Has desbloqueado el premio del día. Ya puedes canjearlo cuando
                 quieras.
               </p>
-              <div className="rounded-2xl bg-rose-50 p-4">
+              <div className="rounded-2xl bg-rose-50 p-3 sm:p-4">
                 <p className="font-semibold text-gray-800">Premio desbloqueado</p>
                 <p className="text-sm text-gray-600">Un detallito especial para relajarte después del turno</p>
               </div>
@@ -925,7 +928,7 @@ function CouponCard({ coupon, onRedeem, isNewlyUnlocked }) {
   return (
     <article
       className={[
-        'flex flex-col rounded-3xl bg-white p-5 shadow-sm transition-all duration-300',
+        'flex flex-col rounded-2xl sm:rounded-3xl bg-white p-4 sm:p-5 shadow-sm transition-all duration-300',
         'hover:shadow-lg hover:-translate-y-1 hover:scale-[1.01]',
         coupon.redeemed ? 'opacity-70 grayscale' : '',
         coupon.locked ? 'opacity-80' : '',
@@ -934,21 +937,21 @@ function CouponCard({ coupon, onRedeem, isNewlyUnlocked }) {
     >
       <div
         className={[
-          'mb-4 flex h-12 w-12 items-center justify-center rounded-2xl',
+          'mb-3 flex h-11 w-11 items-center justify-center rounded-xl sm:mb-4 sm:h-12 sm:w-12 sm:rounded-2xl',
           coupon.locked ? 'bg-stone-200 text-stone-400' : 'bg-rose-100 text-red-400',
         ].join(' ')}
       >
         {coupon.locked ? (
-          <Lock className="h-6 w-6" aria-hidden="true" />
+          <Lock className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
         ) : (
-          <Icon className="h-6 w-6" aria-hidden="true" />
+          <Icon className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
         )}
       </div>
 
-      <h3 className="mb-1 text-lg font-bold text-gray-800">
+      <h3 className="mb-1 text-base font-bold text-gray-800 sm:text-lg">
         {coupon.locked ? 'Cupón secreto' : coupon.title}
       </h3>
-      <p className="mb-5 flex-1 text-sm leading-relaxed text-gray-600">
+      <p className="mb-4 flex-1 text-sm leading-relaxed text-gray-600 sm:mb-5">
         {coupon.locked
           ? 'Responde correctamente el reto del día para descubrirlo.'
           : coupon.description}
@@ -959,7 +962,7 @@ function CouponCard({ coupon, onRedeem, isNewlyUnlocked }) {
         disabled={coupon.redeemed || coupon.locked}
         onClick={() => onRedeem(coupon.id)}
         className={[
-          'mt-auto w-full rounded-xl py-3 font-semibold transition-all duration-200',
+          'mt-auto min-h-[2.75rem] sm:min-h-[3rem] w-full rounded-xl py-2.5 text-sm font-semibold transition-all duration-200 sm:py-3 sm:text-base',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2',
           coupon.redeemed
             ? 'cursor-not-allowed bg-stone-200 text-stone-500'
@@ -987,11 +990,12 @@ function CouponCard({ coupon, onRedeem, isNewlyUnlocked }) {
 }
 
 function CouponSection({ title, icon: Icon, coupons, onRedeem, emptyMessage, newlyUnlockedId }) {
+  const sectionId = title.replace(/\s+/g, '-').toLowerCase()
   return (
-    <section className="mb-8" aria-labelledby={title.replace(/\s+/g, '-').toLowerCase()}>
-      <div className="mb-4 flex items-center gap-2">
+    <section className="mb-6 sm:mb-8" aria-labelledby={sectionId}>
+      <div className="mb-3 flex items-center gap-2 sm:mb-4">
         <Icon className="h-5 w-5 text-red-400" aria-hidden="true" />
-        <h2 id={title.replace(/\s+/g, '-').toLowerCase()} className="text-lg font-bold text-gray-800">
+        <h2 id={sectionId} className="text-base font-bold text-gray-800 sm:text-lg">
           {title}
         </h2>
         <span className="ml-auto rounded-full bg-stone-100 px-2 py-0.5 text-xs font-semibold text-gray-500">
@@ -1000,11 +1004,11 @@ function CouponSection({ title, icon: Icon, coupons, onRedeem, emptyMessage, new
       </div>
 
       {coupons.length === 0 ? (
-        <div className="rounded-2xl bg-white p-6 text-center text-sm text-gray-500 shadow-sm animate-fade-in-up">
+        <div className="rounded-2xl bg-white p-5 text-center text-sm text-gray-500 shadow-sm animate-fade-in-up sm:p-6">
           {emptyMessage}
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {coupons.map((coupon) => (
             <CouponCard
               key={coupon.id}
@@ -1025,17 +1029,17 @@ function LockedCouponsSection({ coupons }) {
   if (coupons.length === 0) return null
 
   return (
-    <section className="mb-8" aria-labelledby="cupones-bloqueados-titulo">
+    <section className="mb-6 sm:mb-8" aria-labelledby="cupones-bloqueados-titulo">
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex w-full items-center justify-between rounded-2xl bg-white p-4 shadow-sm transition-all duration-200 hover:bg-stone-100 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2"
+        className="flex min-h-[3rem] w-full items-center justify-between rounded-2xl bg-white p-3 shadow-sm transition-all duration-200 hover:bg-stone-100 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 sm:p-4"
         aria-expanded={isOpen}
         aria-controls="cupones-bloqueados-lista"
       >
         <div className="flex items-center gap-2">
           <Lock className="h-5 w-5 text-stone-400" aria-hidden="true" />
-          <h2 id="cupones-bloqueados-titulo" className="text-base font-bold text-gray-700">
+          <h2 id="cupones-bloqueados-titulo" className="text-sm font-bold text-gray-700 sm:text-base">
             Cupones por descubrir
           </h2>
         </div>
@@ -1052,7 +1056,7 @@ function LockedCouponsSection({ coupons }) {
       </button>
 
       {isOpen ? (
-        <div id="cupones-bloqueados-lista" className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 animate-fade-in-up">
+        <div id="cupones-bloqueados-lista" className="mt-3 grid grid-cols-1 gap-3 animate-fade-in-up sm:mt-4 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {coupons.map((coupon) => (
             <CouponCard key={coupon.id} coupon={coupon} onRedeem={() => {}} />
           ))}
@@ -1075,7 +1079,7 @@ function RedeemModal({ coupon, onClose, onConfirm }) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-titulo"
-        className="animate-scale-in w-full max-w-sm rounded-3xl bg-white p-6 shadow-xl"
+        className="animate-scale-in max-h-[90dvh] w-full max-w-sm overflow-y-auto rounded-3xl bg-white p-5 shadow-xl sm:p-6"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">
@@ -1094,26 +1098,26 @@ function RedeemModal({ coupon, onClose, onConfirm }) {
 
         <h3
           id="modal-titulo"
-          className="mb-2 text-xl font-bold text-gray-800"
+          className="mb-2 text-lg font-bold text-gray-800 sm:text-xl"
         >
           ¿Segura que quieres usar este cupón ahora?
         </h3>
-        <p className="mb-6 text-gray-600">
+        <p className="mb-6 text-sm text-gray-600 sm:text-base">
           Vas a canjear: <span className="font-semibold text-gray-800">{coupon.title}</span>
         </p>
 
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-2 sm:flex-row sm:gap-3">
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 rounded-xl border border-stone-200 bg-white py-3 font-semibold text-gray-700 transition-colors hover:bg-stone-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2"
+            className="min-h-[2.75rem] flex-1 rounded-xl border border-stone-200 bg-white py-2.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-stone-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 sm:py-3 sm:text-base"
           >
             Cancelar
           </button>
           <button
             type="button"
             onClick={onConfirm}
-            className="flex-1 rounded-xl bg-red-400 py-3 font-semibold text-white shadow-sm transition-all hover:bg-red-500 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2"
+            className="min-h-[2.75rem] flex-1 rounded-xl bg-red-400 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-red-500 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 sm:py-3 sm:text-base"
           >
             Sí, canjear
           </button>
@@ -1276,10 +1280,10 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-stone-50 px-4 py-6 sm:py-8">
+    <div className="min-h-[100dvh] min-h-screen bg-stone-50 px-4 py-5 sm:px-6 sm:py-7 md:py-9">
       {showWelcome ? <WelcomeScreen onStart={dismissWelcome} /> : null}
 
-      <div className="mx-auto max-w-md sm:max-w-lg">
+      <div className="mx-auto w-full max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
         <Header readyCount={readyCount} streak={streak} bestStreak={bestStreak} />
 
         <main>
@@ -1313,7 +1317,7 @@ function App() {
           />
         </main>
 
-        <footer className="mt-10 text-center text-xs text-gray-400">
+        <footer className="mt-8 pb-[env(safe-area-inset-bottom)] text-center text-xs text-gray-400 sm:mt-10">
           Hecho con amor para Mi Amochito 💕
         </footer>
       </div>
