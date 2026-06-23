@@ -68,7 +68,7 @@ const QUESTIONS = [
     options: [
       'Unos Subway',
       'Unos tacos de birria',
-      'Pizza de peperoni',
+      'Pizza de pepperoni',
     ],
     correctAnswerIndex: 0,
   },
@@ -706,7 +706,7 @@ function Toast({ message, onClose }) {
   useEffect(() => {
     const timeout = window.setTimeout(onClose, 4000)
     return () => window.clearTimeout(timeout)
-  }, [onClose])
+  }, [message, onClose])
 
   return (
     <div
@@ -1075,10 +1075,12 @@ function App() {
     if (typeof window === 'undefined') return INITIAL_COUPONS
     const unlocked = safeParseJSON(window.localStorage.getItem('unlockedCouponIds'), [])
     const redeemed = safeParseJSON(window.localStorage.getItem('redeemedCouponIds'), [])
+    const unlockedIds = Array.isArray(unlocked) ? unlocked : []
+    const redeemedIds = Array.isArray(redeemed) ? redeemed : []
     return INITIAL_COUPONS.map((c) => ({
       ...c,
-      locked: !unlocked.includes(c.id),
-      redeemed: redeemed.includes(c.id),
+      locked: !unlockedIds.includes(c.id),
+      redeemed: redeemedIds.includes(c.id),
     }))
   })
   const [modalCouponId, setModalCouponId] = useState(null)
