@@ -3,11 +3,29 @@ import {
   Heart,
   Sparkles,
   Gift,
-  Footprints,
   UtensilsCrossed,
   Gamepad2,
   CheckCircle2,
   X,
+  Star,
+  Music,
+  BookOpen,
+  Sunrise,
+  ShoppingBag,
+  IceCream,
+  Soup,
+  Moon,
+  Tv,
+  Film,
+  Plane,
+  Compass,
+  Building2,
+  Droplets,
+  EyeOff,
+  CalendarX,
+  Users,
+  Smile,
+  Lock,
 } from 'lucide-react'
 
 const QUESTIONS = [
@@ -341,18 +359,124 @@ function getDailyTrivia() {
 
 const INITIAL_COUPONS = [
   {
-    id: 'kit-post-turno',
-    title: 'Kit Post-Turno',
-    description: 'Cena lista y masaje de pies después del hospital.',
-    icon: Footprints,
+    id: 'masaje-express',
+    title: 'Masaje Express',
+    description: '15 minutos de masaje donde tú elijas.',
+    icon: Sparkles,
     redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'cena-velas',
+    title: 'Cena a la Luz de Velas',
+    description: 'Yo preparo la cena y el ambiente especial.',
+    icon: UtensilsCrossed,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'dia-mimos',
+    title: 'Día de Mimoss',
+    description: 'Un día entero de abrazos, besos y atención.',
+    icon: Heart,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'cita-sorpresa',
+    title: 'Cita Sorpresa',
+    description: 'Yo planeo una salida sorpresa para nosotros.',
+    icon: Sparkles,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'noche-estrellas',
+    title: 'Noche de Estrellas',
+    description: 'Película juntos con palomitas y cobijas.',
+    icon: Star,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'baile-sala',
+    title: 'Baile en la Sala',
+    description: 'Bailamos nuestras canciones favoritas en casa.',
+    icon: Music,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'poema-carta',
+    title: 'Poema o Carta',
+    description: 'Te escribo algo bonito a mano.',
+    icon: BookOpen,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'despertar-juntos',
+    title: 'Despertar Juntos',
+    description: 'Desayuno en la cama un día que elijas.',
+    icon: Sunrise,
+    redeemed: false,
+    locked: true,
   },
   {
     id: 'antojo-expres',
     title: 'Antojo Exprés',
-    description: 'Vale por unos tacos de birria o gorditas sin importar el día.',
+    description: 'Vale por tacos, gorditas o lo que se te antoje.',
     icon: UtensilsCrossed,
     redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'rappi-libre',
+    title: 'Rappi Libre',
+    description: 'Pido lo que quieras por Rappi sin reclamos.',
+    icon: ShoppingBag,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'postre-sorpresa',
+    title: 'Postre Sorpresa',
+    description: 'Vamos por un postre a algún lugar especial.',
+    icon: IceCream,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'subway-lujo',
+    title: 'Subway de Lujo',
+    description: 'Nuestra cena fancy favorita, unos Subway.',
+    icon: UtensilsCrossed,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'desayuno-favorito',
+    title: 'Desayuno Favorito',
+    description: 'Yo preparo tu desayuno favorito en casa.',
+    icon: Sunrise,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'comida-reconfortante',
+    title: 'Comida Reconfortante',
+    description: 'Preparo tu platillo favorito para consentirte.',
+    icon: Soup,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'cena-post-turno',
+    title: 'Cena Post-Turno',
+    description: 'Cena lista cuando llegues del hospital.',
+    icon: Moon,
+    redeemed: false,
+    locked: true,
   },
   {
     id: 'player-1',
@@ -360,6 +484,119 @@ const INITIAL_COUPONS = [
     description: 'Tú eliges el próximo juego cooperativo.',
     icon: Gamepad2,
     redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'juegos-mesa',
+    title: 'Noche de Juegos de Mesa',
+    description: 'Dominó, UNO y Conecta 4 hasta tarde.',
+    icon: Gamepad2,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'maraton-malcolm',
+    title: 'Maratón Malcolm',
+    description: 'Capítulos de Malcolm el de enmedio juntos.',
+    icon: Tv,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'maraton-bbt',
+    title: 'Maratón Big Bang',
+    description: 'Capítulos de The Big Bang Theory juntos.',
+    icon: Tv,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'cine-casa',
+    title: 'Cine en Casa',
+    description: 'Película a tu elección con snacks incluidos.',
+    icon: Film,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'tarde-videojuegos',
+    title: 'Tarde de Videojuegos',
+    description: 'Jugamos lo que tú quieras juntos.',
+    icon: Gamepad2,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'viaje-sorpresa',
+    title: 'Viaje Sorpresa',
+    description: 'Un viajecito corto a donde tú elijas.',
+    icon: Plane,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'dia-aventura',
+    title: 'Día de Aventura',
+    description: 'Un día visitando un lugar nuevo que no conozcamos.',
+    icon: Compass,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'zoologico-round-2',
+    title: 'Zoológico Round 2',
+    description: 'Otra visita al zoológico, esta vez sin perder tarjetas.',
+    icon: Smile,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'cdmx-tour',
+    title: 'CDMX Tour',
+    description: 'Un día recorriendo lugares emblemáticos.',
+    icon: Building2,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'tolantongo-relax',
+    title: 'Tolantongo Relax',
+    description: 'Otro día de aguas termales y relajación.',
+    icon: Droplets,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'modo-espia',
+    title: 'Modo Espía',
+    description: 'Un plan secreto solo para nosotros.',
+    icon: EyeOff,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'dia-sin-compromisos',
+    title: 'Día sin Compromisos',
+    description: 'Un día completo a tu manera, sin planes.',
+    icon: CalendarX,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'mejor-equipo',
+    title: 'Mejor Equipo',
+    description: 'Recordamos por qué seguimos siendo el mejor equipo.',
+    icon: Users,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'anillo-promesa',
+    title: 'Anillo de Promesa',
+    description: 'Un gesto que refuerce nuestro compromiso.',
+    icon: Heart,
+    redeemed: false,
+    locked: true,
   },
 ]
 
@@ -471,33 +708,54 @@ function CouponCard({ coupon, onRedeem }) {
         'flex flex-col rounded-3xl bg-white p-5 shadow-sm transition-all duration-300',
         'hover:shadow-md hover:-translate-y-0.5',
         coupon.redeemed ? 'opacity-70 grayscale' : '',
+        coupon.locked ? 'opacity-80' : '',
       ].join(' ')}
     >
-      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-100 text-red-400">
-        <Icon className="h-6 w-6" aria-hidden="true" />
+      <div
+        className={[
+          'mb-4 flex h-12 w-12 items-center justify-center rounded-2xl',
+          coupon.locked ? 'bg-stone-200 text-stone-400' : 'bg-rose-100 text-red-400',
+        ].join(' ')}
+      >
+        {coupon.locked ? (
+          <Lock className="h-6 w-6" aria-hidden="true" />
+        ) : (
+          <Icon className="h-6 w-6" aria-hidden="true" />
+        )}
       </div>
 
-      <h3 className="mb-1 text-lg font-bold text-gray-800">{coupon.title}</h3>
+      <h3 className="mb-1 text-lg font-bold text-gray-800">
+        {coupon.locked ? 'Cupón secreto' : coupon.title}
+      </h3>
       <p className="mb-5 flex-1 text-sm leading-relaxed text-gray-600">
-        {coupon.description}
+        {coupon.locked
+          ? 'Responde correctamente el reto del día para descubrirlo.'
+          : coupon.description}
       </p>
 
       <button
         type="button"
-        disabled={coupon.redeemed}
+        disabled={coupon.redeemed || coupon.locked}
         onClick={() => onRedeem(coupon.id)}
         className={[
           'mt-auto w-full rounded-xl py-3 font-semibold transition-all duration-200',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2',
           coupon.redeemed
             ? 'cursor-not-allowed bg-stone-200 text-stone-500'
-            : 'bg-red-400 text-white shadow-sm hover:bg-red-500 active:scale-95',
+            : coupon.locked
+              ? 'cursor-not-allowed bg-stone-200 text-stone-400'
+              : 'bg-red-400 text-white shadow-sm hover:bg-red-500 active:scale-95',
         ].join(' ')}
       >
         {coupon.redeemed ? (
           <span className="flex items-center justify-center gap-2">
             <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
             Canjeado
+          </span>
+        ) : coupon.locked ? (
+          <span className="flex items-center justify-center gap-2">
+            <Lock className="h-4 w-4" aria-hidden="true" />
+            Bloqueado
           </span>
         ) : (
           'Canjear'
@@ -599,11 +857,39 @@ function App() {
   })
   const [selectedOptionId, setSelectedOptionId] = useState(null)
   const [wrongOptionId, setWrongOptionId] = useState(null)
-  const [coupons, setCoupons] = useState(INITIAL_COUPONS)
+  const [coupons, setCoupons] = useState(() => {
+    if (typeof window === 'undefined') return INITIAL_COUPONS
+    const unlocked = JSON.parse(window.localStorage.getItem('unlockedCouponIds') || '[]')
+    const redeemed = JSON.parse(window.localStorage.getItem('redeemedCouponIds') || '[]')
+    return INITIAL_COUPONS.map((c) => ({
+      ...c,
+      locked: !unlocked.includes(c.id),
+      redeemed: redeemed.includes(c.id),
+    }))
+  })
   const [modalCouponId, setModalCouponId] = useState(null)
 
-  const readyCount = coupons.filter((c) => !c.redeemed).length
+  const readyCount = coupons.filter((c) => !c.locked && !c.redeemed).length
   const modalCoupon = coupons.find((c) => c.id === modalCouponId) || null
+
+  const saveCoupons = (nextCoupons) => {
+    const unlocked = nextCoupons.filter((c) => !c.locked).map((c) => c.id)
+    const redeemed = nextCoupons.filter((c) => c.redeemed).map((c) => c.id)
+    window.localStorage.setItem('unlockedCouponIds', JSON.stringify(unlocked))
+    window.localStorage.setItem('redeemedCouponIds', JSON.stringify(redeemed))
+  }
+
+  const unlockRandomCoupon = () => {
+    const locked = coupons.filter((c) => c.locked && !c.redeemed)
+    if (locked.length === 0) return
+    const randomIndex = Math.floor(Math.random() * locked.length)
+    const couponToUnlock = locked[randomIndex]
+    const nextCoupons = coupons.map((c) =>
+      c.id === couponToUnlock.id ? { ...c, locked: false } : c
+    )
+    setCoupons(nextCoupons)
+    saveCoupons(nextCoupons)
+  }
 
   const handleAnswer = (option) => {
     setSelectedOptionId(option.id)
@@ -614,6 +900,7 @@ function App() {
         setTriviaStatus('success')
         window.localStorage.setItem('triviaStatus', 'success')
         window.localStorage.setItem('triviaDate', todayKey)
+        unlockRandomCoupon()
       }, 400)
     } else {
       setWrongOptionId(option.id)
@@ -644,9 +931,11 @@ function App() {
 
   const confirmRedeem = () => {
     const coupon = coupons.find((c) => c.id === modalCouponId)
-    setCoupons((prev) =>
-      prev.map((c) => (c.id === modalCouponId ? { ...c, redeemed: true } : c))
+    const nextCoupons = coupons.map((c) =>
+      c.id === modalCouponId ? { ...c, redeemed: true } : c
     )
+    setCoupons(nextCoupons)
+    saveCoupons(nextCoupons)
     setModalCouponId(null)
 
     if (coupon) {
