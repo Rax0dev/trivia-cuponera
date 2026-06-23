@@ -876,44 +876,48 @@ function Header({ readyCount, streak, bestStreak, onHeartTap, onTitleLongPress }
       </LongPressTitle>
 
       <div className="flex flex-wrap gap-2 sm:gap-3">
-        <div className="flex flex-1 min-w-[8rem] items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm sm:flex-none sm:min-w-0">
-          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-100">
-            <Flame
-              className={[
-                'h-6 w-6 text-orange-500',
-                streak > 0 ? 'animate-pulse-soft' : '',
-              ].join(' ')}
-              aria-hidden="true"
-            />
-            <button
-              type="button"
-              onClick={onHeartTap}
-              className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-white p-0.5 shadow-sm transition-transform active:scale-125 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 sm:h-6 sm:w-6"
-              aria-label="Corazón secreto"
-            >
-              <Heart className="h-3 w-3 fill-red-500 text-red-500 sm:h-4 sm:w-4" aria-hidden="true" />
-            </button>
-          </div>
-          <div className="min-w-0 leading-tight">
-            <span className="block text-xs text-gray-500">Racha</span>
-            <span className="font-bold text-gray-800">
-              <AnimatedNumber value={streak} /> días
-            </span>
-            <span className="block text-[10px] text-gray-400">
-              Mejor: <AnimatedNumber value={bestStreak} /> días
-            </span>
+        <div className="flex flex-1 min-w-[8rem] flex-col rounded-2xl bg-gradient-to-br from-rose-200 to-red-300 p-1 shadow-sm transition-shadow duration-300 hover:shadow-md sm:flex-none sm:min-w-0">
+          <div className="flex flex-1 items-center gap-2 rounded-[0.85rem] bg-white px-3 py-2">
+            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-100">
+              <Flame
+                className={[
+                  'h-6 w-6 text-orange-500',
+                  streak > 0 ? 'animate-pulse-soft' : '',
+                ].join(' ')}
+                aria-hidden="true"
+              />
+              <button
+                type="button"
+                onClick={onHeartTap}
+                className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-white p-0.5 shadow-sm transition-transform active:scale-125 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 sm:h-6 sm:w-6"
+                aria-label="Corazón secreto"
+              >
+                <Heart className="h-3 w-3 fill-red-500 text-red-500 sm:h-4 sm:w-4" aria-hidden="true" />
+              </button>
+            </div>
+            <div className="min-w-0 leading-tight">
+              <span className="block text-xs text-gray-500">Racha</span>
+              <span className="font-bold text-gray-800">
+                <AnimatedNumber value={streak} /> días
+              </span>
+              <span className="block text-[10px] text-gray-400">
+                Mejor: <AnimatedNumber value={bestStreak} /> días
+              </span>
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-1 min-w-[8rem] items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm sm:flex-none sm:min-w-0">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-100">
-            <Gift className="h-5 w-5 text-red-400" aria-hidden="true" />
-          </div>
-          <div className="min-w-0 leading-tight">
-            <span className="block text-xs text-gray-500">Listos para usar</span>
-            <span className="font-bold text-gray-800">
-              <AnimatedNumber value={readyCount} />
-            </span>
+        <div className="flex flex-1 min-w-[8rem] flex-col rounded-2xl bg-gradient-to-br from-rose-200 to-red-300 p-1 shadow-sm transition-shadow duration-300 hover:shadow-md sm:flex-none sm:min-w-0">
+          <div className="flex flex-1 items-center gap-2 rounded-[0.85rem] bg-white px-3 py-2">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-100">
+              <Gift className="h-5 w-5 text-red-400" aria-hidden="true" />
+            </div>
+            <div className="min-w-0 leading-tight">
+              <span className="block text-xs text-gray-500">Listos para usar</span>
+              <span className="font-bold text-gray-800">
+                <AnimatedNumber value={readyCount} />
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -1001,67 +1005,78 @@ function DailyChallenge({ trivia, status, selectedOptionId, wrongOptionId, onAns
 
 function CouponCard({ coupon, onRedeem, isNewlyUnlocked }) {
   const Icon = coupon.icon
+  const hasGradientBorder = !coupon.locked && !coupon.redeemed
 
   return (
     <article
       className={[
-        'flex flex-col rounded-2xl sm:rounded-3xl bg-white p-4 sm:p-5 shadow-sm transition-all duration-300',
+        'flex flex-col rounded-2xl sm:rounded-3xl shadow-sm transition-all duration-300',
         'hover:shadow-lg hover:-translate-y-1 hover:scale-[1.01]',
         coupon.redeemed ? 'opacity-70 grayscale' : '',
         coupon.locked ? 'opacity-80' : '',
         isNewlyUnlocked ? 'animate-pop-glow' : '',
+        hasGradientBorder
+          ? 'bg-gradient-to-br from-rose-200 to-red-300 p-1'
+          : 'bg-white p-4 sm:p-5',
       ].join(' ')}
     >
       <div
         className={[
-          'mb-3 flex h-11 w-11 items-center justify-center rounded-xl sm:mb-4 sm:h-12 sm:w-12 sm:rounded-2xl',
-          coupon.locked ? 'bg-stone-200 text-stone-400' : 'bg-rose-100 text-red-400',
+          'flex flex-col flex-1',
+          hasGradientBorder ? 'rounded-[0.85rem] sm:rounded-[1.35rem] bg-white p-3 sm:p-4' : '',
         ].join(' ')}
       >
-        {coupon.locked ? (
-          <Lock className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
-        ) : (
-          <Icon className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
-        )}
+        <div
+          className={[
+            'mb-3 flex h-11 w-11 items-center justify-center rounded-xl sm:mb-4 sm:h-12 sm:w-12 sm:rounded-2xl',
+            coupon.locked ? 'bg-stone-200 text-stone-400' : 'bg-rose-100 text-red-400',
+          ].join(' ')}
+        >
+          {coupon.locked ? (
+            <Lock className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
+          ) : (
+            <Icon className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />
+          )}
+        </div>
+
+        <h3 className="mb-1 text-base font-bold text-gray-800 sm:text-lg">
+          {coupon.locked ? 'Cupón secreto' : coupon.title}
+        </h3>
+        <p className="mb-4 flex-1 text-sm leading-relaxed text-gray-600 sm:mb-5">
+          {coupon.locked
+            ? 'Responde correctamente el reto del día para descubrirlo.'
+            : coupon.description}
+        </p>
+
+        <button
+          type="button"
+          disabled={coupon.redeemed || coupon.locked}
+          onClick={() => onRedeem(coupon.id)}
+          className={[
+            'mt-auto min-h-[2.75rem] sm:min-h-[3rem] w-full rounded-xl py-2.5 text-sm font-semibold transition-all duration-200 sm:py-3 sm:text-base',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2',
+            coupon.redeemed
+              ? 'cursor-not-allowed bg-stone-200 text-stone-500'
+              : coupon.locked
+                ? 'cursor-not-allowed bg-stone-200 text-stone-400'
+                : 'bg-red-400 text-white shadow-sm hover:bg-red-500 hover:shadow-md hover:shadow-red-200 active:scale-95',
+          ].join(' ')}
+        >
+          {coupon.redeemed ? (
+            <span className="flex items-center justify-center gap-2">
+              <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+              Canjeado
+            </span>
+          ) : coupon.locked ? (
+            <span className="flex items-center justify-center gap-2">
+              <Lock className="h-4 w-4" aria-hidden="true" />
+              Bloqueado
+            </span>
+          ) : (
+            'Canjear'
+          )}
+        </button>
       </div>
-
-      <h3 className="mb-1 text-base font-bold text-gray-800 sm:text-lg">
-        {coupon.locked ? 'Cupón secreto' : coupon.title}
-      </h3>
-      <p className="mb-4 flex-1 text-sm leading-relaxed text-gray-600 sm:mb-5">
-        {coupon.locked
-          ? 'Responde correctamente el reto del día para descubrirlo.'
-          : coupon.description}
-      </p>
-
-      <button
-        type="button"
-        disabled={coupon.redeemed || coupon.locked}
-        onClick={() => onRedeem(coupon.id)}
-        className={[
-          'mt-auto min-h-[2.75rem] sm:min-h-[3rem] w-full rounded-xl py-2.5 text-sm font-semibold transition-all duration-200 sm:py-3 sm:text-base',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2',
-          coupon.redeemed
-            ? 'cursor-not-allowed bg-stone-200 text-stone-500'
-            : coupon.locked
-              ? 'cursor-not-allowed bg-stone-200 text-stone-400'
-              : 'bg-red-400 text-white shadow-sm hover:bg-red-500 hover:shadow-md hover:shadow-red-200 active:scale-95',
-        ].join(' ')}
-      >
-        {coupon.redeemed ? (
-          <span className="flex items-center justify-center gap-2">
-            <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-            Canjeado
-          </span>
-        ) : coupon.locked ? (
-          <span className="flex items-center justify-center gap-2">
-            <Lock className="h-4 w-4" aria-hidden="true" />
-            Bloqueado
-          </span>
-        ) : (
-          'Canjear'
-        )}
-      </button>
     </article>
   )
 }
