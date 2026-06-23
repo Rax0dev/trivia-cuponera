@@ -296,7 +296,7 @@ const QUESTIONS = [
     id: 27,
     question: 'En la planeación de la boda me puse bien nerd y armé una app para llevar el control. ¿Cómo la bauticé?',
     options: [
-      'Boda Vicky y Aldo',
+      'Boda Mi Amochito y Aldo',
       'Pagos Bodorrio',
       'Wedding Tracker Pro',
     ],
@@ -360,6 +360,14 @@ function isYesterday(dateKey) {
 
 function isToday(dateKey) {
   return dateKey === getTodayKey()
+}
+
+function safeParseJSON(value, fallback) {
+  try {
+    return value ? JSON.parse(value) : fallback
+  } catch {
+    return fallback
+  }
 }
 
 function getDailyTrivia() {
@@ -768,9 +776,10 @@ function DailyChallenge({ trivia, status, selectedOptionId, wrongOptionId, onAns
                     <button
                       key={option.id}
                       type="button"
+                      disabled={selectedOptionId !== null}
                       onClick={() => onAnswer(option)}
                       className={[
-                        'w-full rounded-xl border px-4 py-3.5 text-left font-medium transition-all duration-200',
+                        'w-full rounded-xl border px-4 py-3.5 text-left font-medium transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60',
                         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2',
                         isWrong
                           ? 'animate-shake border-red-300 bg-red-50 text-red-600'
@@ -1044,8 +1053,8 @@ function App() {
   })
   const [coupons, setCoupons] = useState(() => {
     if (typeof window === 'undefined') return INITIAL_COUPONS
-    const unlocked = JSON.parse(window.localStorage.getItem('unlockedCouponIds') || '[]')
-    const redeemed = JSON.parse(window.localStorage.getItem('redeemedCouponIds') || '[]')
+    const unlocked = safeParseJSON(window.localStorage.getItem('unlockedCouponIds'), [])
+    const redeemed = safeParseJSON(window.localStorage.getItem('redeemedCouponIds'), [])
     return INITIAL_COUPONS.map((c) => ({
       ...c,
       locked: !unlocked.includes(c.id),

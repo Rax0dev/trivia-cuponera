@@ -7,6 +7,7 @@ Route: POST /api/notify
 Body JSON: {"cupon": "Nombre del cupón"}
 """
 
+import html
 import json
 import os
 from http.server import BaseHTTPRequestHandler
@@ -67,12 +68,12 @@ def send_telegram_message(coupon_name):
         raise RuntimeError("Telegram credentials are not configured")
 
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    text = f"🚨 ¡Atención! Mi Amochito acaba de canjear el cupón: {coupon_name} 🚨"
+    safe_name = html.escape(coupon_name)
+    text = f"🚨 ¡Atención! Mi Amochito acaba de canjear el cupón: {safe_name} 🚨"
 
     payload = urlencode({
         "chat_id": TELEGRAM_CHAT_ID,
         "text": text,
-        "parse_mode": "HTML",
     }).encode("utf-8")
 
     request = Request(
