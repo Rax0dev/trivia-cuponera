@@ -10,6 +10,7 @@ Body JSON: {"cupon": "Nombre del cupón"}
 import html
 import json
 import os
+import time
 from http.server import BaseHTTPRequestHandler
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
@@ -30,6 +31,44 @@ NOTIFY_API_KEY = os.environ.get("NOTIFY_API_KEY", "")
 #   ALLOWED_ORIGINS=https://trivia-cuponera.vercel.app,http://localhost:5173
 # If left empty, only localhost origins are allowed (safe default for dev).
 ALLOWED_ORIGINS = os.environ.get("ALLOWED_ORIGINS", "")
+
+# Rate limiting: max requests per IP within the time window.
+# These are safe defaults for a personal app. Tune as needed.
+RATE_LIMIT_REQUESTS = int(os.environ.get("RATE_LIMIT_REQUESTS", "5"))
+RATE_LIMIT_WINDOW_SECONDS = int(os.environ.get("RATE_LIMIT_WINDOW_SECONDS", "60"))
+
+# ---------------------------------------------------------------------------
+# In-memory rate limiter
+# Note: this works for warm serverless instances. It is not distributed,
+# but it is enough to stop casual abuse on a small personal project.
+# ---------------------------------------------------------------------------
+_request_log = {}
+
+
+def _get_client_ip(headers):
+    """Extract the client IP from common proxy headers or fallback."""
+    forwarded = headers.get("X-Forwarded-For", "")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    real_ip = headers.get("X-Real-IP", "")
+    if real_ip:
+        return real_ip.strip()
+    return headers.get("Remote-Addr", "unknown")
+
+
+def is_rate_limited(client_ip):
+    """Return True if the client has exceeded the configured request limit."""
+    now = time.time()
+    window_start = now - RATE_LIMIT_WINDOW_SECONDS
+    log = _request_log.get(client_ip, [])
+    # Keep only timestamps inside the current window.
+    log = [timestamp for timestamp in log if timestamp > window_start]
+    if len(log) >= RATE_LIMIT_REQUESTS:
+        _request_log[client_ip] = log
+        return True
+    log.append(now)
+    _request_log[client_ip] = log
+    return False
 
 
 # ---------------------------------------------------------------------------
@@ -136,6 +175,10 @@ class handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         """Receive the coupon name and trigger the Telegram notification."""
+        client_ip = _get_client_ip(self.headers)
+        if is_rate_limited(client_ip):
+            return self._send_error(429, "Too many requests. Please slow down.")
+
         # Validate the optional API key if one is configured.
         api_key = self.headers.get("x-api-key", "")
         if NOTIFY_API_KEY and api_key != NOTIFY_API_KEY:

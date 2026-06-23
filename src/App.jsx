@@ -702,7 +702,24 @@ function AnimatedNumber({ value }) {
   return <span>{display}</span>
 }
 
-function Header({ readyCount, streak }) {
+function Toast({ message, onClose }) {
+  useEffect(() => {
+    const timeout = window.setTimeout(onClose, 4000)
+    return () => window.clearTimeout(timeout)
+  }, [onClose])
+
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      className="animate-fade-in-up fixed bottom-6 left-1/2 z-50 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-2xl bg-gray-800 px-4 py-3 text-sm font-medium text-white shadow-lg"
+    >
+      {message}
+    </div>
+  )
+}
+
+function Header({ readyCount, streak, bestStreak }) {
   return (
     <header className="mb-6 sm:mb-8">
       <h1 className="mb-4 text-3xl font-bold text-gray-800 sm:text-4xl">
@@ -725,6 +742,9 @@ function Header({ readyCount, streak }) {
             <span className="block text-xs text-gray-500">Racha</span>
             <span className="font-bold text-gray-800">
               <AnimatedNumber value={streak} /> días
+            </span>
+            <span className="block text-[10px] text-gray-400">
+              Mejor: <AnimatedNumber value={bestStreak} /> días
             </span>
           </div>
         </div>
@@ -1064,6 +1084,7 @@ function App() {
   const [modalCouponId, setModalCouponId] = useState(null)
   const [showConfetti, setShowConfetti] = useState(false)
   const [newlyUnlockedId, setNewlyUnlockedId] = useState(null)
+  const [toastMessage, setToastMessage] = useState(null)
 
   const readyCount = coupons.filter((c) => !c.locked && !c.redeemed).length
   const modalCoupon = coupons.find((c) => c.id === modalCouponId) || null
@@ -1143,11 +1164,13 @@ function App() {
       })
 
       if (!response.ok) {
-        // No bloqueamos el canje si la notificación falla, pero lo registramos.
-        console.error('Error enviando notificación:', await response.text())
+        const errorText = await response.text()
+        console.error('Error enviando notificación:', errorText)
+        setToastMessage('No se pudo enviar la notificación, pero tu cupón fue canjeado 💕')
       }
     } catch (error) {
       console.error('Error de red al enviar notificación:', error)
+      setToastMessage('No se pudo enviar la notificación, pero tu cupón fue canjeado 💕')
     }
   }
 
@@ -1168,7 +1191,7 @@ function App() {
   return (
     <div className="min-h-screen bg-stone-50 px-4 py-6 sm:py-8">
       <div className="mx-auto max-w-md sm:max-w-lg">
-        <Header readyCount={readyCount} streak={streak} />
+        <Header readyCount={readyCount} streak={streak} bestStreak={bestStreak} />
 
         <main>
           <DailyChallenge
@@ -1212,6 +1235,10 @@ function App() {
           onClose={closeModal}
           onConfirm={confirmRedeem}
         />
+      ) : null}
+
+      {toastMessage ? (
+        <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
       ) : null}
     </div>
   )
