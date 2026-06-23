@@ -670,6 +670,82 @@ function RomanticConfetti({ show }) {
   return <ConfettiBurst />
 }
 
+function WelcomeScreen({ onStart }) {
+  return (
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-y-auto bg-gradient-to-br from-pink-100 via-rose-50 to-pink-200 p-6 text-center">
+      <div className="animate-fade-in-up max-w-sm">
+        <div className="mb-6 flex justify-center">
+          <div className="relative flex h-28 w-28 items-center justify-center rounded-full bg-white shadow-lg shadow-rose-200">
+            <Heart
+              className="h-14 w-14 fill-red-500 text-red-500 animate-pulse-soft"
+              aria-hidden="true"
+            />
+            <Sparkles
+              className="absolute -right-2 -top-2 h-8 w-8 text-amber-400 animate-sparkle"
+              aria-hidden="true"
+            />
+          </div>
+        </div>
+
+        <h1 className="mb-4 text-3xl font-bold text-gray-800 sm:text-4xl">
+          Bienvenida a tu Bóveda
+        </h1>
+
+        <p className="mb-8 text-lg leading-relaxed text-gray-600">
+          Cada día tienes una pregunta sobre nuestra historia. Si respondes bien,
+          desbloqueas un cupón sorpresa que puedes canjear cuando quieras.
+        </p>
+
+        <div className="mb-8 space-y-4 text-left">
+          <div className="flex items-start gap-3 rounded-2xl bg-white/70 p-4 shadow-sm">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-100 text-red-400">
+              <Sparkles className="h-5 w-5" aria-hidden="true" />
+            </div>
+            <div>
+              <p className="font-semibold text-gray-800">Un reto al día</p>
+              <p className="text-sm text-gray-600">
+                Responde la trivia para poner a prueba cuánto recuerdas de nosotros.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 rounded-2xl bg-white/70 p-4 shadow-sm">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-100 text-red-400">
+              <Gift className="h-5 w-5" aria-hidden="true" />
+            </div>
+            <div>
+              <p className="font-semibold text-gray-800">Cupones sorpresa</p>
+              <p className="text-sm text-gray-600">
+                Cada acierto desbloquea un cupón romántico para canjear.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 rounded-2xl bg-white/70 p-4 shadow-sm">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-rose-100 text-red-400">
+              <Flame className="h-5 w-5" aria-hidden="true" />
+            </div>
+            <div>
+              <p className="font-semibold text-gray-800">Mantén la racha</p>
+              <p className="text-sm text-gray-600">
+                Acertar varios días seguidos aumenta tu racha de amor.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={onStart}
+          className="w-full rounded-2xl bg-red-400 py-4 text-lg font-bold text-white shadow-lg shadow-red-200 transition-all duration-200 hover:bg-red-500 hover:shadow-xl active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300"
+        >
+          Abrir mi bóveda 💕
+        </button>
+      </div>
+    </div>
+  )
+}
+
 function AnimatedNumber({ value }) {
   const [display, setDisplay] = useState(value)
   const prevValueRef = useRef(value)
@@ -1087,6 +1163,10 @@ function App() {
   const [showConfetti, setShowConfetti] = useState(false)
   const [newlyUnlockedId, setNewlyUnlockedId] = useState(null)
   const [toastMessage, setToastMessage] = useState(null)
+  const [showWelcome, setShowWelcome] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return window.localStorage.getItem('welcomeSeen') !== 'true'
+  })
 
   const readyCount = coupons.filter((c) => !c.locked && !c.redeemed).length
   const modalCoupon = coupons.find((c) => c.id === modalCouponId) || null
@@ -1190,8 +1270,15 @@ function App() {
     }
   }
 
+  const dismissWelcome = () => {
+    setShowWelcome(false)
+    window.localStorage.setItem('welcomeSeen', 'true')
+  }
+
   return (
     <div className="min-h-screen bg-stone-50 px-4 py-6 sm:py-8">
+      {showWelcome ? <WelcomeScreen onStart={dismissWelcome} /> : null}
+
       <div className="mx-auto max-w-md sm:max-w-lg">
         <Header readyCount={readyCount} streak={streak} bestStreak={bestStreak} />
 

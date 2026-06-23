@@ -92,6 +92,19 @@
   }
 }
 
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+
+  50% {
+    opacity: 0.85;
+    transform: scale(1.2) rotate(12deg);
+  }
+}
+
 .animate-fade-in-up {
   animation: fade-in-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -114,6 +127,10 @@
 
 .animate-float-down {
   animation: float-down 3s linear forwards;
+}
+
+.animate-sparkle {
+  animation: sparkle 1.8s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
