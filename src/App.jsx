@@ -382,6 +382,32 @@ function getDailyTrivia() {
   }
 }
 
+const SPECIAL_DATES = [
+  // Personaliza aquí tus fechas especiales en formato MM-DD
+  { date: '02-14', message: '¡Feliz San Valentín, mi amor! 💘 Hoy la Bóveda brilla más fuerte.', themeColor: '#e11d48' },
+  { date: '12-25', message: '¡Feliz Navidad, Amochito! 🎄 Gracias por ser mi mejor regalo.', themeColor: '#16a34a' },
+]
+
+const SECRET_NOTE = {
+  title: 'Nota secreta 💌',
+  message: 'A veces no te lo digo tanto como quisiera, pero eres la persona más importante de mi vida. Gracias por cada día a tu lado. Te amo infinito. 💕',
+}
+
+const SPECIAL_COUPON = {
+  id: 'sorpresa-amor',
+  title: 'Sorpresa de Amor',
+  description: 'Una cena, un detalle o un plan sorpresa elegido especialmente para ti. Solo por ser tú.',
+  icon: Heart,
+}
+
+const HEART_TAP_MESSAGE = 'Cada latido de este corazón es por ti. Te amo. 💓'
+
+function getSpecialDateInfo() {
+  const today = new Date()
+  const key = `${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
+  return SPECIAL_DATES.find((d) => d.date === key)
+}
+
 const INITIAL_COUPONS = [
   {
     id: 'masaje-express',
@@ -798,12 +824,52 @@ function Toast({ message, onClose }) {
   )
 }
 
-function Header({ readyCount, streak, bestStreak }) {
+function LongPressTitle({ children, onLongPress, duration = 1200 }) {
+  const timerRef = useRef(null)
+  const [pressing, setPressing] = useState(false)
+
+  const start = () => {
+    setPressing(true)
+    timerRef.current = window.setTimeout(() => {
+      onLongPress()
+      setPressing(false)
+    }, duration)
+  }
+
+  const cancel = () => {
+    if (timerRef.current) {
+      window.clearTimeout(timerRef.current)
+      timerRef.current = null
+    }
+    setPressing(false)
+  }
+
+  return (
+    <h1
+      className={[
+        'mb-3 text-2xl font-bold leading-tight text-gray-800 sm:text-3xl md:mb-4 md:text-4xl',
+        'cursor-pointer select-none transition-transform duration-200',
+        pressing ? 'scale-95 text-red-500' : '',
+      ].join(' ')}
+      style={{ WebkitUserSelect: 'none', userSelect: 'none' }}
+      onMouseDown={start}
+      onMouseUp={cancel}
+      onMouseLeave={cancel}
+      onTouchStart={start}
+      onTouchEnd={cancel}
+      onContextMenu={(e) => e.preventDefault()}
+    >
+      {children}
+    </h1>
+  )
+}
+
+function Header({ readyCount, streak, bestStreak, onHeartTap, onTitleLongPress }) {
   return (
     <header className="mb-5 sm:mb-7 md:mb-8">
-      <h1 className="mb-3 text-2xl font-bold leading-tight text-gray-800 sm:text-3xl md:mb-4 md:text-4xl">
+      <LongPressTitle onLongPress={onTitleLongPress}>
         La Bóveda de Mi Amochito
-      </h1>
+      </LongPressTitle>
 
       <div className="flex flex-wrap gap-2 sm:gap-3">
         <div className="flex flex-1 min-w-[8rem] items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm sm:flex-none sm:min-w-0">
@@ -815,7 +881,14 @@ function Header({ readyCount, streak, bestStreak }) {
               ].join(' ')}
               aria-hidden="true"
             />
-            <Heart className="absolute right-1 top-1 h-3 w-3 fill-red-500 text-red-500" aria-hidden="true" />
+            <button
+              type="button"
+              onClick={onHeartTap}
+              className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-white p-0.5 shadow-sm transition-transform active:scale-125 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 sm:h-6 sm:w-6"
+              aria-label="Corazón secreto"
+            >
+              <Heart className="h-3 w-3 fill-red-500 text-red-500 sm:h-4 sm:w-4" aria-hidden="true" />
+            </button>
           </div>
           <div className="min-w-0 leading-tight">
             <span className="block text-xs text-gray-500">Racha</span>
@@ -1127,6 +1200,84 @@ function RedeemModal({ coupon, onClose, onConfirm }) {
   )
 }
 
+function EasterEggModal({ title, message, icon: Icon, onClose, showConfetti }) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/40 p-4 backdrop-blur-sm"
+      onClick={onClose}
+      role="presentation"
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="easter-egg-titulo"
+        className="animate-scale-in relative max-h-[90dvh] w-full max-w-sm overflow-y-auto rounded-3xl bg-white p-5 shadow-xl sm:p-6"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {showConfetti ? <RomanticConfetti show={true} /> : null}
+        <div className="mb-4 flex items-center justify-between">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-100 text-red-400">
+            {Icon ? <Icon className="h-5 w-5" aria-hidden="true" /> : <Heart className="h-5 w-5" aria-hidden="true" />}
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-full p-1 text-gray-400 transition-colors hover:bg-stone-100 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+            aria-label="Cerrar"
+          >
+            <X className="h-5 w-5" aria-hidden="true" />
+          </button>
+        </div>
+
+        <h3
+          id="easter-egg-titulo"
+          className="mb-2 text-lg font-bold text-gray-800 sm:text-xl"
+        >
+          {title}
+        </h3>
+        <p className="mb-6 whitespace-pre-line text-sm leading-relaxed text-gray-600 sm:text-base">
+          {message}
+        </p>
+
+        <button
+          type="button"
+          onClick={onClose}
+          className="min-h-[2.75rem] w-full rounded-xl bg-red-400 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-red-500 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 sm:py-3 sm:text-base"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function SecretFooter({ onDoubleTap }) {
+  const [lastTap, setLastTap] = useState(0)
+
+  const handleClick = () => {
+    const now = Date.now()
+    if (now - lastTap < 300) {
+      onDoubleTap()
+      setLastTap(0)
+    } else {
+      setLastTap(now)
+    }
+  }
+
+  return (
+    <footer
+      className="mt-8 cursor-pointer select-none pb-[env(safe-area-inset-bottom)] text-center text-xs text-gray-400 sm:mt-10"
+      onClick={handleClick}
+      onDoubleClick={onDoubleTap}
+      style={{ WebkitUserSelect: 'none', userSelect: 'none' }}
+      aria-label="Doble toque para una nota secreta"
+    >
+      Hecho con amor para Mi Amochito 💕
+      <span className="block text-[10px] opacity-60">(doble toque sorpresa)</span>
+    </footer>
+  )
+}
+
 function App() {
   const dailyTrivia = getDailyTrivia()
   const todayKey = getTodayKey()
@@ -1171,8 +1322,25 @@ function App() {
     if (typeof window === 'undefined') return false
     return window.localStorage.getItem('welcomeSeen') !== 'true'
   })
+  const [easterEggModal, setEasterEggModal] = useState(null)
+  const [specialCoupon, setSpecialCoupon] = useState(() => {
+    if (typeof window === 'undefined') return { unlocked: false, redeemed: false }
+    return safeParseJSON(window.localStorage.getItem('specialCoupon'), { unlocked: false, redeemed: false })
+  })
 
-  const readyCount = coupons.filter((c) => !c.locked && !c.redeemed).length
+  const heartTapCountRef = useRef(0)
+  const heartTapTimeoutRef = useRef(null)
+  const specialDate = getSpecialDateInfo()
+
+  useEffect(() => {
+    return () => {
+      if (heartTapTimeoutRef.current) {
+        window.clearTimeout(heartTapTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  const readyCount = coupons.filter((c) => !c.locked && !c.redeemed).length + (specialCoupon.unlocked && !specialCoupon.redeemed ? 1 : 0)
   const modalCoupon = coupons.find((c) => c.id === modalCouponId) || null
 
   const saveCoupons = (nextCoupons) => {
@@ -1279,12 +1447,63 @@ function App() {
     window.localStorage.setItem('welcomeSeen', 'true')
   }
 
+  const handleHeartTap = () => {
+    heartTapCountRef.current += 1
+    if (heartTapCountRef.current >= 5) {
+      setEasterEggModal({ type: 'heart' })
+      setShowConfetti(true)
+      window.setTimeout(() => setShowConfetti(false), 2500)
+      heartTapCountRef.current = 0
+      if (heartTapTimeoutRef.current) {
+        window.clearTimeout(heartTapTimeoutRef.current)
+        heartTapTimeoutRef.current = null
+      }
+      return
+    }
+    if (heartTapTimeoutRef.current) {
+      window.clearTimeout(heartTapTimeoutRef.current)
+    }
+    heartTapTimeoutRef.current = window.setTimeout(() => {
+      heartTapCountRef.current = 0
+    }, 2000)
+  }
+
+  const handleTitleLongPress = () => {
+    if (!specialCoupon.unlocked) {
+      const next = { unlocked: true, redeemed: false }
+      setSpecialCoupon(next)
+      window.localStorage.setItem('specialCoupon', JSON.stringify(next))
+    }
+    setEasterEggModal({ type: 'special' })
+    setShowConfetti(true)
+    window.setTimeout(() => setShowConfetti(false), 3000)
+  }
+
+  const redeemSpecialCoupon = () => {
+    const next = { unlocked: true, redeemed: true }
+    setSpecialCoupon(next)
+    window.localStorage.setItem('specialCoupon', JSON.stringify(next))
+    sendRedemptionNotification(SPECIAL_COUPON)
+  }
+
   return (
     <div className="min-h-[100dvh] min-h-screen bg-stone-50 px-4 py-5 sm:px-6 sm:py-7 md:py-9">
       {showWelcome ? <WelcomeScreen onStart={dismissWelcome} /> : null}
 
       <div className="mx-auto w-full max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
-        <Header readyCount={readyCount} streak={streak} bestStreak={bestStreak} />
+        <Header
+          readyCount={readyCount}
+          streak={streak}
+          bestStreak={bestStreak}
+          onHeartTap={handleHeartTap}
+          onTitleLongPress={handleTitleLongPress}
+        />
+
+        {specialDate ? (
+          <div className="mb-5 animate-fade-in-up rounded-2xl px-4 py-3 text-center text-sm font-semibold text-white shadow-md sm:mb-6 sm:px-6 sm:py-4 sm:text-base" style={{ backgroundColor: specialDate.themeColor }}>
+            {specialDate.message}
+          </div>
+        ) : null}
 
         <main>
           <DailyChallenge
@@ -1295,6 +1514,27 @@ function App() {
             onAnswer={handleAnswer}
             showConfetti={showConfetti}
           />
+
+          {specialCoupon.unlocked && !specialCoupon.redeemed ? (
+            <section className="mb-6 sm:mb-8" aria-labelledby="cupon-especial-titulo">
+              <div className="mb-3 flex items-center gap-2 sm:mb-4">
+                <Heart className="h-5 w-5 text-red-400" aria-hidden="true" />
+                <h2 id="cupon-especial-titulo" className="text-base font-bold text-gray-800 sm:text-lg">
+                  Cupón Especial
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+                <CouponCard
+                  coupon={{ ...SPECIAL_COUPON, locked: false, redeemed: false }}
+                  onRedeem={() => {
+                    setEasterEggModal({ type: 'special' })
+                    redeemSpecialCoupon()
+                  }}
+                  isNewlyUnlocked={false}
+                />
+              </div>
+            </section>
+          ) : null}
 
           <CouponSection
             title="Mis Cupones Desbloqueados"
@@ -1317,9 +1557,7 @@ function App() {
           />
         </main>
 
-        <footer className="mt-8 pb-[env(safe-area-inset-bottom)] text-center text-xs text-gray-400 sm:mt-10">
-          Hecho con amor para Mi Amochito 💕
-        </footer>
+        <SecretFooter onDoubleTap={() => setEasterEggModal({ type: 'note' })} />
       </div>
 
       {modalCouponId ? (
@@ -1332,6 +1570,36 @@ function App() {
 
       {toastMessage ? (
         <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
+      ) : null}
+
+      {easterEggModal?.type === 'heart' ? (
+        <EasterEggModal
+          title="Mensaje secreto 💓"
+          message={HEART_TAP_MESSAGE}
+          icon={Heart}
+          showConfetti={true}
+          onClose={() => setEasterEggModal(null)}
+        />
+      ) : null}
+
+      {easterEggModal?.type === 'note' ? (
+        <EasterEggModal
+          title={SECRET_NOTE.title}
+          message={SECRET_NOTE.message}
+          icon={Heart}
+          showConfetti={true}
+          onClose={() => setEasterEggModal(null)}
+        />
+      ) : null}
+
+      {easterEggModal?.type === 'special' ? (
+        <EasterEggModal
+          title="Cupón secreto desbloqueado 🎁"
+          message={`Has encontrado el cupón especial: ${SPECIAL_COUPON.title}.\n\n${SPECIAL_COUPON.description}\n\nSolo por ser tú, mi Amochito. 💕`}
+          icon={Gift}
+          showConfetti={true}
+          onClose={() => setEasterEggModal(null)}
+        />
       ) : null}
     </div>
   )
