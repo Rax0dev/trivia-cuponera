@@ -1150,7 +1150,7 @@ function LockedCouponsSection({ coupons }) {
       {isOpen ? (
         <div id="cupones-bloqueados-lista" className="mt-3 grid grid-cols-2 gap-3 animate-fade-in-up sm:mt-4 sm:gap-4 lg:grid-cols-3">
           {coupons.map((coupon) => (
-            <CouponCard key={coupon.id} coupon={coupon} onRedeem={() => {}} />
+            <CouponCard key={coupon.id} coupon={coupon} onRedeem={() => { }} />
           ))}
         </div>
       ) : null}
@@ -1506,7 +1506,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-[100dvh] min-h-screen bg-stone-50 px-4 py-5 sm:px-6 sm:py-7 md:py-9">
+    <div className="min-h-[100dvh] bg-stone-50 px-4 py-5 sm:px-6 sm:py-7 md:py-9">
       {showWelcome ? <WelcomeScreen onStart={dismissWelcome} /> : null}
 
       <div className="mx-auto w-full max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
