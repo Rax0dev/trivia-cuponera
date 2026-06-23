@@ -151,6 +151,76 @@ const QUESTIONS = [
     ],
     correctAnswerIndex: 0,
   },
+  {
+    id: 15,
+    question: "Casi no estamos en casa por nuestros trabajos, pero cuando por fin tenemos tiempo para nosotros, ¿cuál es nuestro 'código de vestimenta' favorito para relajarnos?",
+    options: [
+      'Andar en pijama todo el día',
+      'Estar sin ropa',
+      'Usar ropa deportiva súper holgada',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 16,
+    question: 'Cuando armamos el modo cooperativo en los videojuegos, ¿cuáles son los títulos que más jugamos juntos?',
+    options: [
+      'Fortnite, Overcooked y LEGO Marvel',
+      'Dead by Daylight, Halo y Gears of War',
+      'Mario Kart, Smash Bros y Minecraft',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 17,
+    question: 'Si decidimos apagar las consolas y sacar los juegos de mesa, ¿cuál es nuestro combo infalible?',
+    options: [
+      'Monopoly, Jenga y Scrabble',
+      'Ajedrez, Lotería y Basta',
+      'Dominó, UNO y Conecta 4',
+    ],
+    correctAnswerIndex: 2,
+  },
+  {
+    id: 18,
+    question: 'A veces yo me pongo a jugar títulos de un solo jugador como Spiderman, Resident Evil o Assassins Creed. ¿Qué haces tú mientras tanto?',
+    options: [
+      'Te pones a jugar con tu tablet o a ver una serie que te gusta',
+      'Te quedas dormida a los 10 minutos en el sillón',
+      'Me das instrucciones de cómo pasar los niveles',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 19,
+    question: '¿Por qué empezamos a ver Malcolm el de enmedio juntos?',
+    options: [
+      'Porque siempre la pasaban en la tele a la hora de cenar',
+      'Porque tú me la recomendaste, ya que yo nunca la pude ver completa de pequeño',
+      'Porque yo te rogué que la viéramos desde el capítulo uno',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 20,
+    question: 'Hubo otra serie de comedia que tú me recomendaste ver y que, gracias a ti, se convirtió en una de mis grandes favoritas. ¿Cuál es?',
+    options: [
+      'The Office',
+      'Friends',
+      'The Big Bang Theory',
+    ],
+    correctAnswerIndex: 2,
+  },
+  {
+    id: 21,
+    question: 'En general, ¿cómo podríamos describir nuestro estilo de vida y nuestra dinámica de pareja?',
+    options: [
+      'Trabajamos mucho, pero nuestro mayor placer es llegar a casa a relajarnos juntos',
+      'Nos la pasamos planeando fiestas y salidas con amigos cada fin de semana',
+      'Somos súper fitness y nos la pasamos en el gimnasio o haciendo deporte',
+    ],
+    correctAnswerIndex: 0,
+  },
 ]
 
 function getDailyQuestionIndex() {
