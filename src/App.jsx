@@ -94,7 +94,7 @@ const QUESTIONS = [
   },
   {
     id: 7,
-    question: '¿Qué es lo tuyo que me hizo pensar "esta morra nació para ser enfermera"?',
+    question: '¿Qué es lo tuyo que me hizo pensar "ella nació para ser enfermera"?',
     options: [
       'Tu súper poder para no dormir en 24 horas',
       'Tu forma de hablar tan cálida y lo atenta que eres con todos',
@@ -264,7 +264,7 @@ const QUESTIONS = [
   },
   {
     id: 24,
-    question: 'Yo estaba bien nervioso cuando te pedí matrimonio, pero se me ocurrió algo rápido para grabar el momento. ¿Qué hice?',
+    question: 'Yo estaba super nervioso cuando te pedí matrimonio, pero se me ocurrió algo rápido para grabar el momento. ¿Qué hice?',
     options: [
       'Llevé un tripié escondido en la chamarra',
       'Le pedí a una persona que estaba ahí que grabara el momento',
@@ -274,7 +274,7 @@ const QUESTIONS = [
   },
   {
     id: 25,
-    question: 'Al día siguiente de comprometernos fuimos a desayunar a un lugar bien rico. ¿A dónde?',
+    question: 'Al día siguiente de comprometernos fuimos a desayunar a un lugar super rico. ¿A dónde?',
     options: [
       'A La Casa de Toño',
       'A Los Chilaquiles',
@@ -284,21 +284,21 @@ const QUESTIONS = [
   },
   {
     id: 26,
-    question: 'Cuando pedimos Rappi porque no queremos cocinar, ¿de dónde pedimos usualmente?',
+    question: 'Cuando tenemos antojo de boneless, ¿a dónde queremos ir siempre?',
     options: [
-      "McDonald's, KFC o Burger King",
-      'Tacos Oficina, Sushi Roll o Terraza Italiana',
-      'Puras ensaladas y jugos verdes',
+      "Wings Stop",
+      "Clock' Wings",
+      'Wings Army',
     ],
     correctAnswerIndex: 1,
   },
   {
     id: 27,
-    question: 'En la planeación de la boda me puse bien nerd y armé una app para llevar el control. ¿Cómo la bauticé?',
+    question: 'Cuando andamos en el carro juntos, ¿qué artista no puede faltar en nuestra playlist?',
     options: [
-      'Boda Mi Amochito y Aldo',
-      'Pagos Bodorrio',
-      'Wedding Tracker Pro',
+      'Bad Bunny',
+      'Feid',
+      'Karol G',
     ],
     correctAnswerIndex: 1,
   },
@@ -327,7 +327,7 @@ const QUESTIONS = [
     question: 'Al final de todo esto, ¿cuál es la mejor parte de abrir esta Bóveda?',
     options: [
       'Tener la razón en todas las preguntas',
-      'Recordar que seguimos siendo el mejor equipo',
+      'Recordar toda nuestra historia con anécdotas bonitas y divertidas y demostrarte cuánto te amo y lo importante y especial que te has vuelto para mí',
       'Que yo te prepare de cenar hoy',
     ],
     correctAnswerIndex: 1,
