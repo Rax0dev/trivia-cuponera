@@ -458,7 +458,7 @@ export default function TetrisGame({ onComplete }) {
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
-              className="relative mx-auto aspect-[10/20] w-full max-w-[260px] touch-none rounded-xl border-4 border-purple-100 bg-stone-100 p-1 shadow-inner sm:mx-0"
+              className="relative mx-auto aspect-[10/20] w-full max-w-[260px] touch-none rounded-xl border-4 border-purple-100 bg-purple-50/60 p-1 shadow-inner sm:mx-0"
             >
               {!gameStarted ? (
                 <div className="absolute inset-0 z-20 flex items-center justify-center rounded-xl bg-white/60 p-3 backdrop-blur-sm">
@@ -487,17 +487,24 @@ export default function TetrisGame({ onComplete }) {
                 style={{ gridTemplateColumns: `repeat(${BOARD_WIDTH}, minmax(0, 1fr))` }}
               >
                 {displayBoard.map((row, rowIndex) =>
-                  row.map((cell, cellIndex) => (
-                    <div
-                      key={`${rowIndex}-${cellIndex}`}
-                      className="rounded-[1px]"
-                      style={{
-                        backgroundColor: cell || 'transparent',
-                        boxShadow: cell ? 'inset 0 0 0 1px rgba(255,255,255,0.3)' : 'none',
-                      }}
-                      aria-hidden="true"
-                    />
-                  ))
+                  row.map((cell, cellIndex) => {
+                    const isMajorRow = (rowIndex + 1) % 5 === 0
+                    return (
+                      <div
+                        key={`${rowIndex}-${cellIndex}`}
+                        className={[
+                          'rounded-[1px]',
+                          cell ? '' : 'border border-purple-200/50',
+                          isMajorRow && !cell ? 'bg-purple-200/25' : '',
+                        ].join(' ')}
+                        style={{
+                          backgroundColor: cell || 'transparent',
+                          boxShadow: cell ? 'inset 0 0 0 1px rgba(255,255,255,0.35)' : 'none',
+                        }}
+                        aria-hidden="true"
+                      />
+                    )
+                  })
                 )}
               </div>
             </div>
