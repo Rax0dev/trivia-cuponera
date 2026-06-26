@@ -129,6 +129,14 @@ function getDropInterval(level) {
   return Math.max(150, 1000 - (level - 1) * 100)
 }
 
+function hexToRgba(hex, alpha) {
+  const sanitized = hex.replace('#', '')
+  const r = parseInt(sanitized.substring(0, 2), 16)
+  const g = parseInt(sanitized.substring(2, 4), 16)
+  const b = parseInt(sanitized.substring(4, 6), 16)
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
 export default function TetrisGame({ onComplete }) {
   const [game, setGame] = useState(createInitialState)
   const [showHint, setShowHint] = useState(true)
@@ -144,8 +152,33 @@ export default function TetrisGame({ onComplete }) {
 
   const displayBoard = useMemo(() => {
     const newBoard = game.board.map((row) => [...row])
+
     if (game.currentPiece && !game.gameOver && !game.won) {
       const { currentPiece, position } = game
+
+      // Draw ghost piece where the current piece will land
+      let ghostY = position.y
+      while (isValidPosition(game.board, currentPiece, { ...position, y: ghostY + 1 })) {
+        ghostY += 1
+      }
+      const ghostColor = hexToRgba(currentPiece.color, 0.22)
+      for (let y = 0; y < currentPiece.shape.length; y++) {
+        for (let x = 0; x < currentPiece.shape[y].length; x++) {
+          if (currentPiece.shape[y][x]) {
+            const newY = ghostY + y
+            const newX = position.x + x
+            if (
+              newY >= 0 && newY < BOARD_HEIGHT &&
+              newX >= 0 && newX < BOARD_WIDTH &&
+              !newBoard[newY][newX]
+            ) {
+              newBoard[newY][newX] = ghostColor
+            }
+          }
+        }
+      }
+
+      // Draw current piece on top of ghost
       for (let y = 0; y < currentPiece.shape.length; y++) {
         for (let x = 0; x < currentPiece.shape[y].length; x++) {
           if (currentPiece.shape[y][x]) {
@@ -158,6 +191,7 @@ export default function TetrisGame({ onComplete }) {
         }
       }
     }
+
     return newBoard
   }, [game])
 
@@ -452,13 +486,36 @@ export default function TetrisGame({ onComplete }) {
             Completa 5 líneas para desbloquear la pregunta de hoy
           </h2>
 
-          <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-start">
+          <div className="mb-4 flex flex-col items-center gap-4">
+            <div className="grid w-full grid-cols-3 gap-2 sm:gap-3">
+              <div className="rounded-2xl bg-purple-50 p-2 text-center sm:p-3">
+                <p className="text-[10px] text-purple-500 sm:text-xs">Líneas</p>
+                <p className="text-lg font-bold text-gray-800 sm:text-xl">
+                  {game.linesCleared} <span className="text-xs font-medium text-gray-500">/ {LINES_TO_WIN}</span>
+                </p>
+                <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-purple-100">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-purple-400 to-pink-400 transition-all duration-300"
+                    style={{ width: `${progressPercent}%` }}
+                  />
+                </div>
+              </div>
+              <div className="rounded-2xl bg-rose-50 p-2 text-center sm:p-3">
+                <p className="text-[10px] text-rose-500 sm:text-xs">Nivel</p>
+                <p className="text-lg font-bold text-gray-800 sm:text-xl">{game.level}</p>
+              </div>
+              <div className="rounded-2xl bg-pink-50 p-2 text-center sm:p-3">
+                <p className="text-[10px] text-pink-500 sm:text-xs">Puntos</p>
+                <p className="text-lg font-bold text-gray-800 sm:text-xl">{game.score.toLocaleString()}</p>
+              </div>
+            </div>
+
             <div
               ref={boardRef}
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
-              className="relative mx-auto aspect-[10/20] w-full max-w-[260px] touch-none rounded-xl border-4 border-purple-100 bg-purple-50/60 p-1 shadow-inner sm:mx-0"
+              className="relative mx-auto aspect-[10/20] w-full max-w-[260px] touch-none rounded-xl border-4 border-purple-100 bg-purple-50/60 p-1 shadow-inner"
             >
               {!gameStarted ? (
                 <div className="absolute inset-0 z-20 flex items-center justify-center rounded-xl bg-white/60 p-3 backdrop-blur-sm">
@@ -489,6 +546,7 @@ export default function TetrisGame({ onComplete }) {
                 {displayBoard.map((row, rowIndex) =>
                   row.map((cell, cellIndex) => {
                     const isMajorRow = (rowIndex + 1) % 5 === 0
+                    const isGhost = typeof cell === 'string' && cell.startsWith('rgba')
                     return (
                       <div
                         key={`${rowIndex}-${cellIndex}`}
@@ -496,10 +554,12 @@ export default function TetrisGame({ onComplete }) {
                           'rounded-[1px]',
                           cell ? '' : 'border border-purple-200/50',
                           isMajorRow && !cell ? 'bg-purple-200/25' : '',
+                          isGhost ? 'border border-current' : '',
                         ].join(' ')}
                         style={{
                           backgroundColor: cell || 'transparent',
-                          boxShadow: cell ? 'inset 0 0 0 1px rgba(255,255,255,0.35)' : 'none',
+                          color: isGhost ? cell : 'inherit',
+                          boxShadow: cell && !isGhost ? 'inset 0 0 0 1px rgba(255,255,255,0.35)' : 'none',
                         }}
                         aria-hidden="true"
                       />
@@ -509,39 +569,13 @@ export default function TetrisGame({ onComplete }) {
               </div>
             </div>
 
-            <div className="flex flex-1 flex-col gap-3 sm:pt-2">
-              <div className="rounded-2xl bg-purple-50 p-3 sm:p-4">
-                <p className="text-xs text-purple-500 sm:text-sm">Líneas completadas</p>
-                <p className="text-2xl font-bold text-gray-800 sm:text-3xl">
-                  {game.linesCleared} <span className="text-base font-medium text-gray-500">/ {LINES_TO_WIN}</span>
-                </p>
-                <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-purple-100">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-purple-400 to-pink-400 transition-all duration-300"
-                    style={{ width: `${progressPercent}%` }}
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-2xl bg-rose-50 p-3 sm:p-4">
-                  <p className="text-xs text-rose-500 sm:text-sm">Nivel</p>
-                  <p className="text-xl font-bold text-gray-800 sm:text-2xl">{game.level}</p>
-                </div>
-                <div className="rounded-2xl bg-pink-50 p-3 sm:p-4">
-                  <p className="text-xs text-pink-500 sm:text-sm">Puntos</p>
-                  <p className="text-xl font-bold text-gray-800 sm:text-2xl">{game.score.toLocaleString()}</p>
-                </div>
-              </div>
-
-              {showHint ? (
-                <p className="animate-fade-in-up rounded-xl bg-stone-50 p-2 text-center text-xs text-gray-500 sm:text-sm">
-                  {isTouchDevice
-                    ? 'Desliza izquierda/derecha para mover, arriba para rotar, abajo para caer al instante, o toca para rotar'
-                    : 'Usa las flechas del teclado o los botones de abajo'}
-                </p>
-              ) : null}
-            </div>
+            {showHint ? (
+              <p className="animate-fade-in-up w-full rounded-xl bg-stone-50 p-2 text-center text-xs text-gray-500 sm:text-sm">
+                {isTouchDevice
+                  ? 'Desliza izquierda/derecha para mover, arriba para rotar, abajo para caer al instante, o toca para rotar'
+                  : 'Usa las flechas del teclado o los botones de abajo'}
+              </p>
+            ) : null}
           </div>
 
           {!gameStarted ? (
