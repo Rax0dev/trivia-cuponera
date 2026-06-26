@@ -29,7 +29,9 @@ import {
   Flame,
   ChevronUp,
   ChevronDown,
+  Trophy,
 } from 'lucide-react'
+import TetrisGame from './components/TetrisGame.jsx'
 
 const QUESTIONS = [
   {
@@ -1003,9 +1005,10 @@ function DailyChallenge({ trivia, status, selectedOptionId, wrongOptionId, onAns
   )
 }
 
-function CouponCard({ coupon, onRedeem, isNewlyUnlocked }) {
+function CouponCard({ coupon, onRedeem, isNewlyUnlocked, canRedeemToday = true }) {
   const Icon = coupon.icon
   const hasGradientBorder = !coupon.locked && !coupon.redeemed
+  const isBlockedByDailyLimit = !coupon.locked && !coupon.redeemed && !canRedeemToday
 
   return (
     <article
@@ -1013,7 +1016,7 @@ function CouponCard({ coupon, onRedeem, isNewlyUnlocked }) {
         'flex flex-col rounded-2xl sm:rounded-3xl shadow-sm transition-all duration-300',
         'hover:shadow-lg hover:-translate-y-1 hover:scale-[1.01]',
         coupon.redeemed ? 'opacity-70 grayscale' : '',
-        coupon.locked ? 'opacity-80' : '',
+        coupon.locked || isBlockedByDailyLimit ? 'opacity-80' : '',
         isNewlyUnlocked ? 'animate-pop-glow' : '',
         hasGradientBorder
           ? 'bg-gradient-to-br from-rose-200 to-red-300 p-1'
@@ -1050,7 +1053,7 @@ function CouponCard({ coupon, onRedeem, isNewlyUnlocked }) {
 
         <button
           type="button"
-          disabled={coupon.redeemed || coupon.locked}
+          disabled={coupon.redeemed || coupon.locked || isBlockedByDailyLimit}
           onClick={() => onRedeem(coupon.id)}
           className={[
             'mt-auto min-h-[2.75rem] sm:min-h-[3rem] w-full rounded-xl py-2.5 text-sm font-semibold transition-all duration-200 sm:py-3 sm:text-base',
@@ -1059,7 +1062,9 @@ function CouponCard({ coupon, onRedeem, isNewlyUnlocked }) {
               ? 'cursor-not-allowed bg-stone-200 text-stone-500'
               : coupon.locked
                 ? 'cursor-not-allowed bg-stone-200 text-stone-400'
-                : 'bg-red-400 text-white shadow-sm hover:bg-red-500 hover:shadow-md hover:shadow-red-200 active:scale-95',
+                : isBlockedByDailyLimit
+                  ? 'cursor-not-allowed bg-purple-100 text-purple-400'
+                  : 'bg-red-400 text-white shadow-sm hover:bg-red-500 hover:shadow-md hover:shadow-red-200 active:scale-95',
           ].join(' ')}
         >
           {coupon.redeemed ? (
@@ -1072,6 +1077,11 @@ function CouponCard({ coupon, onRedeem, isNewlyUnlocked }) {
               <Lock className="h-4 w-4" aria-hidden="true" />
               Bloqueado
             </span>
+          ) : isBlockedByDailyLimit ? (
+            <span className="flex items-center justify-center gap-2">
+              <Trophy className="h-4 w-4" aria-hidden="true" />
+              Hoy ya canjeaste
+            </span>
           ) : (
             'Canjear'
           )}
@@ -1081,7 +1091,7 @@ function CouponCard({ coupon, onRedeem, isNewlyUnlocked }) {
   )
 }
 
-function CouponSection({ title, icon: Icon, coupons, onRedeem, emptyMessage, newlyUnlockedId }) {
+function CouponSection({ title, icon: Icon, coupons, onRedeem, emptyMessage, newlyUnlockedId, canRedeemToday = true }) {
   const sectionId = title.replace(/\s+/g, '-').toLowerCase()
   return (
     <section className="mb-6 sm:mb-8" aria-labelledby={sectionId}>
@@ -1107,6 +1117,7 @@ function CouponSection({ title, icon: Icon, coupons, onRedeem, emptyMessage, new
               coupon={coupon}
               onRedeem={onRedeem}
               isNewlyUnlocked={coupon.id === newlyUnlockedId}
+              canRedeemToday={canRedeemToday}
             />
           ))}
         </div>
@@ -1307,6 +1318,14 @@ function App() {
     const savedDate = window.localStorage.getItem('triviaDate')
     return saved === 'success' && savedDate === todayKey ? 'success' : 'active'
   })
+  const [gamePhase, setGamePhase] = useState(() => {
+    if (typeof window === 'undefined') return 'tetris'
+    const savedStatus = window.localStorage.getItem('triviaStatus')
+    const savedDate = window.localStorage.getItem('triviaDate')
+    if (savedStatus === 'success' && savedDate === todayKey) return 'success'
+    const gamePlayedDate = window.localStorage.getItem('gamePlayedDate')
+    return gamePlayedDate === todayKey ? 'trivia' : 'tetris'
+  })
   const [selectedOptionId, setSelectedOptionId] = useState(null)
   const [wrongOptionId, setWrongOptionId] = useState(null)
   const [streak, setStreak] = useState(() => {
@@ -1346,6 +1365,10 @@ function App() {
     if (typeof window === 'undefined') return { unlocked: false, redeemed: false }
     return safeParseJSON(window.localStorage.getItem('specialCoupon'), { unlocked: false, redeemed: false })
   })
+  const [lastRedeemedDate, setLastRedeemedDate] = useState(() => {
+    if (typeof window === 'undefined') return ''
+    return window.localStorage.getItem('lastRedeemedDate') || ''
+  })
 
   const heartTapCountRef = useRef(0)
   const heartTapTimeoutRef = useRef(null)
@@ -1361,6 +1384,7 @@ function App() {
 
   const readyCount = coupons.filter((c) => !c.locked && !c.redeemed).length + (specialCoupon.unlocked && !specialCoupon.redeemed ? 1 : 0)
   const modalCoupon = coupons.find((c) => c.id === modalCouponId) || null
+  const canRedeemToday = lastRedeemedDate !== todayKey
 
   const saveCoupons = (nextCoupons) => {
     const unlocked = nextCoupons.filter((c) => !c.locked).map((c) => c.id)
@@ -1401,6 +1425,11 @@ function App() {
   const resetStreak = () => {
     setStreak(0)
     window.localStorage.setItem('streakCount', '0')
+  }
+
+  const handleTetrisComplete = () => {
+    window.localStorage.setItem('gamePlayedDate', todayKey)
+    setGamePhase('trivia')
   }
 
   const handleAnswer = (option) => {
@@ -1448,6 +1477,12 @@ function App() {
   }
 
   const confirmRedeem = () => {
+    if (!canRedeemToday) {
+      setModalCouponId(null)
+      setToastMessage('Ya usaste un cupón hoy. Mañana podrás canjear otro. 💕')
+      return
+    }
+
     const coupon = coupons.find((c) => c.id === modalCouponId)
     const nextCoupons = coupons.map((c) =>
       c.id === modalCouponId ? { ...c, redeemed: true } : c
@@ -1455,6 +1490,8 @@ function App() {
     setCoupons(nextCoupons)
     saveCoupons(nextCoupons)
     setModalCouponId(null)
+    setLastRedeemedDate(todayKey)
+    window.localStorage.setItem('lastRedeemedDate', todayKey)
 
     if (coupon) {
       sendRedemptionNotification(coupon)
@@ -1499,9 +1536,16 @@ function App() {
   }
 
   const redeemSpecialCoupon = () => {
+    if (!canRedeemToday) {
+      setToastMessage('Ya usaste un cupón hoy. Mañana podrás canjear otro. 💕')
+      return
+    }
+
     const next = { unlocked: true, redeemed: true }
     setSpecialCoupon(next)
     window.localStorage.setItem('specialCoupon', JSON.stringify(next))
+    setLastRedeemedDate(todayKey)
+    window.localStorage.setItem('lastRedeemedDate', todayKey)
     sendRedemptionNotification(SPECIAL_COUPON)
   }
 
@@ -1525,14 +1569,18 @@ function App() {
         ) : null}
 
         <main>
-          <DailyChallenge
-            trivia={dailyTrivia}
-            status={triviaStatus}
-            selectedOptionId={selectedOptionId}
-            wrongOptionId={wrongOptionId}
-            onAnswer={handleAnswer}
-            showConfetti={showConfetti}
-          />
+          {gamePhase === 'tetris' && triviaStatus !== 'success' ? (
+            <TetrisGame onComplete={handleTetrisComplete} />
+          ) : (
+            <DailyChallenge
+              trivia={dailyTrivia}
+              status={triviaStatus}
+              selectedOptionId={selectedOptionId}
+              wrongOptionId={wrongOptionId}
+              onAnswer={handleAnswer}
+              showConfetti={showConfetti}
+            />
+          )}
 
           {specialCoupon.unlocked && !specialCoupon.redeemed ? (
             <section className="mb-6 sm:mb-8" aria-labelledby="cupon-especial-titulo">
@@ -1550,6 +1598,7 @@ function App() {
                     redeemSpecialCoupon()
                   }}
                   isNewlyUnlocked={false}
+                  canRedeemToday={canRedeemToday}
                 />
               </div>
             </section>
@@ -1562,6 +1611,7 @@ function App() {
             onRedeem={openRedeem}
             emptyMessage="Responde correctamente el reto del día para desbloquear un cupón."
             newlyUnlockedId={newlyUnlockedId}
+            canRedeemToday={canRedeemToday}
           />
 
           <CouponSection

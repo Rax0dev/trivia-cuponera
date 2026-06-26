@@ -11,6 +11,7 @@ import html
 import json
 import os
 import time
+from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
@@ -108,7 +109,8 @@ def send_telegram_message(coupon_name):
 
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     safe_name = html.escape(coupon_name)
-    text = f"🚨 ¡Atención! Mi Amochito acaba de canjear el cupón: {safe_name} 🚨"
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+    text = f"🚨 ¡Atención! Mi Amochito acaba de canjear el cupón: {safe_name} 🚨\n🗓️ {now}"
 
     payload = urlencode({
         "chat_id": TELEGRAM_CHAT_ID,
