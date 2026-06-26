@@ -416,6 +416,9 @@ export default function TetrisGame({ onComplete }) {
 
   const startGame = () => {
     setGameStarted(true)
+    window.setTimeout(() => {
+      boardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
+    }, 50)
   }
 
   const handleTouchStart = useCallback((event) => {
