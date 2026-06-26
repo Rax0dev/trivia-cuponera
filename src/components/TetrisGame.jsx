@@ -470,6 +470,22 @@ export default function TetrisGame({ onComplete }) {
 
   return (
     <section className="relative mb-6 sm:mb-8 md:mb-10" aria-labelledby="tetris-titulo">
+      {game.won ? (
+        <div className="fixed inset-x-0 top-[max(1rem,env(safe-area-inset-top))] z-50 flex justify-center px-4">
+          <div
+            className="animate-fade-in-up flex max-w-sm items-center gap-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 px-5 py-3 text-white shadow-xl shadow-purple-200"
+            role="status"
+            aria-live="polite"
+          >
+            <Trophy className="h-6 w-6 shrink-0" aria-hidden="true" />
+            <div>
+              <p className="text-base font-bold">¡Objetivo completado!</p>
+              <p className="text-xs opacity-90">Desbloqueando la pregunta del día...</p>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
       <div className="rounded-3xl bg-gradient-to-br from-rose-200 to-purple-300 p-1 shadow-sm transition-shadow duration-300 hover:shadow-md">
         <div className="rounded-[1.35rem] bg-white p-4 sm:p-6 md:p-7">
           <div className="mb-3 flex items-center gap-2 md:mb-4">
@@ -486,27 +502,27 @@ export default function TetrisGame({ onComplete }) {
             Completa 5 líneas para desbloquear la pregunta de hoy
           </h2>
 
-          <div className="mb-4 flex flex-col items-center gap-4">
+          <div className="mb-4 flex flex-col items-center gap-4 sm:gap-5">
             <div className="grid w-full grid-cols-3 gap-2 sm:gap-3">
-              <div className="rounded-2xl bg-purple-50 p-2 text-center sm:p-3">
-                <p className="text-[10px] text-purple-500 sm:text-xs">Líneas</p>
-                <p className="text-lg font-bold text-gray-800 sm:text-xl">
-                  {game.linesCleared} <span className="text-xs font-medium text-gray-500">/ {LINES_TO_WIN}</span>
+              <div className="rounded-2xl bg-purple-50 p-3 text-center sm:p-4">
+                <p className="text-xs text-purple-500 sm:text-sm">Líneas</p>
+                <p className="text-xl font-bold text-gray-800 sm:text-2xl">
+                  {game.linesCleared} <span className="text-sm font-medium text-gray-500">/ {LINES_TO_WIN}</span>
                 </p>
-                <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-purple-100">
+                <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-purple-100">
                   <div
                     className="h-full rounded-full bg-gradient-to-r from-purple-400 to-pink-400 transition-all duration-300"
                     style={{ width: `${progressPercent}%` }}
                   />
                 </div>
               </div>
-              <div className="rounded-2xl bg-rose-50 p-2 text-center sm:p-3">
-                <p className="text-[10px] text-rose-500 sm:text-xs">Nivel</p>
-                <p className="text-lg font-bold text-gray-800 sm:text-xl">{game.level}</p>
+              <div className="rounded-2xl bg-rose-50 p-3 text-center sm:p-4">
+                <p className="text-xs text-rose-500 sm:text-sm">Nivel</p>
+                <p className="text-xl font-bold text-gray-800 sm:text-2xl">{game.level}</p>
               </div>
-              <div className="rounded-2xl bg-pink-50 p-2 text-center sm:p-3">
-                <p className="text-[10px] text-pink-500 sm:text-xs">Puntos</p>
-                <p className="text-lg font-bold text-gray-800 sm:text-xl">{game.score.toLocaleString()}</p>
+              <div className="rounded-2xl bg-pink-50 p-3 text-center sm:p-4">
+                <p className="text-xs text-pink-500 sm:text-sm">Puntos</p>
+                <p className="text-xl font-bold text-gray-800 sm:text-2xl">{game.score.toLocaleString()}</p>
               </div>
             </div>
 
@@ -515,7 +531,7 @@ export default function TetrisGame({ onComplete }) {
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
-              className="relative mx-auto aspect-[10/20] w-full max-w-[260px] touch-none rounded-xl border-4 border-purple-100 bg-purple-50/60 p-1 shadow-inner"
+              className="relative mx-auto aspect-[10/20] w-full max-w-[min(320px,85vw)] touch-none rounded-xl border-4 border-purple-100 bg-purple-50/60 p-1 shadow-inner sm:max-w-[340px]"
             >
               {!gameStarted ? (
                 <div className="absolute inset-0 z-20 flex items-center justify-center rounded-xl bg-white/60 p-3 backdrop-blur-sm">
@@ -582,12 +598,7 @@ export default function TetrisGame({ onComplete }) {
             <p className="animate-fade-in-up text-center text-sm text-gray-500 sm:text-base">
               Presiona <span className="font-semibold text-purple-500">Empezar a jugar</span> en el tablero para comenzar
             </p>
-          ) : game.won ? (
-            <div className="animate-fade-in-up rounded-2xl bg-gradient-to-br from-purple-100 to-pink-100 p-4 text-center sm:p-5">
-              <p className="text-lg font-bold text-gray-800 sm:text-xl">¡Lo lograste! 🎉</p>
-              <p className="text-sm text-gray-600 sm:text-base">Preparando la pregunta del día...</p>
-            </div>
-          ) : game.gameOver ? (
+          ) : game.won ? null : game.gameOver ? (
             <div className="animate-fade-in-up rounded-2xl bg-red-50 p-4 text-center sm:p-5">
               <p className="mb-3 text-lg font-bold text-gray-800 sm:text-xl">¡Se acabó el juego!</p>
               <button
@@ -600,55 +611,55 @@ export default function TetrisGame({ onComplete }) {
               </button>
             </div>
           ) : isTouchDevice ? (
-            <div className="mt-2 flex flex-wrap items-center justify-center gap-4 text-center text-xs text-gray-500 sm:text-sm">
-              <div className="flex items-center gap-1.5">
-                <span className="rounded-lg bg-purple-100 px-2 py-1">👈 Deslizar</span>
+            <div className="flex flex-wrap items-center justify-center gap-3 text-center text-[10px] text-gray-500 sm:text-xs">
+              <div className="flex items-center gap-1">
+                <span className="rounded-md bg-purple-100 px-1.5 py-0.5">👈 Deslizar</span>
                 <span>mover</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="rounded-lg bg-pink-100 px-2 py-1">👆 Tocar</span>
+              <div className="flex items-center gap-1">
+                <span className="rounded-md bg-pink-100 px-1.5 py-0.5">👆 Tocar</span>
                 <span>rotar</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <span className="rounded-lg bg-rose-100 px-2 py-1">👇 Deslizar abajo</span>
+              <div className="flex items-center gap-1">
+                <span className="rounded-md bg-rose-100 px-1.5 py-0.5">👇 Abajo</span>
                 <span>caer</span>
               </div>
             </div>
           ) : (
-            <div className="mt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            <div className="mt-1 flex flex-wrap items-center justify-center gap-4 sm:gap-5">
               <button
                 type="button"
                 onClick={() => move(-1)}
-                className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-100 text-purple-600 shadow-sm transition-all active:scale-90 hover:bg-purple-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 sm:h-14 sm:w-14"
+                className="flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-100 text-purple-600 shadow-sm transition-all active:scale-90 hover:bg-purple-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 sm:h-16 sm:w-16"
                 aria-label="Mover izquierda"
               >
-                <MoveLeft className="h-6 w-6" aria-hidden="true" />
+                <MoveLeft className="h-7 w-7" aria-hidden="true" />
               </button>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-3">
                 <button
                   type="button"
                   onClick={rotate}
-                  className="flex h-12 w-12 items-center justify-center rounded-xl bg-pink-100 text-pink-600 shadow-sm transition-all active:scale-90 hover:bg-pink-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 sm:h-14 sm:w-14"
+                  className="flex h-14 w-14 items-center justify-center rounded-2xl bg-pink-100 text-pink-600 shadow-sm transition-all active:scale-90 hover:bg-pink-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 sm:h-16 sm:w-16"
                   aria-label="Rotar pieza"
                 >
-                  <RotateCw className="h-6 w-6" aria-hidden="true" />
+                  <RotateCw className="h-7 w-7" aria-hidden="true" />
                 </button>
                 <button
                   type="button"
                   onClick={moveDown}
-                  className="flex h-12 w-12 items-center justify-center rounded-xl bg-rose-100 text-rose-600 shadow-sm transition-all active:scale-90 hover:bg-rose-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 sm:h-14 sm:w-14"
+                  className="flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-100 text-rose-600 shadow-sm transition-all active:scale-90 hover:bg-rose-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 sm:h-16 sm:w-16"
                   aria-label="Bajar rápido"
                 >
-                  <MoveDown className="h-6 w-6" aria-hidden="true" />
+                  <MoveDown className="h-7 w-7" aria-hidden="true" />
                 </button>
               </div>
               <button
                 type="button"
                 onClick={() => move(1)}
-                className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-100 text-purple-600 shadow-sm transition-all active:scale-90 hover:bg-purple-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 sm:h-14 sm:w-14"
+                className="flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-100 text-purple-600 shadow-sm transition-all active:scale-90 hover:bg-purple-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 sm:h-16 sm:w-16"
                 aria-label="Mover derecha"
               >
-                <MoveRight className="h-6 w-6" aria-hidden="true" />
+                <MoveRight className="h-7 w-7" aria-hidden="true" />
               </button>
             </div>
           )}
