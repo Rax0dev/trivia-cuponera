@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { RotateCw, MoveLeft, MoveRight, MoveDown, Trophy, RefreshCw } from 'lucide-react'
+import useTetrisSounds from '../hooks/useTetrisSounds.js'
 
 const BOARD_WIDTH = 10
 const BOARD_HEIGHT = 20
@@ -132,6 +133,9 @@ export default function TetrisGame({ onComplete }) {
   const [game, setGame] = useState(createInitialState)
   const [showHint, setShowHint] = useState(true)
   const boardRef = useRef(null)
+  const { playMove, playRotate, playDrop, playClear, playWin, playGameOver } = useTetrisSounds()
+  const prevPieceKeyRef = useRef(null)
+  const prevLinesRef = useRef(0)
 
   const displayBoard = useMemo(() => {
     const newBoard = game.board.map((row) => [...row])
@@ -232,11 +236,12 @@ export default function TetrisGame({ onComplete }) {
       if (prev.gameOver || prev.won) return prev
       const newPosition = { ...prev.position, x: prev.position.x + dx }
       if (isValidPosition(prev.board, prev.currentPiece, newPosition)) {
+        playMove()
         return { ...prev, position: newPosition }
       }
       return prev
     })
-  }, [])
+  }, [playMove])
 
   const moveDown = useCallback(() => {
     setGame((prev) => {
@@ -260,12 +265,13 @@ export default function TetrisGame({ onComplete }) {
       for (const kick of kicks) {
         const newPosition = { ...prev.position, x: prev.position.x + kick }
         if (isValidPosition(prev.board, rotatedPiece, newPosition)) {
+          playRotate()
           return { ...prev, currentPiece: rotatedPiece, position: newPosition }
         }
       }
       return prev
     })
-  }, [])
+  }, [playRotate])
 
   const restart = useCallback(() => {
     setGame(createInitialState())
@@ -274,10 +280,32 @@ export default function TetrisGame({ onComplete }) {
 
   useEffect(() => {
     if (game.won) {
+      playWin()
       const timeout = window.setTimeout(onComplete, 1500)
       return () => window.clearTimeout(timeout)
     }
-  }, [game.won, onComplete])
+  }, [game.won, onComplete, playWin])
+
+  useEffect(() => {
+    if (game.gameOver) {
+      playGameOver()
+    }
+  }, [game.gameOver, playGameOver])
+
+  useEffect(() => {
+    if (game.linesCleared > prevLinesRef.current) {
+      playClear()
+    }
+    prevLinesRef.current = game.linesCleared
+  }, [game.linesCleared, playClear])
+
+  useEffect(() => {
+    if (game.gameOver || game.won) return
+    if (prevPieceKeyRef.current && prevPieceKeyRef.current !== game.currentPiece.key) {
+      playDrop()
+    }
+    prevPieceKeyRef.current = game.currentPiece.key
+  }, [game.currentPiece.key, game.gameOver, game.won, playDrop])
 
   useEffect(() => {
     if (game.gameOver || game.won) return
