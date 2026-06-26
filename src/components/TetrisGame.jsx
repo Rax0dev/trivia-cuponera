@@ -132,6 +132,9 @@ function getDropInterval(level) {
 export default function TetrisGame({ onComplete }) {
   const [game, setGame] = useState(createInitialState)
   const [showHint, setShowHint] = useState(true)
+  const [gameStarted, setGameStarted] = useState(false)
+  const [showTouchHint, setShowTouchHint] = useState(true)
+  const [touchHintFading, setTouchHintFading] = useState(false)
   const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0)
   const boardRef = useRef(null)
   const touchStartRef = useRef(null)
@@ -288,7 +291,10 @@ export default function TetrisGame({ onComplete }) {
 
   const restart = useCallback(() => {
     setGame(createInitialState())
+    setGameStarted(false)
     setShowHint(true)
+    setShowTouchHint(true)
+    setTouchHintFading(false)
   }, [])
 
   useEffect(() => {
@@ -321,16 +327,16 @@ export default function TetrisGame({ onComplete }) {
   }, [game.currentPiece.key, game.gameOver, game.won, playDrop])
 
   useEffect(() => {
-    if (game.gameOver || game.won) return
+    if (!gameStarted || game.gameOver || game.won) return
     const interval = window.setInterval(() => {
       moveDown()
     }, getDropInterval(game.level))
     return () => window.clearInterval(interval)
-  }, [game.gameOver, game.won, game.level, moveDown])
+  }, [gameStarted, game.gameOver, game.won, game.level, moveDown])
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (game.gameOver || game.won) return
+      if (!gameStarted || game.gameOver || game.won) return
       switch (event.key) {
         case 'ArrowLeft':
           event.preventDefault()
@@ -356,22 +362,37 @@ export default function TetrisGame({ onComplete }) {
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [game.gameOver, game.won, move, moveDown, rotate])
+  }, [gameStarted, game.gameOver, game.won, move, moveDown, rotate])
 
   useEffect(() => {
+    if (!gameStarted) return
     const timer = window.setTimeout(() => setShowHint(false), 5000)
     return () => window.clearTimeout(timer)
-  }, [])
+  }, [gameStarted])
+
+  useEffect(() => {
+    if (!gameStarted || !isTouchDevice || !showTouchHint) return
+    const fadeTimer = window.setTimeout(() => setTouchHintFading(true), 4500)
+    const hideTimer = window.setTimeout(() => setShowTouchHint(false), 5000)
+    return () => {
+      window.clearTimeout(fadeTimer)
+      window.clearTimeout(hideTimer)
+    }
+  }, [gameStarted, isTouchDevice, showTouchHint])
+
+  const startGame = () => {
+    setGameStarted(true)
+  }
 
   const handleTouchStart = useCallback((event) => {
-    if (game.gameOver || game.won) return
+    if (!gameStarted || game.gameOver || game.won) return
     const touch = event.touches[0]
     touchStartRef.current = {
       x: touch.clientX,
       y: touch.clientY,
       time: Date.now(),
     }
-  }, [game.gameOver, game.won])
+  }, [gameStarted, game.gameOver, game.won])
 
   const handleTouchMove = useCallback((event) => {
     if (touchStartRef.current) {
@@ -380,7 +401,7 @@ export default function TetrisGame({ onComplete }) {
   }, [])
 
   const handleTouchEnd = useCallback((event) => {
-    if (!touchStartRef.current || game.gameOver || game.won) return
+    if (!gameStarted || !touchStartRef.current || game.gameOver || game.won) return
 
     const touch = event.changedTouches[0]
     const start = touchStartRef.current
@@ -409,7 +430,7 @@ export default function TetrisGame({ onComplete }) {
         rotate()
       }
     }
-  }, [game.gameOver, game.won, move, rotate, hardDrop])
+  }, [gameStarted, game.gameOver, game.won, move, rotate, hardDrop])
 
   const progressPercent = Math.min(100, (game.linesCleared / LINES_TO_WIN) * 100)
 
@@ -439,8 +460,23 @@ export default function TetrisGame({ onComplete }) {
               onTouchEnd={handleTouchEnd}
               className="relative mx-auto aspect-[10/20] w-full max-w-[260px] touch-none rounded-xl border-4 border-purple-100 bg-stone-100 p-1 shadow-inner sm:mx-0"
             >
-              {isTouchDevice ? (
-                <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-gradient-to-b from-purple-500/5 to-pink-500/5">
+              {!gameStarted ? (
+                <div className="absolute inset-0 z-20 flex items-center justify-center rounded-xl bg-white/60 p-3 backdrop-blur-sm">
+                  <button
+                    type="button"
+                    onClick={startGame}
+                    className="animate-fade-in-up min-h-[3rem] rounded-2xl bg-gradient-to-r from-purple-400 to-pink-400 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-purple-200 transition-all hover:scale-105 hover:shadow-xl active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-purple-300 sm:text-base"
+                  >
+                    Empezar a jugar
+                  </button>
+                </div>
+              ) : isTouchDevice && showTouchHint ? (
+                <div
+                  className={[
+                    'pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-gradient-to-b from-purple-500/5 to-pink-500/5 transition-opacity duration-500 ease-out',
+                    touchHintFading ? 'opacity-0' : 'opacity-100',
+                  ].join(' ')}
+                >
                   <span className="rounded-full bg-white/80 px-3 py-1 text-[10px] font-medium text-purple-500 shadow-sm backdrop-blur-sm">
                     Toca para rotar · Desliza para jugar
                   </span>
@@ -501,7 +537,11 @@ export default function TetrisGame({ onComplete }) {
             </div>
           </div>
 
-          {game.won ? (
+          {!gameStarted ? (
+            <p className="animate-fade-in-up text-center text-sm text-gray-500 sm:text-base">
+              Presiona <span className="font-semibold text-purple-500">Empezar a jugar</span> en el tablero para comenzar
+            </p>
+          ) : game.won ? (
             <div className="animate-fade-in-up rounded-2xl bg-gradient-to-br from-purple-100 to-pink-100 p-4 text-center sm:p-5">
               <p className="text-lg font-bold text-gray-800 sm:text-xl">¡Lo lograste! 🎉</p>
               <p className="text-sm text-gray-600 sm:text-base">Preparando la pregunta del día...</p>
