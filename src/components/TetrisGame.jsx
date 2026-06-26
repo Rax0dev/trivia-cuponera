@@ -132,7 +132,9 @@ function getDropInterval(level) {
 export default function TetrisGame({ onComplete }) {
   const [game, setGame] = useState(createInitialState)
   const [showHint, setShowHint] = useState(true)
+  const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0)
   const boardRef = useRef(null)
+  const touchStartRef = useRef(null)
   const { playMove, playRotate, playDrop, playClear, playWin, playGameOver } = useTetrisSounds()
   const prevPieceKeyRef = useRef(null)
   const prevLinesRef = useRef(0)
@@ -254,6 +256,17 @@ export default function TetrisGame({ onComplete }) {
     })
   }, [])
 
+  const hardDrop = useCallback(() => {
+    setGame((prev) => {
+      if (prev.gameOver || prev.won) return prev
+      let newY = prev.position.y
+      while (isValidPosition(prev.board, prev.currentPiece, { ...prev.position, y: newY + 1 })) {
+        newY += 1
+      }
+      return lockAndSpawn({ ...prev, position: { ...prev.position, y: newY } })
+    })
+  }, [])
+
   const rotate = useCallback(() => {
     setGame((prev) => {
       if (prev.gameOver || prev.won) return prev
@@ -350,6 +363,54 @@ export default function TetrisGame({ onComplete }) {
     return () => window.clearTimeout(timer)
   }, [])
 
+  const handleTouchStart = useCallback((event) => {
+    if (game.gameOver || game.won) return
+    const touch = event.touches[0]
+    touchStartRef.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+      time: Date.now(),
+    }
+  }, [game.gameOver, game.won])
+
+  const handleTouchMove = useCallback((event) => {
+    if (touchStartRef.current) {
+      event.preventDefault()
+    }
+  }, [])
+
+  const handleTouchEnd = useCallback((event) => {
+    if (!touchStartRef.current || game.gameOver || game.won) return
+
+    const touch = event.changedTouches[0]
+    const start = touchStartRef.current
+    const dx = touch.clientX - start.x
+    const dy = touch.clientY - start.y
+    const dt = Date.now() - start.time
+    touchStartRef.current = null
+
+    const minSwipe = 30
+    const absDx = Math.abs(dx)
+    const absDy = Math.abs(dy)
+
+    // Tap = rotate
+    if (absDx < minSwipe && absDy < minSwipe && dt < 250) {
+      rotate()
+      return
+    }
+
+    if (absDx > absDy) {
+      if (dx > minSwipe) move(1)
+      else if (dx < -minSwipe) move(-1)
+    } else {
+      if (dy > minSwipe) {
+        hardDrop()
+      } else if (dy < -minSwipe) {
+        rotate()
+      }
+    }
+  }, [game.gameOver, game.won, move, rotate, hardDrop])
+
   const progressPercent = Math.min(100, (game.linesCleared / LINES_TO_WIN) * 100)
 
   return (
@@ -373,8 +434,18 @@ export default function TetrisGame({ onComplete }) {
           <div className="mb-4 flex flex-col gap-4 sm:flex-row sm:items-start">
             <div
               ref={boardRef}
-              className="mx-auto aspect-[10/20] w-full max-w-[260px] rounded-xl border-4 border-purple-100 bg-stone-100 p-1 shadow-inner sm:mx-0"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              className="relative mx-auto aspect-[10/20] w-full max-w-[260px] touch-none rounded-xl border-4 border-purple-100 bg-stone-100 p-1 shadow-inner sm:mx-0"
             >
+              {isTouchDevice ? (
+                <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-gradient-to-b from-purple-500/5 to-pink-500/5">
+                  <span className="rounded-full bg-white/80 px-3 py-1 text-[10px] font-medium text-purple-500 shadow-sm backdrop-blur-sm">
+                    Toca para rotar · Desliza para jugar
+                  </span>
+                </div>
+              ) : null}
               <div
                 className="grid h-full w-full gap-px"
                 style={{ gridTemplateColumns: `repeat(${BOARD_WIDTH}, minmax(0, 1fr))` }}
@@ -422,7 +493,9 @@ export default function TetrisGame({ onComplete }) {
 
               {showHint ? (
                 <p className="animate-fade-in-up rounded-xl bg-stone-50 p-2 text-center text-xs text-gray-500 sm:text-sm">
-                  Usa las flechas del teclado o los botones de abajo
+                  {isTouchDevice
+                    ? 'Desliza izquierda/derecha para mover, arriba para rotar, abajo para caer al instante, o toca para rotar'
+                    : 'Usa las flechas del teclado o los botones de abajo'}
                 </p>
               ) : null}
             </div>
@@ -444,6 +517,21 @@ export default function TetrisGame({ onComplete }) {
                 <RefreshCw className="h-4 w-4" aria-hidden="true" />
                 Intentar de nuevo
               </button>
+            </div>
+          ) : isTouchDevice ? (
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-4 text-center text-xs text-gray-500 sm:text-sm">
+              <div className="flex items-center gap-1.5">
+                <span className="rounded-lg bg-purple-100 px-2 py-1">👈 Deslizar</span>
+                <span>mover</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="rounded-lg bg-pink-100 px-2 py-1">👆 Tocar</span>
+                <span>rotar</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="rounded-lg bg-rose-100 px-2 py-1">👇 Deslizar abajo</span>
+                <span>caer</span>
+              </div>
             </div>
           ) : (
             <div className="mt-2 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
