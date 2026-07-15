@@ -1462,7 +1462,7 @@ function App() {
           'Content-Type': 'application/json',
           'x-api-key': import.meta.env.VITE_NOTIFY_API_KEY,
         },
-        body: JSON.stringify({ cupon: coupon.title }),
+        body: JSON.stringify({ cupon: coupon.title, descripcion: coupon.description, id: coupon.id }),
       })
 
       if (!response.ok) {

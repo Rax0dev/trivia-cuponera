@@ -4,7 +4,7 @@ Description: Serverless Function for Vercel that receives a redeemed coupon
 name via POST and sends an immediate notification through Telegram.
 
 Route: POST /api/notify
-Body JSON: {"cupon": "Nombre del cupón"}
+Body JSON: {"cupon": "Nombre del cupón", "descripcion": "Descripción del cupón", "id": "id-del-cupon"}
 """
 
 import html
@@ -73,6 +73,44 @@ def is_rate_limited(client_ip):
 
 
 # ---------------------------------------------------------------------------
+# Coupon emoji mapping
+# ---------------------------------------------------------------------------
+COUPON_EMOJIS = {
+    "masaje-express": "💆",
+    "cena-velas": "🕯️",
+    "dia-mimos": "🥰",
+    "cita-sorpresa": "✨",
+    "noche-estrellas": "🌟",
+    "baile-sala": "💃",
+    "poema-carta": "💌",
+    "despertar-juntos": "🌅",
+    "antojo-expres": "🌮",
+    "rappi-libre": "🛍️",
+    "postre-sorpresa": "🍰",
+    "subway-lujo": "🥪",
+    "desayuno-favorito": "🍳",
+    "comida-reconfortante": "🍲",
+    "cena-post-turno": "🌙",
+    "player-1": "🎮",
+    "juegos-mesa": "🎲",
+    "maraton-malcolm": "📺",
+    "maraton-bbt": "📺",
+    "cine-casa": "🎬",
+    "tarde-videojuegos": "🕹️",
+    "viaje-sorpresa": "✈️",
+    "dia-aventura": "🧭",
+    "zoologico-round-2": "🦁",
+    "cdmx-tour": "🏙️",
+    "tolantongo-relax": "♨️",
+    "modo-espia": "🕵️",
+    "dia-sin-compromisos": "😌",
+    "mejor-equipo": "👫",
+    "anillo-promesa": "💍",
+    "sorpresa-amor": "❤️",
+}
+
+
+# ---------------------------------------------------------------------------
 # CORS helpers
 # ---------------------------------------------------------------------------
 def get_allowed_origins():
@@ -99,7 +137,7 @@ def is_origin_allowed(origin):
 # ---------------------------------------------------------------------------
 # Telegram helper
 # ---------------------------------------------------------------------------
-def send_telegram_message(coupon_name):
+def send_telegram_message(coupon_name, description=None, coupon_id=None):
     """
     Send a WhatsApp-style alert to Telegram via the Bot API.
     Returns the parsed JSON response from Telegram.
@@ -109,12 +147,26 @@ def send_telegram_message(coupon_name):
 
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     safe_name = html.escape(coupon_name)
+    emoji = COUPON_EMOJIS.get(coupon_id, "🎁") if coupon_id else "🎁"
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
-    text = f"🚨 ¡Atención! Mi Amochito acaba de canjear el cupón: {safe_name} 🚨\n🗓️ {now}"
+
+    lines = [
+        f"🚨 ¡Atención! Mi Amochito acaba de canjear:",
+        f"",
+        f"{emoji} <b>{safe_name}</b>",
+    ]
+    if description:
+        safe_desc = html.escape(description)
+        lines.append(f"📝 <i>{safe_desc}</i>")
+    lines.append(f"")
+    lines.append(f"🗓️ {now}")
+
+    text = "\n".join(lines)
 
     payload = urlencode({
         "chat_id": TELEGRAM_CHAT_ID,
         "text": text,
+        "parse_mode": "HTML",
     }).encode("utf-8")
 
     request = Request(
@@ -202,9 +254,12 @@ class handler(BaseHTTPRequestHandler):
         if not coupon_name or not isinstance(coupon_name, str):
             return self._send_error(400, "Field 'cupon' is required and must be a string")
 
+        description = body.get("descripcion")
+        coupon_id = body.get("id")
+
         # Send the Telegram message.
         try:
-            telegram_response = send_telegram_message(coupon_name)
+            telegram_response = send_telegram_message(coupon_name, description, coupon_id)
         except HTTPError as exc:
             return self._send_error(502, f"Telegram API error: {exc.code}")
         except URLError as exc:
