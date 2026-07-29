@@ -17,14 +17,15 @@ import {
   Moon,
   Tv,
   Film,
-  Plane,
-  Compass,
-  Building2,
-  Droplets,
+  Sunset,
+  ChefHat,
+  TreePine,
+  Camera,
+  Smartphone,
+  PenLine,
   EyeOff,
   CalendarX,
   Users,
-  Smile,
   Lock,
   Flame,
   ChevronUp,
@@ -584,42 +585,42 @@ const INITIAL_COUPONS = [
     locked: true,
   },
   {
-    id: 'viaje-sorpresa',
-    title: 'Viaje Sorpresa',
-    description: 'Un viajecito corto a donde tú elijas.',
-    icon: Plane,
+    id: 'atardecer-juntos',
+    title: 'Atardecer Juntos',
+    description: 'Ver el atardecer desde un lugar cercano con una bebida rica.',
+    icon: Sunset,
     redeemed: false,
     locked: true,
   },
   {
-    id: 'dia-aventura',
-    title: 'Día de Aventura',
-    description: 'Un día visitando un lugar nuevo que no conozcamos.',
-    icon: Compass,
+    id: 'receta-nueva-juntos',
+    title: 'Receta Nueva Juntos',
+    description: 'Cocinar juntos algo nuevo que nunca hayamos preparado.',
+    icon: ChefHat,
     redeemed: false,
     locked: true,
   },
   {
-    id: 'zoologico-round-2',
-    title: 'Zoológico Round 2',
-    description: 'Otra visita al zoológico, esta vez sin perder tarjetas.',
-    icon: Smile,
+    id: 'picnic-parque',
+    title: 'Picnic en el Parque',
+    description: 'Un picnic sencillo en un parque cercano o en la sala.',
+    icon: TreePine,
     redeemed: false,
     locked: true,
   },
   {
-    id: 'cdmx-tour',
-    title: 'CDMX Tour',
-    description: 'Un día recorriendo lugares emblemáticos.',
-    icon: Building2,
+    id: 'album-recuerdos',
+    title: 'Álbum de Recuerdos',
+    description: 'Ver fotos desde el inicio de la relación y recordar momentos.',
+    icon: Camera,
     redeemed: false,
     locked: true,
   },
   {
-    id: 'tolantongo-relax',
-    title: 'Tolantongo Relax',
-    description: 'Otro día de aguas termales y relajación.',
-    icon: Droplets,
+    id: 'noche-sin-celulares',
+    title: 'Noche Sin Celulares',
+    description: 'Noche sin pantallas, solo platicar, abrazarse y estar juntos.',
+    icon: Smartphone,
     redeemed: false,
     locked: true,
   },
@@ -648,10 +649,10 @@ const INITIAL_COUPONS = [
     locked: true,
   },
   {
-    id: 'anillo-promesa',
-    title: 'Anillo de Promesa',
-    description: 'Un gesto que refuerce nuestro compromiso.',
-    icon: Heart,
+    id: 'lista-razones',
+    title: 'Lista de Razones',
+    description: 'Escribir una lista de razones por las que te amo.',
+    icon: PenLine,
     redeemed: false,
     locked: true,
   },
@@ -1298,7 +1299,6 @@ function SecretFooter({ onDoubleTap }) {
     <footer
       className="mt-8 cursor-pointer select-none pb-[env(safe-area-inset-bottom)] text-center text-xs text-gray-400 sm:mt-10"
       onClick={handleClick}
-      onDoubleClick={onDoubleTap}
       style={{ WebkitUserSelect: 'none', userSelect: 'none' }}
       aria-label="Doble toque para una nota secreta"
     >
@@ -1449,6 +1449,10 @@ function App() {
     } else {
       setWrongOptionId(option.id)
       resetStreak()
+      window.setTimeout(() => {
+        setSelectedOptionId(null)
+        setWrongOptionId(null)
+      }, 600)
     }
   }
 
