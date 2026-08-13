@@ -35,7 +35,7 @@ export default function Sidebar({ isOpen, onClose, coupons, onRedeem, canRedeemT
 
       <aside
         className={[
-          'fixed inset-y-0 left-0 z-50 flex w-[85vw] max-w-[360px] flex-col bg-stone-50 shadow-2xl transition-transform duration-300 ease-in-out',
+          'fixed inset-y-0 left-0 z-50 flex w-[280px] flex-col bg-stone-50 shadow-2xl transition-transform duration-300 ease-in-out',
           isOpen ? 'translate-x-0' : '-translate-x-full',
         ].join(' ')}
         role="dialog"
