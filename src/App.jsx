@@ -2090,7 +2090,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-stone-50 px-4 py-5 sm:px-6 sm:py-7 md:py-9 transition-transform duration-300 ease-in-out" style={{ transform: sidebarOpen ? 'translateX(280px)' : 'translateX(0)' }}>
+    <div className="min-h-[100dvh] bg-stone-50 px-4 py-5 sm:px-6 sm:py-7 md:py-9">
       {showWelcome ? <WelcomeScreen onStart={dismissWelcome} /> : null}
 
       <Sidebar
