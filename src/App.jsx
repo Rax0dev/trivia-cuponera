@@ -2097,7 +2097,12 @@ function App() {
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         coupons={coupons}
+        specialCoupon={specialCoupon.unlocked && !specialCoupon.redeemed ? { ...SPECIAL_COUPON, locked: false, redeemed: false } : null}
         onRedeem={openRedeem}
+        onRedeemSpecial={() => {
+          setEasterEggModal({ type: 'special' })
+          redeemSpecialCoupon()
+        }}
         canRedeemToday={canRedeemToday}
         newlyUnlockedId={newlyUnlockedId}
         CouponCard={CouponCard}
@@ -2154,28 +2159,6 @@ function App() {
               showConfetti={showConfetti}
             />
           )}
-
-          {specialCoupon.unlocked && !specialCoupon.redeemed ? (
-            <section className="mb-6 sm:mb-8" aria-labelledby="cupon-especial-titulo">
-              <div className="mb-3 flex items-center gap-2 sm:mb-4">
-                <Heart className="h-5 w-5 text-red-400" aria-hidden="true" />
-                <h2 id="cupon-especial-titulo" className="text-base font-bold text-gray-800 sm:text-lg">
-                  Cupón Especial
-                </h2>
-              </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-                <CouponCard
-                  coupon={{ ...SPECIAL_COUPON, locked: false, redeemed: false }}
-                  onRedeem={() => {
-                    setEasterEggModal({ type: 'special' })
-                    redeemSpecialCoupon()
-                  }}
-                  isNewlyUnlocked={false}
-                  canRedeemToday={canRedeemToday}
-                />
-              </div>
-            </section>
-          ) : null}
         </main>
 
         <SecretFooter onDoubleTap={() => setEasterEggModal({ type: 'note' })} />

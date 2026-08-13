@@ -7,15 +7,16 @@ const TABS = [
   { id: 'locked', label: 'Bloqueados', icon: Lock },
 ]
 
-export default function Sidebar({ isOpen, onClose, coupons, onRedeem, canRedeemToday, newlyUnlockedId, CouponCard }) {
+export default function Sidebar({ isOpen, onClose, coupons, specialCoupon, onRedeem, onRedeemSpecial, canRedeemToday, newlyUnlockedId, CouponCard }) {
   const [activeTab, setActiveTab] = useState('available')
 
   const available = coupons.filter((c) => !c.locked && !c.redeemed)
   const redeemed = coupons.filter((c) => c.redeemed)
   const locked = coupons.filter((c) => c.locked && !c.redeemed)
 
+  const hasSpecialCoupon = specialCoupon && specialCoupon.unlocked && !specialCoupon.redeemed
   const tabCounts = {
-    available: available.length,
+    available: available.length + (hasSpecialCoupon ? 1 : 0),
     redeemed: redeemed.length,
     locked: locked.length,
   }
@@ -85,7 +86,7 @@ export default function Sidebar({ isOpen, onClose, coupons, onRedeem, canRedeemT
         </nav>
 
         <div className="flex-1 overflow-y-auto px-3 py-4 sm:px-4">
-          {currentCoupons.length === 0 ? (
+          {currentCoupons.length === 0 && !(activeTab === 'available' && hasSpecialCoupon) ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-stone-200">
                 {activeTab === 'available' ? (
@@ -106,6 +107,14 @@ export default function Sidebar({ isOpen, onClose, coupons, onRedeem, canRedeemT
             </div>
           ) : (
             <div className="flex flex-col gap-3">
+              {activeTab === 'available' && hasSpecialCoupon && (
+                <CouponCard
+                  coupon={{ ...specialCoupon, locked: false, redeemed: false }}
+                  onRedeem={onRedeemSpecial}
+                  isNewlyUnlocked={false}
+                  canRedeemToday={canRedeemToday}
+                />
+              )}
               {currentCoupons.map((coupon) => (
                 <CouponCard
                   key={coupon.id}
