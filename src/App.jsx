@@ -2090,7 +2090,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-stone-50 px-4 py-5 sm:px-6 sm:py-7 md:py-9">
+    <div className="flex min-h-[100dvh] flex-col bg-stone-50 px-4 py-5 sm:px-6 sm:py-7 md:py-9">
       {showWelcome ? <WelcomeScreen onStart={dismissWelcome} /> : null}
 
       <Sidebar
@@ -2103,7 +2103,7 @@ function App() {
         CouponCard={CouponCard}
       />
 
-      <div className="mx-auto w-full max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
+      <div className="mx-auto flex w-full max-w-md flex-1 flex-col sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
         <Header
           readyCount={readyCount}
           streak={streak}
@@ -2119,7 +2119,7 @@ function App() {
           </div>
         ) : null}
 
-        <main>
+        <main className="flex-1">
           {noQuestionsAvailable && triviaStatus !== 'success' ? (
             <div className="mb-6 animate-fade-in-up rounded-3xl bg-gradient-to-br from-amber-50 to-orange-50 p-6 shadow-lg sm:mb-8 sm:p-8">
               <div className="mb-4 flex items-center justify-center">
