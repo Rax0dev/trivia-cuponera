@@ -2090,7 +2090,7 @@ function App() {
   }
 
   return (
-    <div className="flex min-h-[100dvh] flex-col bg-stone-50 px-4 py-5 sm:px-6 sm:py-7 md:py-9">
+    <div className="flex h-[100dvh] flex-col overflow-hidden bg-stone-50 px-4 sm:px-6 md:px-8">
       {showWelcome ? <WelcomeScreen onStart={dismissWelcome} /> : null}
 
       <Sidebar
@@ -2108,23 +2108,25 @@ function App() {
         CouponCard={CouponCard}
       />
 
-      <div className="mx-auto flex w-full max-w-md flex-1 flex-col sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
-        <Header
-          readyCount={readyCount}
-          streak={streak}
-          bestStreak={bestStreak}
-          onHeartTap={handleHeartTap}
-          onTitleLongPress={handleTitleLongPress}
-          onMenuClick={() => setSidebarOpen(true)}
-        />
+      <div className="mx-auto flex w-full max-w-md flex-1 flex-col overflow-hidden sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
+        <div className="flex-shrink-0 py-4 sm:py-5 md:py-6">
+          <Header
+            readyCount={readyCount}
+            streak={streak}
+            bestStreak={bestStreak}
+            onHeartTap={handleHeartTap}
+            onTitleLongPress={handleTitleLongPress}
+            onMenuClick={() => setSidebarOpen(true)}
+          />
 
-        {specialDate ? (
-          <div className="mb-5 animate-fade-in-up rounded-2xl px-4 py-3 text-center text-sm font-semibold text-white shadow-md sm:mb-6 sm:px-6 sm:py-4 sm:text-base" style={{ backgroundColor: specialDate.themeColor }}>
-            {specialDate.message}
-          </div>
-        ) : null}
+          {specialDate ? (
+            <div className="mb-4 animate-fade-in-up rounded-2xl px-4 py-3 text-center text-sm font-semibold text-white shadow-md sm:mb-5 sm:px-6 sm:py-4 sm:text-base" style={{ backgroundColor: specialDate.themeColor }}>
+              {specialDate.message}
+            </div>
+          ) : null}
+        </div>
 
-        <main className="flex-1">
+        <main className="flex-1 overflow-y-auto px-1">
           {noQuestionsAvailable && triviaStatus !== 'success' ? (
             <div className="mb-6 animate-fade-in-up rounded-3xl bg-gradient-to-br from-amber-50 to-orange-50 p-6 shadow-lg sm:mb-8 sm:p-8">
               <div className="mb-4 flex items-center justify-center">
@@ -2161,7 +2163,9 @@ function App() {
           )}
         </main>
 
-        <SecretFooter onDoubleTap={() => setEasterEggModal({ type: 'note' })} />
+        <div className="flex-shrink-0 py-4 sm:py-5">
+          <SecretFooter onDoubleTap={() => setEasterEggModal({ type: 'note' })} />
+        </div>
       </div>
 
       {modalCouponId ? (
