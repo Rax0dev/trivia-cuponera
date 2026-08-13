@@ -28,11 +28,33 @@ import {
   Users,
   Lock,
   Flame,
-  ChevronUp,
-  ChevronDown,
   Trophy,
+  Menu,
+  Pizza,
+  Candy,
+  CupSoda,
+  Footprints,
+  BedDouble,
+  Headphones,
+  Brush,
+  WashingMachine,
+  ShoppingCart,
+  Compass,
+  Mountain,
+  IceCreamCone,
+  Crown,
+  Infinity as InfinityIcon,
+  Wrench,
+  Briefcase,
+  Music2,
+  MessageCircle,
+  Mic,
+  Search,
+  Baby,
+  Shield,
 } from 'lucide-react'
 import TetrisGame from './components/TetrisGame.jsx'
+import Sidebar from './components/Sidebar.jsx'
 
 const QUESTIONS = [
   {
@@ -335,15 +357,313 @@ const QUESTIONS = [
     ],
     correctAnswerIndex: 1,
   },
+  {
+    id: 31,
+    question: 'Si tengo un par de horas libres para jugar, ¿a qué me vas a ver pegado casi seguro?',
+    options: [
+      'A un juego de terror o supervivencia',
+      'A uno de carreras o deportes',
+      'A uno de cartas o estrategia pura',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 32,
+    question: 'Cuando jugamos en línea con más gente, ¿qué rol me gusta tomar?',
+    options: [
+      'Ir al frente a dar con todo',
+      'Quedarme atrás apoyando y curando',
+      'El francotirador que se oculta y espera pacientemente',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 33,
+    question: 'Si me fuera a una isla desierta y solo me dejaran llevar un juego para siempre, ¿cuál sería?',
+    options: [
+      'Uno de supervivencia y construcción estilo Minecraft o Project Zomboid',
+      'Uno de carreras para andar a toda velocidad',
+      'Uno de deportes para echar retas',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 34,
+    question: '¿Cuál es mi postura cuando la cosa en el juego se pone realmente seria?',
+    options: [
+      'Reclinado hacia atrás en modo relajado',
+      'Inclinado hacia adelante con los codos en las rodillas',
+      'Recostado de lado en el sillón',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 35,
+    question: 'Si me nineyos para comprar un videojuego, ¿Cuál crees que sería el primero en comprar?',
+    options: [
+      'Saga Assassin\'s Creed',
+      'Saga Call of Duty',
+      'Saga GTA',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 36,
+    question: '¿Qué es lo que más me molesta cuando estoy jugando?',
+    options: [
+      'Que la conexión ande lenta o con interrupciones',
+      'Cometer un error ingenuo yo solo',
+      'Que a mis compañeros de equipo no les interese ayudar',
+    ],
+    correctAnswerIndex: 2,
+  },
+  {
+    id: 37,
+    question: 'Si no sabemos qué poner en la tele y nos está dando flojera buscar, ¿cuál es mi serie confiable de fondo?',
+    options: [
+      'Una comedia tipo The Big Bang Theory o Malcolm',
+      'Un documental de asesinos o crímenes',
+      'Una de doctores o policías',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 38,
+    question: 'Cuando vamos al cine, ¿qué botana es la que no se perdona?',
+    options: [
+      'Palomitas combinadas (mantequilla y Cheetos Mix)',
+      'Unas crepas bien ricolinas',
+      'Un hot dog con todito',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 39,
+    question: 'Si me toca poner la música en un viaje, ¿qué es lo primero que vas a escuchar?',
+    options: [
+      'Requeson',
+      'Rock o Metal',
+      'Pop viejito en español para ir gritando',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 40,
+    question: 'Si me pongo a arreglar la casa o limpiar, ¿qué ritmo me hace acabar más rápido?',
+    options: [
+      'Reggaetón o rolas urbanas pegajosas',
+      'Cumbias o salsa a todo volumen',
+      'Música tranquila / instrumental',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 41,
+    question: 'En una peli de superhéroes o acción, ¿qué es lo que más disfruto?',
+    options: [
+      'Las explosiones y los efectos especiales',
+      'Que tenga chistes y momentos de risa',
+      'Las peleas bien chidas',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 42,
+    question: '¿Quién es mi superhéroe favorito de toda la vida?',
+    options: [
+      'Spider-Man',
+      'Batman',
+      'Iron Man',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 43,
+    question: 'Es fin de semana, tenemos flojera de cocinar y te digo "vamos a pedirnos algo bien rico", ¿qué es lo primero que se me viene a la mente?',
+    options: [
+      'Unos buenos tacos o burritos',
+      'Una pizza',
+      'Unas alitas o boneless con salsa picosa',
+    ],
+    correctAnswerIndex: 2,
+  },
+  {
+    id: 44,
+    question: 'Si a fuerzas hay que elegir un postre, ¿con qué me convences fácil?',
+    options: [
+      'Algo que tenga chocolate',
+      'Una nieve / helado',
+      'Un rebanada de pastel o pay',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 45,
+    question: '¿Cómo me gusta más tomarme el cafecito?',
+    options: [
+      'Bien caliente y bien cargado',
+      'Frío, dulce o tipo frappé',
+      'Prefiero un té o algo helado',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 46,
+    question: 'Si armamos cenita en la casa, ¿qué me verás haciendo?',
+    options: [
+      'Al pie de la estufa cocinando todo',
+      'Poniendo el ambiente, la botana y la música',
+      'Picando verduras y ayudando a preparar',
+    ],
+    correctAnswerIndex: 2,
+  },
+  {
+    id: 47,
+    question: '¿Qué onda con el picante en mi comida?',
+    options: [
+      'Con que tenga tantita salsa de botella estoy bien',
+      'Nomás un toque, prefiero sentirle el sabor a la comida',
+      'Entre más pise y me haga sudar, mejor',
+    ],
+    correctAnswerIndex: 2,
+  },
+  {
+    id: 48,
+    question: 'Son las 12 de la noche y me entra un bajón de hambre, ¿qué iría a buscar a la cocina?',
+    options: [
+      'Un plato de cereal con leche bien fría',
+      'Galletas o algo dulce que encuentre por ahí',
+      'Unas papitas con limón y chile',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 49,
+    question: 'Si se descompone algo en la casa o un aparato falla, ¿qué es lo primero que hago?',
+    options: [
+      'Agarrar herramientas y desarmarlo a ver qué tiene',
+      'Buscarme un tutorial en YouTube antes de moverle a nada',
+      'Decir "ya no sirve" y buscar a quién hablarle',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 50,
+    question: '¿En qué me puedes cachar fácil viendo precios o reviews en internet?',
+    options: [
+      'Audífonos, bocinas y cosas de audio',
+      'Teclados, mouses y cosas para la compu',
+      'Relojes o gadgets varios',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 51,
+    question: 'Si me pusiera a hacer ejercicio, ¿qué es lo que más disfrutaría hacer?',
+    options: [
+      'Cargar pesado / rutinitas de fuerza en el gym',
+      'Salirme a dar una vuelta a caminar o correr',
+      'Darle a la bici o hacer cardio',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 52,
+    question: '¿Cuál es mi manía clásica cuando estoy frente a la compu o trabajando?',
+    options: [
+      'Tener como mil pestañas abiertas al mismo tiempo',
+      'Tener los audífonos puestos a fuerza aunque no esté escuchando nada',
+      'Andar cambiando entre modo claro y oscuro',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 53,
+    question: 'Si entramos a una tienda de tecnología/electrónica/videojuegos, ¿qué va a pasar conmigo?',
+    options: [
+      'En 5 minutos ya vi lo que quería y me quiero ir',
+      'Me vas a perder unos 20 minutos viendo tarugadas',
+      'Me tienes que sacar a la fuerza del área de juegos y compus',
+    ],
+    correctAnswerIndex: 2,
+  },
+  {
+    id: 54,
+    question: '¿Cómo está mi escritorio o área de trabajo normalmente?',
+    options: [
+      'Súper limpio: nomás la compu y ya',
+      'Es un desmadre, pero yo sé exactamente dónde está cada cosa',
+      'Lleno de figuritas, juguetes y vasos vacíos',
+    ],
+    correctAnswerIndex: 2,
+  },
+  {
+    id: 55,
+    question: 'Al momento de andar manejando, ¿qué tal me comporto?',
+    options: [
+      'Súper tranquilo, voy a mi rollo escuchando música',
+      'Práctico: voy buscando el camino más rápido en el mapa para no tragar tráfico',
+      'Voy platicando de todo y al pendiente del camino',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 56,
+    question: 'Si nos vamos a ir de fin de semana por ahí, ¿qué preferiría?',
+    options: [
+      'Irnos a la playita a no hacer nada',
+      'Un pueblito o ciudad para andar caminando y comiendo rico',
+      'Un lugar de aventura para andar en la naturaleza',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 57,
+    question: '¿Qué cosita para Zapatito me emociona más comprarle o checarle?',
+    options: [
+      'Unas buenas llantas que se vean chilas',
+      'Aromatizantes, ceras y cosas para que huela a nuevo',
+      'Cositas de adorno o fundas para el interior de Spider-Man',
+    ],
+    correctAnswerIndex: 2,
+  },
+  {
+    id: 58,
+    question: '¿Cuál dirías que es mi "superpoder" en el día a día?',
+    options: [
+      'Resolver problemas rápido sin ahogarme en un vaso de agua',
+      'No perderme nunca y ubicarme súper fácil',
+      'Armar o arreglar cosas sin tener que leer el manual',
+    ],
+    correctAnswerIndex: 1,
+  },
+  {
+    id: 59,
+    question: 'Hace un calorón de la fregada, ¿con qué me refresco más a gusto?',
+    options: [
+      'Un agua fresca bien helada',
+      'Meterme a un cuarto con el aire en 16°C',
+      'Una paleta o nieve',
+    ],
+    correctAnswerIndex: 0,
+  },
+  {
+    id: 60,
+    question: 'Si tuvieras que decir cuál es mi forma favorita de demostrarte mi amor, ¿cuál sería?',
+    options: [
+      'Cuidarte, ayudarte y hacerte la vida más fácil en todo lo que pueda',
+      'Estar pegados haciendo planes o platicando',
+      'Andar de encimoso con abrazos, besos y apapachos',
+    ],
+    correctAnswerIndex: 0,
+  },
 ]
 
-function getDailyQuestionIndex() {
-  const today = new Date()
-  const start = new Date(today.getFullYear(), 0, 0)
-  const diff = today - start
-  const oneDay = 1000 * 60 * 60 * 24
-  const dayOfYear = Math.floor(diff / oneDay)
-  return dayOfYear % QUESTIONS.length
+function getDailyQuestionIndex(answeredIds) {
+  const unanswered = QUESTIONS.filter(q => !answeredIds.includes(q.id))
+  if (unanswered.length === 0) return -1
+  const randomIndex = Math.floor(Math.random() * unanswered.length)
+  return QUESTIONS.findIndex(q => q.id === unanswered[randomIndex].id)
 }
 
 function getTodayKey() {
@@ -373,9 +693,12 @@ function safeParseJSON(value, fallback) {
   }
 }
 
-function getDailyTrivia() {
-  const question = QUESTIONS[getDailyQuestionIndex()]
+function getDailyTrivia(answeredIds) {
+  const questionIndex = getDailyQuestionIndex(answeredIds)
+  if (questionIndex === -1) return null
+  const question = QUESTIONS[questionIndex]
   return {
+    questionId: question.id,
     question: question.question,
     options: question.options.map((label, index) => ({
       id: String.fromCharCode(97 + index),
@@ -656,6 +979,246 @@ const INITIAL_COUPONS = [
     redeemed: false,
     locked: true,
   },
+  {
+    id: 'noche-pizza',
+    title: 'Noche de Pizza y Cero Cocina',
+    description: 'Pedimos tu pizza favorita y los platos corren totalmente por mi cuenta.',
+    icon: Pizza,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'antojo-dulce-nocturno',
+    title: 'Antojo Dulce Nocturno',
+    description: 'Salida relámpago o pedido a domicilio por el postre que más se te antoje.',
+    icon: Candy,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'frappe-rescate',
+    title: 'Frappé de Rescate',
+    description: 'Pasa por tu bebida favorita de camino a casa para recargar pilas.',
+    icon: CupSoda,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'masaje-pies',
+    title: 'Masaje de Pies Cansados',
+    description: 'Consentimiento total para tus pies después de estar horas de pie en el turno.',
+    icon: Footprints,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'siesta-sagrada',
+    title: 'Siesta Sagrada Sin Interrupciones',
+    description: 'Casa en silencio total para que duermas y descanses todo lo que necesites.',
+    icon: BedDouble,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'desconexion-total',
+    title: 'Tiempo de Desconexión Total',
+    description: 'Un par de horas para que veas tus series, juegues o escuches tu música favorita sin interrupciones.',
+    icon: Headphones,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'pase-quehaceres',
+    title: 'Pase Libre de Quehaceres',
+    description: 'Hoy no levantas ni un solo plato; yo me encargo de limpiar y ordenar todo.',
+    icon: Brush,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'lavanderia-vip',
+    title: 'Servicio de Lavandería VIP',
+    description: 'Me encargo de lavar, doblar y guardar la ropa de la semana por ti.',
+    icon: WashingMachine,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'mandado-resuelto',
+    title: 'Mandado Resuelto',
+    description: 'Yo me encargo de hacer la lista del súper y traer todo a la casa.',
+    icon: ShoppingCart,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'yo-cocino-hoy',
+    title: 'Yo Cocino Hoy',
+    description: 'Preparo algún platillo casero que sea tu preferido para consentirte el finde.',
+    icon: ChefHat,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'cita-sorpresa-fin',
+    title: 'Cita Sorpresa de Fin de Semana',
+    description: 'Preparo una salida especial a algún lugar bonito sin que tengas que planear nada.',
+    icon: Compass,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'escapada-fin-semana',
+    title: 'Escapada de Fin de Semana',
+    description: 'Plan para salir a despejarnos a algún parque o lugar tranquilo.',
+    icon: Mountain,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'caminata-helado',
+    title: 'Caminata Tranquila y Helado',
+    description: 'Paseo sin prisas al aire libre para platicar de todo y desconectarnos.',
+    icon: IceCreamCone,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'culpable-razon',
+    title: 'La Culpable Siempre Tiene la Razón',
+    description: 'Ganas una discusión menor automáticamente sin necesidad de explicaciones.',
+    icon: Crown,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'detalle-nada',
+    title: 'Un Detalle de la Nada',
+    description: 'Valido por una sorpresa o regalito sorpresa sin necesidad de que sea fecha especial.',
+    icon: Gift,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'comodin-infinito',
+    title: 'Comodín Infinito',
+    description: 'Canjeable por absolutamente cualquier favor o capricho que se te ocurra en el momento.',
+    icon: InfinityIcon,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'soporte-tecnico',
+    title: 'Soporte Técnico Personal',
+    description: 'Arreglo cualquier problema con tu cel, tu pompu, la tele o las apps sin que reniegue.',
+    icon: Wrench,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'preparar-maleta',
+    title: 'Preparar la Maleta/Mochila',
+    description: 'Te ayudo a organizar y alistar todo lo que necesites llevar listo para tu siguiente día.',
+    icon: Briefcase,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'sesion-fotos-pareja',
+    title: 'Sesión de Fotos en Pareja',
+    description: 'Salimos a tomarnos fotitas bonitas sin poner peros.',
+    icon: Camera,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'tarde-shopping',
+    title: 'Tarde de Shopping',
+    description: 'Te acompaño a recorrer tus tiendas favoritas a ver cosas sin presionar por el tiempo.',
+    icon: ShoppingBag,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'canta-rolas-zapatito',
+    title: 'Canta-Rolas en Zapatito',
+    description: 'Ponemos tus canciones favoritas en Zapatito a todo volumen y las cantamos a todo volumen.',
+    icon: Music2,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'regalito-mochila',
+    title: 'Regalito Sorpresa en la Mochila',
+    description: 'Un detallito oculto entre tus cosas para que lo encuentres a mitad de tu turno.',
+    icon: Gift,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'noche-preguntas',
+    title: 'Noche de Preguntas',
+    description: 'Nos preparamos algo de tomar y jugamos a hacernos preguntas para platicar de la vida.',
+    icon: MessageCircle,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'serenata-personalizada',
+    title: 'Serenata Personalizada',
+    description: 'Te pongo tu canción favorita a todo volumen mientras te hago reír un rato.',
+    icon: Mic,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'detective-objetos',
+    title: 'Detective de Objetos Perdidos',
+    description: 'Busco por todos lados eso que se te haya perdido: las llaves, el cel, etc.',
+    icon: Search,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'crema-panchita',
+    title: 'Sesión de Crema en Panchita',
+    description: 'Te pongo cremita o el aceite en panchita con un masajito suave mientras platicamos con bebé Ethan.',
+    icon: Baby,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'guardian-silencio',
+    title: 'Guardián del Silencio y Descanso',
+    description: 'Me encargo de atender cualquier pendiente de la casa para que duermas la siesta que tu cuerpecito pida.',
+    icon: Shield,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'platica-musica-pancita',
+    title: 'Plática y Música para la Pancita',
+    description: 'Me pongo a cantar, leerle un cuento o platicarle pegado a tu panchita para que bebé Ethan empiece a reconocer mi voz.',
+    icon: Baby,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'foto-inesperada',
+    title: 'Foto Inesperada y Bonita',
+    description: 'Te aviso cuando te veas súper linda distraída y te tomo una foto desprevenida para guardarla de recuerdo.',
+    icon: Camera,
+    redeemed: false,
+    locked: true,
+  },
+  {
+    id: 'cancion-dedicada',
+    title: 'Canción Dedicada con Historia',
+    description: 'Te pongo una canción bonita y especial, te abrazo fuerte y te cuento exactamente qué pensé la primera vez que la escuché acordándome de ti.',
+    icon: Music,
+    redeemed: false,
+    locked: true,
+  },
 ]
 
 function generateConfettiParticles() {
@@ -871,12 +1434,22 @@ function LongPressTitle({ children, onLongPress, duration = 1200 }) {
   )
 }
 
-function Header({ readyCount, streak, bestStreak, onHeartTap, onTitleLongPress }) {
+function Header({ readyCount, streak, bestStreak, onHeartTap, onTitleLongPress, onMenuClick }) {
   return (
     <header className="mb-5 sm:mb-7 md:mb-8">
-      <LongPressTitle onLongPress={onTitleLongPress}>
-        La Bóveda de Mi Amochito
-      </LongPressTitle>
+      <div className="mb-3 flex items-center gap-3 sm:mb-4">
+        <button
+          type="button"
+          onClick={onMenuClick}
+          className="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-sm transition-all duration-200 hover:bg-stone-100 hover:shadow-md active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+          aria-label="Abrir menú de cupones"
+        >
+          <Menu className="h-5 w-5 text-gray-700" aria-hidden="true" />
+        </button>
+        <LongPressTitle onLongPress={onTitleLongPress}>
+          La Bóveda de Mi Amochito
+        </LongPressTitle>
+      </div>
 
       <div className="flex flex-wrap gap-2 sm:gap-3">
         <div className="flex flex-1 min-w-[8rem] flex-col rounded-2xl bg-gradient-to-br from-rose-200 to-red-300 p-1 shadow-sm transition-shadow duration-300 hover:shadow-md sm:flex-none sm:min-w-0">
@@ -1092,84 +1665,6 @@ function CouponCard({ coupon, onRedeem, isNewlyUnlocked, canRedeemToday = true }
   )
 }
 
-function CouponSection({ title, icon: Icon, coupons, onRedeem, emptyMessage, newlyUnlockedId, canRedeemToday = true }) {
-  const sectionId = title.replace(/\s+/g, '-').toLowerCase()
-  return (
-    <section className="mb-6 sm:mb-8" aria-labelledby={sectionId}>
-      <div className="mb-3 flex items-center gap-2 sm:mb-4">
-        <Icon className="h-5 w-5 text-red-400" aria-hidden="true" />
-        <h2 id={sectionId} className="text-base font-bold text-gray-800 sm:text-lg">
-          {title}
-        </h2>
-        <span className="ml-auto rounded-full bg-stone-100 px-2 py-0.5 text-xs font-semibold text-gray-500">
-          {coupons.length}
-        </span>
-      </div>
-
-      {coupons.length === 0 ? (
-        <div className="rounded-2xl bg-white p-5 text-center text-sm text-gray-500 shadow-sm animate-fade-in-up sm:p-6">
-          {emptyMessage}
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-          {coupons.map((coupon) => (
-            <CouponCard
-              key={coupon.id}
-              coupon={coupon}
-              onRedeem={onRedeem}
-              isNewlyUnlocked={coupon.id === newlyUnlockedId}
-              canRedeemToday={canRedeemToday}
-            />
-          ))}
-        </div>
-      )}
-    </section>
-  )
-}
-
-function LockedCouponsSection({ coupons }) {
-  const [isOpen, setIsOpen] = useState(false)
-
-  if (coupons.length === 0) return null
-
-  return (
-    <section className="mb-6 sm:mb-8" aria-labelledby="cupones-bloqueados-titulo">
-      <button
-        type="button"
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="flex min-h-[3rem] w-full items-center justify-between rounded-2xl bg-white p-3 shadow-sm transition-all duration-200 hover:bg-stone-100 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 sm:p-4"
-        aria-expanded={isOpen}
-        aria-controls="cupones-bloqueados-lista"
-      >
-        <div className="flex items-center gap-2">
-          <Lock className="h-5 w-5 text-stone-400" aria-hidden="true" />
-          <h2 id="cupones-bloqueados-titulo" className="text-sm font-bold text-gray-700 sm:text-base">
-            Cupones por descubrir
-          </h2>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="rounded-full bg-stone-100 px-2 py-0.5 text-xs font-semibold text-gray-500">
-            {coupons.length}
-          </span>
-          {isOpen ? (
-            <ChevronUp className="h-5 w-5 text-gray-400" aria-hidden="true" />
-          ) : (
-            <ChevronDown className="h-5 w-5 text-gray-400" aria-hidden="true" />
-          )}
-        </div>
-      </button>
-
-      {isOpen ? (
-        <div id="cupones-bloqueados-lista" className="mt-3 grid grid-cols-2 gap-3 animate-fade-in-up sm:mt-4 sm:gap-4 lg:grid-cols-3">
-          {coupons.map((coupon) => (
-            <CouponCard key={coupon.id} coupon={coupon} onRedeem={() => { }} />
-          ))}
-        </div>
-      ) : null}
-    </section>
-  )
-}
-
 function RedeemModal({ coupon, onClose, onConfirm }) {
   if (!coupon) return null
 
@@ -1309,7 +1804,6 @@ function SecretFooter({ onDoubleTap }) {
 }
 
 function App() {
-  const dailyTrivia = getDailyTrivia()
   const todayKey = getTodayKey()
 
   const [triviaStatus, setTriviaStatus] = useState(() => {
@@ -1369,6 +1863,18 @@ function App() {
     if (typeof window === 'undefined') return ''
     return window.localStorage.getItem('lastRedeemedDate') || ''
   })
+  const [answeredQuestionIds, setAnsweredQuestionIds] = useState(() => {
+    if (typeof window === 'undefined') return []
+    return safeParseJSON(window.localStorage.getItem('answeredQuestionIds'), [])
+  })
+  const [streakPaused, setStreakPaused] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return window.localStorage.getItem('streakPaused') === 'true'
+  })
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  const dailyTrivia = getDailyTrivia(answeredQuestionIds)
+  const noQuestionsAvailable = dailyTrivia === null
 
   const heartTapCountRef = useRef(0)
   const heartTapTimeoutRef = useRef(null)
@@ -1381,6 +1887,28 @@ function App() {
       }
     }
   }, [])
+
+  useEffect(() => {
+    const prevMaxId = safeParseJSON(window.localStorage.getItem('prevMaxQuestionId'), 0)
+    const currentMaxId = QUESTIONS.reduce((max, q) => Math.max(max, q.id), 0)
+    if (prevMaxId > 0 && currentMaxId > prevMaxId && noQuestionsAvailable) {
+      window.setTimeout(() => {
+        setToastMessage('¡Hay preguntas nuevas disponibles! 🎉')
+        setStreakPaused(false)
+      }, 0)
+      window.localStorage.setItem('streakPaused', 'false')
+    }
+    window.localStorage.setItem('prevMaxQuestionId', String(currentMaxId))
+  }, [noQuestionsAvailable])
+
+  useEffect(() => {
+    if (noQuestionsAvailable && triviaStatus !== 'success' && !streakPaused && streak > 0) {
+      window.setTimeout(() => {
+        setStreakPaused(true)
+      }, 0)
+      window.localStorage.setItem('streakPaused', 'true')
+    }
+  }, [noQuestionsAvailable, triviaStatus, streakPaused, streak])
 
   const readyCount = coupons.filter((c) => !c.locked && !c.redeemed).length + (specialCoupon.unlocked && !specialCoupon.redeemed ? 1 : 0)
   const modalCoupon = coupons.find((c) => c.id === modalCouponId) || null
@@ -1410,19 +1938,24 @@ function App() {
   const updateStreak = () => {
     const nextStreak = isToday(lastCorrectDate)
       ? streak
-      : isYesterday(lastCorrectDate)
+      : isYesterday(lastCorrectDate) || streakPaused
         ? streak + 1
         : 1
     const nextBestStreak = Math.max(nextStreak, bestStreak)
     setStreak(nextStreak)
     setBestStreak(nextBestStreak)
     setLastCorrectDate(todayKey)
+    if (streakPaused) {
+      setStreakPaused(false)
+      window.localStorage.setItem('streakPaused', 'false')
+    }
     window.localStorage.setItem('streakCount', String(nextStreak))
     window.localStorage.setItem('bestStreak', String(nextBestStreak))
     window.localStorage.setItem('lastCorrectDate', todayKey)
   }
 
   const resetStreak = () => {
+    if (streakPaused) return
     setStreak(0)
     window.localStorage.setItem('streakCount', '0')
   }
@@ -1437,6 +1970,9 @@ function App() {
 
     if (option.isCorrect) {
       setWrongOptionId(null)
+      const nextAnsweredIds = [...answeredQuestionIds, dailyTrivia.questionId]
+      setAnsweredQuestionIds(nextAnsweredIds)
+      window.localStorage.setItem('answeredQuestionIds', JSON.stringify(nextAnsweredIds))
       window.setTimeout(() => {
         setTriviaStatus('success')
         window.localStorage.setItem('triviaStatus', 'success')
@@ -1554,8 +2090,18 @@ function App() {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-stone-50 px-4 py-5 sm:px-6 sm:py-7 md:py-9">
+    <div className="min-h-[100dvh] bg-stone-50 px-4 py-5 sm:px-6 sm:py-7 md:py-9 transition-transform duration-300 ease-in-out" style={{ transform: sidebarOpen ? 'translateX(280px)' : 'translateX(0)' }}>
       {showWelcome ? <WelcomeScreen onStart={dismissWelcome} /> : null}
+
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        coupons={coupons}
+        onRedeem={openRedeem}
+        canRedeemToday={canRedeemToday}
+        newlyUnlockedId={newlyUnlockedId}
+        CouponCard={CouponCard}
+      />
 
       <div className="mx-auto w-full max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
         <Header
@@ -1564,6 +2110,7 @@ function App() {
           bestStreak={bestStreak}
           onHeartTap={handleHeartTap}
           onTitleLongPress={handleTitleLongPress}
+          onMenuClick={() => setSidebarOpen(true)}
         />
 
         {specialDate ? (
@@ -1573,7 +2120,29 @@ function App() {
         ) : null}
 
         <main>
-          {gamePhase === 'tetris' && triviaStatus !== 'success' ? (
+          {noQuestionsAvailable && triviaStatus !== 'success' ? (
+            <div className="mb-6 animate-fade-in-up rounded-3xl bg-gradient-to-br from-amber-50 to-orange-50 p-6 shadow-lg sm:mb-8 sm:p-8">
+              <div className="mb-4 flex items-center justify-center">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-amber-100">
+                  <BookOpen className="h-8 w-8 text-amber-600" aria-hidden="true" />
+                </div>
+              </div>
+              <h3 className="mb-3 text-center text-lg font-bold text-gray-800 sm:text-xl">
+                ¡No hay preguntas disponibles!
+              </h3>
+              <p className="text-center text-sm text-gray-600 sm:text-base">
+                Avisale a señor Eposo que agregue más preguntas!! Para no perder esa racha por falta de preguntas se guardará hasta detectar nuevas preguntas :D
+              </p>
+              {streak > 0 && (
+                <div className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-white/60 p-3">
+                  <Flame className="h-5 w-5 text-orange-500" aria-hidden="true" />
+                  <span className="text-sm font-semibold text-gray-700">
+                    Tu racha de {streak} días está guardada
+                  </span>
+                </div>
+              )}
+            </div>
+          ) : gamePhase === 'tetris' && triviaStatus !== 'success' ? (
             <TetrisGame onComplete={handleTetrisComplete} />
           ) : (
             <DailyChallenge
@@ -1607,27 +2176,6 @@ function App() {
               </div>
             </section>
           ) : null}
-
-          <CouponSection
-            title="Mis Cupones Desbloqueados"
-            icon={Gift}
-            coupons={coupons.filter((c) => !c.locked && !c.redeemed)}
-            onRedeem={openRedeem}
-            emptyMessage="Responde correctamente el reto del día para desbloquear un cupón."
-            newlyUnlockedId={newlyUnlockedId}
-            canRedeemToday={canRedeemToday}
-          />
-
-          <CouponSection
-            title="Mis Cupones Canjeados"
-            icon={CheckCircle2}
-            coupons={coupons.filter((c) => c.redeemed)}
-            emptyMessage="Aún no has canjeado ningún cupón."
-          />
-
-          <LockedCouponsSection
-            coupons={coupons.filter((c) => c.locked && !c.redeemed)}
-          />
         </main>
 
         <SecretFooter onDoubleTap={() => setEasterEggModal({ type: 'note' })} />
