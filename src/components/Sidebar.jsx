@@ -14,7 +14,7 @@ export default function Sidebar({ isOpen, onClose, coupons, specialCoupon, onRed
   const redeemed = coupons.filter((c) => c.redeemed)
   const locked = coupons.filter((c) => c.locked && !c.redeemed)
 
-  const hasSpecialCoupon = specialCoupon && specialCoupon.unlocked && !specialCoupon.redeemed
+  const hasSpecialCoupon = specialCoupon !== null && specialCoupon !== undefined
   const tabCounts = {
     available: available.length + (hasSpecialCoupon ? 1 : 0),
     redeemed: redeemed.length,
