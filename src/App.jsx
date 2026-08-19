@@ -1266,20 +1266,47 @@ function RomanticConfetti({ show }) {
   return <ConfettiBurst />
 }
 
+function VaultIcon({ className = "h-12 w-12 sm:h-14 sm:w-14" }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 512 512"
+      className={className}
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id="vaultGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style={{ stopColor: '#f472b6', stopOpacity: 1 }} />
+          <stop offset="50%" style={{ stopColor: '#ec4899', stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: '#e11d48', stopOpacity: 1 }} />
+        </linearGradient>
+        <linearGradient id="doorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style={{ stopColor: '#a855f7', stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: '#9333ea', stopOpacity: 1 }} />
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="512" height="512" rx="80" fill="#fce7f3" />
+      <rect x="80" y="80" width="352" height="352" rx="40" fill="url(#vaultGradient)" stroke="#be185d" strokeWidth="12" />
+      <circle cx="256" cy="256" r="120" fill="url(#doorGradient)" stroke="#7e22ce" strokeWidth="8" />
+      <circle cx="256" cy="256" r="40" fill="#fce7f3" stroke="#be185d" strokeWidth="6" />
+      <rect x="248" y="220" width="16" height="72" rx="8" fill="#be185d" />
+      <rect x="220" y="248" width="72" height="16" rx="8" fill="#be185d" />
+      <circle cx="140" cy="140" r="16" fill="#fce7f3" stroke="#be185d" strokeWidth="4" />
+      <circle cx="372" cy="140" r="16" fill="#fce7f3" stroke="#be185d" strokeWidth="4" />
+      <circle cx="140" cy="372" r="16" fill="#fce7f3" stroke="#be185d" strokeWidth="4" />
+      <circle cx="372" cy="372" r="16" fill="#fce7f3" stroke="#be185d" strokeWidth="4" />
+      <ellipse cx="180" cy="180" rx="30" ry="20" fill="#fce7f3" opacity="0.6" transform="rotate(-45 180 180)" />
+    </svg>
+  )
+}
+
 function WelcomeScreen({ onStart }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-gradient-to-br from-pink-100 via-rose-50 to-pink-200 p-4 text-center sm:p-6">
       <div className="welcome-landscape animate-fade-in-up w-full max-w-xs py-6 sm:max-w-sm sm:py-8 md:max-w-md md:py-10 lg:flex lg:max-w-3xl lg:items-center lg:gap-10 lg:text-left">
         <div className="mb-6 flex justify-center lg:mb-0 lg:shrink-0">
           <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-lg shadow-rose-200 sm:h-28 sm:w-28">
-            <Heart
-              className="h-12 w-12 fill-red-500 text-red-500 animate-pulse-soft sm:h-14 sm:w-14"
-              aria-hidden="true"
-            />
-            <Sparkles
-              className="absolute -right-1 -top-1 h-7 w-7 text-amber-400 animate-sparkle sm:-right-2 sm:-top-2 sm:h-8 sm:w-8"
-              aria-hidden="true"
-            />
+            <VaultIcon className="h-16 w-16 animate-pulse-soft sm:h-20 sm:w-20" />
           </div>
         </div>
 
