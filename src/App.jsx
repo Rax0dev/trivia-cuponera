@@ -2108,7 +2108,7 @@ function App() {
         CouponCard={CouponCard}
       />
 
-      <div className="mx-auto flex w-full max-w-md flex-1 flex-col overflow-hidden sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
+      <div className="mx-auto flex w-full max-w-md flex-1 flex-col sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
         <div className="flex-shrink-0 py-4 sm:py-5 md:py-6">
           <Header
             readyCount={readyCount}
